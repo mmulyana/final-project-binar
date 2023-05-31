@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .body-10-regular {
+    @apply text-[10px] font-normal leading-[14px];
+  }
+  .body-10-medium {
+    @apply text-[10px] font-medium leading-[14px];
+  }
+  .body-10-bold {
+    @apply text-[10px] font-bold leading-[14px];
+  }
+
+  .body-12-regular {
+    @apply text-[12px] font-normal leading-[18px];
+  }
+  .body-12-medium {
+    @apply text-[12px] font-medium leading-[18px];
+  }
+  .body-12-bold {
+    @apply text-[12px] font-bold leading-[18px];
+  }
+
+  .body-14-regular {
+    @apply text-[14px] font-normal leading-5;
+  }
+  .body-14-medium {
+    @apply text-[14px] font-medium leading-5;
+  }
+  .body-14-bold {
+    @apply text-[14px] font-bold leading-5;
+  }
+
+  .title-16-regular {
+    @apply text-base font-normal leading-6;
+  }
+  .title-16-medium {
+    @apply text-base font-medium leading-6;
+  }
+  .title-16-bold {
+    @apply text-base font-bold leading-6;
+  }
+
+  .title-18-regular {
+    @apply text-lg font-normal leading-[26px];
+  }
+  .title-18-medium {
+    @apply text-lg font-medium leading-[26px];
+  }
+  .title-18-bold {
+    @apply text-lg font-bold leading-[26px];
+  }
+
+  .heading-20-regular {
+    @apply text-xl font-normal leading-[30px];
+  }
+  .heading-20-medium {
+    @apply text-xl font-medium leading-[30px];
+  }
+  .heading-20-bold {
+    @apply text-xl font-bold leading-[30px];
+  }
+
+  .heading-24-regular {
+    @apply text-2xl font-normal leading-9;
+  }
+  .heading-24-medium {
+    @apply text-2xl font-medium leading-9;
+  }
+  .heading-24-bold {
+    @apply text-2xl font-bold leading-9;
+  }
+}
