@@ -25,12 +25,11 @@ export default function SearchFlight() {
           Pilih Jadwal Penerbangan spesial di{' '}
           <span className='text-primary-purple-4'>Tiketku</span>
         </h4>
-        
+
         {/* destination */}
         <div className='mt-6 gap-4 md:gap-[100px] relative grid grid-cols-1 md:grid-cols-2 h-fit md:h-[61px]'>
-          
           {/* from */}
-          <div className='grid grid-cols-[70px_1fr] gap-[29px] items-start'>
+          <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] items-start'>
             <div className='flex items-center gap-3'>
               <Image src={IconFlight} width={24} height={24} />
               <p className='body-14-regular text-neutral-3'>From</p>
@@ -43,56 +42,61 @@ export default function SearchFlight() {
           </div>
 
           {/* to */}
-          <div className='grid grid-cols-[70px_1fr] gap-[29px] items-start'>
+          <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] items-start'>
             <div className='flex items-center gap-3'>
               <Image src={IconFlight} width={24} height={24} />
               <p className='body-14-regular text-neutral-3'>To</p>
             </div>
             <input
               value='Jakarta (JKTA)'
+              onFocus={() => setIsSearch(true)}
               className='bg-transparent pb-[12px] border-b border-neutral-2 outline-none w-3/4 md:w-full'
             />
           </div>
 
-          <Button className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/2 md:left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <Button className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/3 md:left-1/2 -translate-x-1/2 -translate-y-1/2'>
             <Image src={IconReverse} w={32} h={32} />
           </Button>
 
           <SearchFlightModal
             isOpen={isSearch}
             toggleModal={handleSearchToogle}
-            className='left-1/2 -translate-x-1/2 top-11'
+            className='left-1/2 -translate-x-1/2 top-12'
           />
           <LayerModal isOpen={isSearch} handleToggle={handleSearchToogle} />
         </div>
 
         {/* date */}
         <div className='mt-8 md:mt-2 gap-4 md:gap-24 grid grid-cols-1 md:grid-cols-2'>
-
           {/* Departure */}
-          <div className='grid grid-cols-[70px_1fr_1fr] gap-[29px] relative'>
+          <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] relative'>
             <div className='flex items-center gap-2'>
               <Image src={IconDate} w={24} h={24} />
-              <p className='body-14-regular text-neutral-3'>Date</p>
-            </div>
-            <div className='flex flex-col gap-1'>
-              <label className='title-16-regular text-neutral-3'>
-                Departure
-              </label>
-              <input
-                className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                value='2023-03-01'
-                type='date'
-              />
+              <p className='body-14-regular text-neutral-2'>Date</p>
             </div>
 
-            <div className='flex flex-col gap-1'>
-              <label className='title-16-regular text-neutral-3'>Return</label>
-              <input
-                className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                value='2023-03-01'
-                type='date'
-              />
+            <div className='grid grid-cols-2 gap-6'>
+              <div className='flex flex-col gap-1'>
+                <label className='title-16-regular text-neutral-3'>
+                  Departure
+                </label>
+                <input
+                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
+                  value='2023-03-01'
+                  type='date'
+                />
+              </div>
+
+              <div className='flex flex-col gap-1'>
+                <label className='title-16-regular text-neutral-3'>
+                  Return
+                </label>
+                <input
+                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
+                  value='2023-03-01'
+                  type='date'
+                />
+              </div>
             </div>
 
             <Slider
@@ -103,29 +107,32 @@ export default function SearchFlight() {
           </div>
 
           {/* Passengers */}
-          <div className=' grid grid-cols-[70px_1fr_1fr] gap-[29px] mt-4 md:mt-0'>
+          <div className=' grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] mt-4 md:mt-0'>
             <div className='flex items-center gap-2'>
               <Image src={IconPassenger} w={24} h={24} />
               <p className='body-14-regular text-neutral-3'>To</p>
             </div>
-            <div className='flex flex-col gap-1'>
-              <label className='title-16-regular text-neutral-3'>
-                Passengers
-              </label>
-              <input
-                className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                value='2 Penumpang'
-              />
-            </div>
 
-            <div className='flex flex-col gap-1'>
-              <label className='title-16-regular text-neutral-3'>
-                Seat Class
-              </label>
-              <input
-                className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                value='Business'
-              />
+            <div className='grid grid-cols-2 gap-6'>
+              <div className='flex flex-col gap-1'>
+                <label className='title-16-regular text-neutral-3'>
+                  Passengers
+                </label>
+                <input
+                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
+                  value='2 Penumpang'
+                />
+              </div>
+
+              <div className='flex flex-col gap-1'>
+                <label className='title-16-regular text-neutral-3'>
+                  Seat Class
+                </label>
+                <input
+                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
+                  value='Business'
+                />
+              </div>
             </div>
           </div>
         </div>
