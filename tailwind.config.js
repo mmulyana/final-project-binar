@@ -6,6 +6,10 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'md': '768px',
+      'lg': '1024px',
+    },
     container: {
       center: true,
       padding: '1rem'

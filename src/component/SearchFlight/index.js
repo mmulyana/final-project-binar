@@ -19,7 +19,7 @@ export default function SearchFlight() {
   }
 
   return (
-    <div className='bg-gray-100 rounded-xl max-w-[968px] h-fit border border-neutral-2 mx-auto mt-20'>
+    <div className='bg-white rounded-xl max-w-[968px] h-fit border border-neutral-2 mx-auto mt-20 shadow-high overflow-hidden'>
       <div className='p-6'>
         <h4 className='heading-20-bold'>
           Pilih Jadwal Penerbangan spesial di{' '}
@@ -72,7 +72,7 @@ export default function SearchFlight() {
           <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] relative'>
             <div className='flex items-center gap-2'>
               <Image src={IconDate} w={24} h={24} />
-              <p className='body-14-regular text-neutral-2'>Date</p>
+              <p className='body-14-regular text-neutral-3'>Date</p>
             </div>
 
             <div className='grid grid-cols-2 gap-6'>
@@ -137,6 +137,9 @@ export default function SearchFlight() {
           </div>
         </div>
       </div>
+      <Button className='w-full h-12 bg-primary-purple-4'>
+        <p className='title-16-bold text-white'>Cari Penerbangan</p>
+      </Button>
     </div>
   )
 }
