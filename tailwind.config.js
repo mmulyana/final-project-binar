@@ -5,6 +5,14 @@ module.exports = {
     './src/component/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'md': '768px',
+      'lg': '1024px',
+    },
+    container: {
+      center: true,
+      padding: '1rem'
+    },
     extend: {
       boxShadow: {
         low: '0 0 4px 0 rgba(0, 0, 0, 0.15)',
