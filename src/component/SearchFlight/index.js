@@ -1,16 +1,15 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
-import { useState } from 'react'
-import LayerModal from '../Modal/LayerModal'
 import Slider from '../Form/Slider'
 import DestinationModal from '../Modal/DestinationModal'
+import PassengersModal from '../Modal/PassengersModal'
+import SeatClassModal from '../Modal/SeatClassModal'
 
 import IconFlight from 'public/icon/material-flight-takeoff.svg'
 import IconReverse from 'public/icon/play-cycle.svg'
 import IconDate from 'public/icon/material-date.svg'
 import IconPassenger from 'public/icon/material-airline-seat.svg'
-import PassengersModal from '../Modal/PassengersModal'
-import SeatClassModal from '../Modal/SeatClassModal'
 
 export default function SearchFlight() {
   const [isSearch, setIsSearch] = useState(false)
@@ -73,9 +72,8 @@ export default function SearchFlight() {
           <DestinationModal
             isOpen={isSearch}
             toggleModal={handleSearchToggle}
-            className='left-1/2 -translate-x-1/2 top-12'
+            className='left-1/2 -translate-x-1/2 top-[448px]'
           />
-          <LayerModal isOpen={isSearch} handleToggle={handleSearchToggle} />
         </div>
 
         {/* date */}
@@ -152,21 +150,15 @@ export default function SearchFlight() {
             <PassengersModal
               toggleModal={handlePassengerToggle}
               isOpen={isPassenger}
-              className='top-16'
+              className='right-4 md:right-[40px] lg:right-[170px] top-[540px]'
             />
 
             <SeatClassModal
               toggleModal={handleSeatToggle}
               isOpen={isSeatClass}
-              className='top-16'
+              className='right-4 md:right-[170px] top-[540px]'
             />
 
-            <LayerModal isOpen={isSeatClass} handleToggle={handleSeatToggle} />
-
-            <LayerModal
-              isOpen={isPassenger}
-              handleToggle={handlePassengerToggle}
-            />
           </div>
         </div>
       </div>

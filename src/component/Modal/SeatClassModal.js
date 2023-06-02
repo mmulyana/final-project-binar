@@ -26,26 +26,34 @@ function SeatClass({ toggleModal }) {
   }
 
   return (
-    <div className='bg-white rounded-2xl w-[400px] h-fit'>
-      <div className='px-4 py-[14px] flex justify-end items-center border-b border-neutral-2'>
-        <button onClick={toggleModal}>
-          <Image src={IconClose} h={16} w={16} />
-        </button>
-      </div>
+    <div className='relative max-w-[968px] mx-auto h-full'>
+      <div className='absolute top-[540px] right-4 z-50'>
+        <div className='bg-white rounded-2xl w-[400px] h-fit'>
+          <div className='px-4 py-[14px] flex justify-end items-center border-b border-neutral-2'>
+            <button onClick={toggleModal}>
+              <Image src={IconClose} h={16} w={16} />
+            </button>
+          </div>
 
-      <div className='px-[10px] mb-4'>
-        {seates.map((seat, index) => (
-          <RadioSeat data={seat} key={index} handleClick={handleClickSeat} />
-        ))}
-      </div>
+          <div className='px-[10px] mb-4'>
+            {seates.map((seat, index) => (
+              <RadioSeat
+                data={seat}
+                key={index}
+                handleClick={handleClickSeat}
+              />
+            ))}
+          </div>
 
-      <div className='flex justify-end items-center pb-3 px-4'>
-        <Button
-          onClick={toggleModal}
-          className='h-12 w-[150px] rounded-xl bg-primary-purple-5 text-white title-16-medium'
-        >
-          Simpan
-        </Button>
+          <div className='flex justify-end items-center pb-3 px-4'>
+            <Button
+              onClick={toggleModal}
+              className='h-12 w-[150px] rounded-xl bg-primary-purple-5 text-white title-16-medium'
+            >
+              Simpan
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )

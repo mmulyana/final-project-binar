@@ -5,8 +5,8 @@ import imgBanner from 'public/images/banner.png'
 export default function Home() {
   return (
     <>
-      <Banner />  
-      <div className='container -mt-14 relative z-10'>
+      <Banner />
+      <div className='container -mt-14 relative z-[5px]'>
         <SearchFlight />
       </div>
     </>
