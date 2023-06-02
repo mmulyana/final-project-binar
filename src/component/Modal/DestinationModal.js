@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 function Destination({ toggleModal }) {
   return (
-    <div className='relative w-screen px-4'>
+    <div className='relative w-[calc(100vw-2rem)] px-4'>
       <div className='px-[22px] py-6 bg-white rounded-xl flex flex-col gap-4 max-w-[700px] mx-auto'>
         <div className='grid grid-cols-[1fr_16px] gap-2 md:gap-[10px]'>
           <div className='relative'>

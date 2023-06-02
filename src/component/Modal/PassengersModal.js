@@ -97,7 +97,12 @@ function Passengers({ toggleModal }) {
       </div>
 
       <div className='flex justify-end items-center pb-3 px-4'>
-        <Button className='h-12 w-[150px] rounded-xl bg-primary-purple-5 text-white title-16-medium'>Simpan</Button>
+        <Button
+          onClick={toggleModal}
+          className='h-12 w-[150px] rounded-xl bg-primary-purple-5 text-white title-16-medium'
+        >
+          Simpan
+        </Button>
       </div>
     </div>
   )

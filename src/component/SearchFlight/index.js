@@ -10,10 +10,12 @@ import IconReverse from 'public/icon/play-cycle.svg'
 import IconDate from 'public/icon/material-date.svg'
 import IconPassenger from 'public/icon/material-airline-seat.svg'
 import PassengersModal from '../Modal/PassengersModal'
+import SeatClassModal from '../Modal/SeatClassModal'
 
 export default function SearchFlight() {
   const [isSearch, setIsSearch] = useState(false)
   const [isPassenger, setIsPassenger] = useState(false)
+  const [isSeatClass, setIsSeatClass] = useState(false)
   const [isCheck, setIsCheck] = useState(false)
 
   function handleSearchToggle() {
@@ -22,6 +24,10 @@ export default function SearchFlight() {
 
   function handlePassengerToggle() {
     setIsPassenger(!isPassenger)
+  }
+
+  function handleSeatToggle() {
+    setIsSeatClass(!isSeatClass)
   }
 
   return (
@@ -138,6 +144,7 @@ export default function SearchFlight() {
                 <input
                   className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
                   value='Business'
+                  onFocus={() => setIsSeatClass(true)}
                 />
               </div>
             </div>
@@ -147,6 +154,14 @@ export default function SearchFlight() {
               isOpen={isPassenger}
               className='top-16'
             />
+
+            <SeatClassModal
+              toggleModal={handleSeatToggle}
+              isOpen={isSeatClass}
+              className='top-16'
+            />
+
+            <LayerModal isOpen={isSeatClass} handleToggle={handleSeatToggle} />
 
             <LayerModal
               isOpen={isPassenger}
