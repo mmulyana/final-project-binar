@@ -4,7 +4,7 @@ import IconClose from 'public/icon/close.svg'
 import IconSearch from 'public/icon/search.svg'
 import Image from 'next/image'
 
-function SearchFlight({ toggleModal }) {
+function Destination({ toggleModal }) {
   return (
     <div className='relative w-screen px-4'>
       <div className='px-[22px] py-6 bg-white rounded-xl flex flex-col gap-4 max-w-[700px] mx-auto'>
@@ -31,5 +31,5 @@ function SearchFlight({ toggleModal }) {
   )
 }
 
-const SearchFlightModal = withModal(SearchFlight)
-export default SearchFlightModal
+const DestinationModal = withModal(Destination)
+export default DestinationModal
