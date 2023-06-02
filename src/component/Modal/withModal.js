@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 export default function withModal(WrappedComponent) {
-  function modal({ isOpen, toggleModal, className }) {
+  function Modal({ isOpen, toggleModal, className, ...props }) {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         toggleModal()
@@ -18,17 +18,17 @@ export default function withModal(WrappedComponent) {
       return () => {
         document.removeEventListener('keydown', handleKeyDown)
       }
-    }, [isOpen, toggleModal])
+    }, [isOpen, toggleModal, handleKeyDown])
 
     if (isOpen) {
       return (
         <div
           className={`z-50 absolute ${className}`}
         >
-          <WrappedComponent toggleModal={toggleModal} />
+          <WrappedComponent toggleModal={toggleModal} {...props} />
         </div>
       )
     }
   }
-  return modal
+  return Modal
 }
