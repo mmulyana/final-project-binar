@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
+import Portal from '../Portal'
 
 export default function withModal(WrappedComponent) {
-  function Modal({ isOpen, toggleModal, className, ...props }) {
+  function Modal({ isOpen, toggleModal, ...props }) {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         toggleModal()
@@ -22,13 +23,15 @@ export default function withModal(WrappedComponent) {
 
     if (isOpen) {
       return (
-        <div
-          className={`z-50 absolute ${className}`}
-        >
+        <div className='absolute top-0 left-0 w-full h-full'>
           <WrappedComponent toggleModal={toggleModal} {...props} />
+          <div
+            onClick={toggleModal}
+            className='fixed top-0 left-0 bg-black/50 h-screen w-full'
+          />
         </div>
       )
     }
   }
-  return Modal
+  return Portal(Modal)
 }

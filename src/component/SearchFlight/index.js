@@ -1,19 +1,22 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
-import { useState } from 'react'
-import LayerModal from '../Modal/LayerModal'
 import Slider from '../Form/Slider'
 import DestinationModal from '../Modal/DestinationModal'
+import PassengersModal from '../Modal/PassengersModal'
+import SeatClassModal from '../Modal/SeatClassModal'
 
 import IconFlight from 'public/icon/material-flight-takeoff.svg'
 import IconReverse from 'public/icon/play-cycle.svg'
 import IconDate from 'public/icon/material-date.svg'
 import IconPassenger from 'public/icon/material-airline-seat.svg'
-import PassengersModal from '../Modal/PassengersModal'
+import DateModal from '../Modal/DateModal'
 
 export default function SearchFlight() {
   const [isSearch, setIsSearch] = useState(false)
+  const [isDate, setIsDate] = useState(false)
   const [isPassenger, setIsPassenger] = useState(false)
+  const [isSeatClass, setIsSeatClass] = useState(false)
   const [isCheck, setIsCheck] = useState(false)
 
   function handleSearchToggle() {
@@ -22,6 +25,14 @@ export default function SearchFlight() {
 
   function handlePassengerToggle() {
     setIsPassenger(!isPassenger)
+  }
+
+  function handleSeatToggle() {
+    setIsSeatClass(!isSeatClass)
+  }
+
+  function handleDateToggle() {
+    setIsDate(!isDate)
   }
 
   return (
@@ -67,9 +78,8 @@ export default function SearchFlight() {
           <DestinationModal
             isOpen={isSearch}
             toggleModal={handleSearchToggle}
-            className='left-1/2 -translate-x-1/2 top-12'
+            className='left-1/2 -translate-x-1/2 top-[448px]'
           />
-          <LayerModal isOpen={isSearch} handleToggle={handleSearchToggle} />
         </div>
 
         {/* date */}
@@ -90,6 +100,7 @@ export default function SearchFlight() {
                   className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
                   value='2023-03-01'
                   type='date'
+                  onFocus={() => setIsDate(true)}
                 />
               </div>
 
@@ -103,6 +114,11 @@ export default function SearchFlight() {
                   type='date'
                 />
               </div>
+
+              <DateModal
+                isOpen={isDate}
+                toggleModal={handleDateToggle}
+              />
             </div>
 
             <Slider
@@ -138,6 +154,7 @@ export default function SearchFlight() {
                 <input
                   className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
                   value='Business'
+                  onFocus={() => setIsSeatClass(true)}
                 />
               </div>
             </div>
@@ -145,12 +162,13 @@ export default function SearchFlight() {
             <PassengersModal
               toggleModal={handlePassengerToggle}
               isOpen={isPassenger}
-              className='top-16'
+              className='right-4 md:right-[40px] lg:right-[170px] top-[540px]'
             />
 
-            <LayerModal
-              isOpen={isPassenger}
-              handleToggle={handlePassengerToggle}
+            <SeatClassModal
+              toggleModal={handleSeatToggle}
+              isOpen={isSeatClass}
+              className='right-4 md:right-[170px] top-[540px]'
             />
           </div>
         </div>

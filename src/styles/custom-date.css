@@ -1,0 +1,37 @@
+.rdp-day_selected:hover {
+  background-color: #e7cffc;
+}
+
+.rdp-head_cell {
+  font-weight: 300;
+  color: #8a8a8a;
+  text-transform: capitalize;
+}
+
+.rdp-day_range_middle {
+  background-color: #d0b7e6;
+  color: #151515 !important;
+}
+
+.rdp-day_range_start:hover,
+.rdp-day_range_end:hover,
+.rdp-day_range_middle:hover {
+  color: #151515 !important;
+}
+
+.rdp-day_range_start,
+.rdp-day_range_end {
+  background-color: #7126b5;
+  border-radius: 8px;
+  color: white;
+}
+
+.rdp-day_range_end.rdp-day_range_start {
+  border-radius: 8px;
+}
+
+.rdp-caption_label {
+  color: #151515;
+  font-size: 16px;
+  font-weight: 600;
+}

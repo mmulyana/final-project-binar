@@ -1,5 +1,8 @@
-import '@/styles/globals.css'
 import { Poppins } from 'next/font/google'
+
+import '@/styles/globals.css'
+import 'react-day-picker/dist/style.css'
+import '@/styles/custom-date.css'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '700'] })
 
