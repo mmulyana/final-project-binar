@@ -1,6 +1,5 @@
-.rdp {
-  --rdp-cell-size: 40px;
-  --rdp-background-color: #e7cffc;
+.rdp-day_selected:hover {
+  background-color: #e7cffc;
 }
 
 .rdp-head_cell {
