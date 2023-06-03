@@ -10,9 +10,11 @@ import IconFlight from 'public/icon/material-flight-takeoff.svg'
 import IconReverse from 'public/icon/play-cycle.svg'
 import IconDate from 'public/icon/material-date.svg'
 import IconPassenger from 'public/icon/material-airline-seat.svg'
+import DateModal from '../Modal/DateModal'
 
 export default function SearchFlight() {
   const [isSearch, setIsSearch] = useState(false)
+  const [isDate, setIsDate] = useState(false)
   const [isPassenger, setIsPassenger] = useState(false)
   const [isSeatClass, setIsSeatClass] = useState(false)
   const [isCheck, setIsCheck] = useState(false)
@@ -27,6 +29,10 @@ export default function SearchFlight() {
 
   function handleSeatToggle() {
     setIsSeatClass(!isSeatClass)
+  }
+
+  function handleDateToggle() {
+    setIsDate(!isDate)
   }
 
   return (
@@ -94,6 +100,7 @@ export default function SearchFlight() {
                   className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
                   value='2023-03-01'
                   type='date'
+                  onFocus={() => setIsDate(true)}
                 />
               </div>
 
@@ -107,6 +114,11 @@ export default function SearchFlight() {
                   type='date'
                 />
               </div>
+
+              <DateModal
+                isOpen={isDate}
+                toggleModal={handleDateToggle}
+              />
             </div>
 
             <Slider
@@ -158,7 +170,6 @@ export default function SearchFlight() {
               isOpen={isSeatClass}
               className='right-4 md:right-[170px] top-[540px]'
             />
-
           </div>
         </div>
       </div>
