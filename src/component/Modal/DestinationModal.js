@@ -90,7 +90,12 @@ function Destination({ toggleModal, dispatch, type }) {
             </div>
 
             {recents.length > 0 || search !== '' ? (
-              <div className='mt-2 px-[22px] py-6 bg-white rounded-xl '>
+              <div
+                className={[
+                  'mt-2 px-[22px] py-6 rounded-xl',
+                  autoCompletes.filter((item) => item.includes(search.toLowerCase())).length > 0 ? 'bg-white' : '',
+                ].join(' ')}
+              >
                 {search !== '' && isAutocomplete ? (
                   <div className='flex flex-col gap-2'>
                     {autoCompletes

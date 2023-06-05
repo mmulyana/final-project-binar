@@ -1,8 +1,9 @@
+import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
 import Image from 'next/image'
 import imgBanner from 'public/images/banner.png'
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Banner />
@@ -26,9 +27,15 @@ function Banner() {
         </div>
         <div className='bg-gradient-to-l from-primary-cream-3/0 to-primary-cream-3 absolute top-0 right-0 w-[761px] h-full z-10' />
         <div className='w-[760px] h-full absolute right-0 top-0 bg-gray-50'>
-          <Image src={imgBanner} h={232} w={760} priority alt='banner'/>
+          <Image src={imgBanner} h={232} w={760} priority alt='banner' />
         </div>
       </div>
     </div>
   )
 }
+
+Home.getLayout = (page) => {
+  return <DefaultLayout>{page}</DefaultLayout>
+}
+
+export default Home
