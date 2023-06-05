@@ -8,6 +8,16 @@ export const searchReducer = (state = initialValue, action) => {
           [action.payload]: !state.isOpen[action.payload],
         },
       }
+    case 'reverseDestination':
+      let tmp = state.data.to
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          to: state.data.from,
+          from: tmp,
+        },
+      }
     default:
       return state
   }

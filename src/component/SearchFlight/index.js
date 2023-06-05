@@ -29,8 +29,6 @@ export default function SearchFlight() {
           <span className='text-primary-purple-4'>Tiketku</span>
         </h4>
 
-        <button onClick={() => handleToggle('search')}>Tes</button>
-
         {/* destination */}
         <div className='mt-6 gap-4 md:gap-[100px] relative grid grid-cols-1 md:grid-cols-2 h-fit md:h-[61px]'>
           {/* from */}
@@ -61,7 +59,12 @@ export default function SearchFlight() {
             </p>
           </div>
 
-          <Button className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/3 md:left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <Button
+            className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/3 md:left-1/2 -translate-x-1/2 -translate-y-1/2'
+            onClick={() => {
+              dispatch({ type: 'reverseDestination' })
+            }}
+          >
             <Image src={IconReverse} w={32} h={32} />
           </Button>
 
