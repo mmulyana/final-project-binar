@@ -45,7 +45,7 @@ export default function Login() {
                 type='text'
                 id='default-input'
                 placeholder='Contoh: johndoe@gmail.com'
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl block w-full p-2.5'
               />
             </div>
 
@@ -64,7 +64,7 @@ export default function Login() {
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
                 placeholder='Password'
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white '
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl block w-full p-2.5'
               />
               <button
                 className='absolute flex right-[8rem] mt-[-2rem] items-center   text-gray-600'
