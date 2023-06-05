@@ -17,7 +17,7 @@ function Home() {
 function Banner() {
   return (
     <div className='relative w-full'>
-      <div className='h-[150px] w-full bg-primary-purple-4/50 mt-[148px]'></div>
+      <div className='h-[150px] w-full bg-primary-purple-4/50 mt-28 md:mt-[148px]'></div>
       <div className='h-[232px] w-[1210px] max-w-full rounded-none md:rounded-[20px] bg-primary-cream-3 mx-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 md:px-8 lg:px-16 overflow-hidden'>
         <div className='relative z-[11]'>
           <h3 className='font-extrabold italic text-4xl'>Diskon Hari ini</h3>
