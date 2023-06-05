@@ -7,9 +7,10 @@ import '@/styles/custom-date.css'
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '700'] })
 
 export default function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout ?? ((pages) => pages)
   return (
     <main className={poppins.className}>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </main>
   )
 }

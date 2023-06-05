@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
 import Slider from '../Form/Slider'
 import DestinationModal from '../Modal/DestinationModal'
 import PassengersModal from '../Modal/PassengersModal'
 import SeatClassModal from '../Modal/SeatClassModal'
+import { sumDataNumbers } from '@/utils'
+import { initialValue, searchReducer } from './reducer'
 
 import IconFlight from 'public/icon/material-flight-takeoff.svg'
 import IconReverse from 'public/icon/play-cycle.svg'
@@ -13,26 +15,11 @@ import IconPassenger from 'public/icon/material-airline-seat.svg'
 import DateModal from '../Modal/DateModal'
 
 export default function SearchFlight() {
-  const [isSearch, setIsSearch] = useState(false)
-  const [isDate, setIsDate] = useState(false)
-  const [isPassenger, setIsPassenger] = useState(false)
-  const [isSeatClass, setIsSeatClass] = useState(false)
-  const [isCheck, setIsCheck] = useState(false)
+  const [state, dispatch] = useReducer(searchReducer, initialValue)
+  const [searchType, setSearchType] = useState('')
 
-  function handleSearchToggle() {
-    setIsSearch(!isSearch)
-  }
-
-  function handlePassengerToggle() {
-    setIsPassenger(!isPassenger)
-  }
-
-  function handleSeatToggle() {
-    setIsSeatClass(!isSeatClass)
-  }
-
-  function handleDateToggle() {
-    setIsDate(!isDate)
+  function handleToggle(payload) {
+    dispatch({ type: 'toggle', payload })
   }
 
   return (
@@ -48,37 +35,73 @@ export default function SearchFlight() {
           {/* from */}
           <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] items-start'>
             <div className='flex items-center gap-3'>
-              <Image src={IconFlight} width={24} height={24} />
+              <Image
+                src={IconFlight}
+                width={24}
+                height={24}
+                alt='from destination'
+                className='h-auto aspect-square'
+              />
               <p className='body-14-regular text-neutral-3'>From</p>
             </div>
-            <input
-              onFocus={() => setIsSearch(true)}
-              value='Jakarta (JKTA)'
-              className='bg-transparent pb-[12px] border-b border-neutral-2 outline-none w-3/4 md:w-full'
-            />
+            <div className='pb-2 border-b border-neutral-2 w-[80%] md:w-full'>
+              <p
+                className='body-14-medium cursor-pointer'
+                onClick={() => {
+                  handleToggle('search')
+                  setSearchType('from')
+                }}
+              >
+                {state?.data.from}
+              </p>
+            </div>
           </div>
 
           {/* to */}
           <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] items-start'>
             <div className='flex items-center gap-3'>
-              <Image src={IconFlight} width={24} height={24} />
+              <Image
+                src={IconFlight}
+                width={24}
+                height={24}
+                alt='to destination'
+                className='h-auto aspect-square'
+              />
               <p className='body-14-regular text-neutral-3'>To</p>
             </div>
-            <input
-              value='Jakarta (JKTA)'
-              onFocus={() => setIsSearch(true)}
-              className='bg-transparent pb-[12px] border-b border-neutral-2 outline-none w-3/4 md:w-full'
-            />
+            <div className='pb-2 border-b border-neutral-2 w-[80%] md:w-full'>
+              <p
+                className='body-14-medium cursor-pointer'
+                onClick={() => {
+                  handleToggle('search')
+                  setSearchType('to')
+                }}
+              >
+                {state?.data.to}
+              </p>
+            </div>
           </div>
 
-          <Button className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/3 md:left-1/2 -translate-x-1/2 -translate-y-1/2'>
-            <Image src={IconReverse} w={32} h={32} />
+          <Button
+            className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/2 md:left-1/2 -translate-x-1/2 -translate-y-1/2'
+            onClick={() => {
+              dispatch({ type: 'reverseDestination' })
+            }}
+          >
+            <Image
+              src={IconReverse}
+              w={32}
+              h={32}
+              alt='reverse button destination'
+            />
           </Button>
 
           <DestinationModal
-            isOpen={isSearch}
-            toggleModal={handleSearchToggle}
+            isOpen={state?.isOpen.search}
+            toggleModal={() => handleToggle('search')}
             className='left-1/2 -translate-x-1/2 top-[448px]'
+            type={searchType}
+            dispatch={dispatch}
           />
         </div>
 
@@ -87,7 +110,7 @@ export default function SearchFlight() {
           {/* Departure */}
           <div className='grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] relative'>
             <div className='flex items-center gap-2'>
-              <Image src={IconDate} w={24} h={24} />
+              <Image src={IconDate} w={24} h={24} alt='date icon' />
               <p className='body-14-regular text-neutral-3'>Date</p>
             </div>
 
@@ -96,34 +119,54 @@ export default function SearchFlight() {
                 <label className='title-16-regular text-neutral-3'>
                   Departure
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2023-03-01'
-                  type='date'
-                  onFocus={() => setIsDate(true)}
-                />
+                <div className='pb-2 border-b border-neutral-2 w-full'>
+                  <p
+                    className='body-14-medium cursor-pointer'
+                    onClick={() => handleToggle('date')}
+                  >
+                    {state?.data?.departureDate.toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </p>
+                </div>
               </div>
 
               <div className='flex flex-col gap-1'>
                 <label className='title-16-regular text-neutral-3'>
                   Return
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2023-03-01'
-                  type='date'
-                />
+                <div className='pb-2 h-7 border-b border-neutral-2 w-full'>
+                  <p
+                    className={[
+                      'body-14-medium cursor-pointer',
+                      state.isReturnDate ? '' : 'text-primary-purple-4',
+                    ].join(' ')}
+                    onClick={() => handleToggle('date')}
+                  >
+                    {state.isOpen.isReturnDate
+                      ? state.data.returnDate
+                        ? state.data.returnDate.toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                          })
+                        : 'Pilih Tanggal'
+                      : null}
+                  </p>
+                </div>
               </div>
 
               <DateModal
-                isOpen={isDate}
-                toggleModal={handleDateToggle}
+                isOpen={state?.isOpen.date}
+                toggleModal={() => handleToggle('date')}
               />
             </div>
 
             <Slider
-              isChecked={isCheck}
-              handleClick={() => setIsCheck(!isCheck)}
+              isChecked={state?.isOpen.isReturnDate}
+              handleClick={() => handleToggle('isReturnDate')}
               className='absolute -right-10 -top-1 -translate-x-1/2'
             />
           </div>
@@ -131,7 +174,7 @@ export default function SearchFlight() {
           {/* Passengers */}
           <div className=' grid grid-cols-[60px_1fr] md:grid-cols-[70px_1fr] gap-[29px] mt-4 md:mt-0 relative'>
             <div className='flex items-center gap-2'>
-              <Image src={IconPassenger} w={24} h={24} />
+              <Image src={IconPassenger} w={24} h={24} alt='passenger icon' />
               <p className='body-14-regular text-neutral-3'>To</p>
             </div>
 
@@ -140,34 +183,40 @@ export default function SearchFlight() {
                 <label className='title-16-regular text-neutral-3'>
                   Passengers
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2 Penumpang'
-                  onFocus={() => setIsPassenger(true)}
-                />
+                <div className='pb-2 border-b border-neutral-2 w-full'>
+                  <p
+                    className='body-14-medium cursor-pointer'
+                    onClick={() => handleToggle('passenger')}
+                  >
+                    {sumDataNumbers(state?.data.passengers)} Penumpang
+                  </p>
+                </div>
               </div>
 
               <div className='flex flex-col gap-1'>
                 <label className='title-16-regular text-neutral-3'>
                   Seat Class
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='Business'
-                  onFocus={() => setIsSeatClass(true)}
-                />
+                <div className='pb-2 border-b border-neutral-2 w-full'>
+                  <p
+                    className='body-14-medium cursor-pointer'
+                    onClick={() => handleToggle('passenger')}
+                  >
+                    {state?.data.seatClass}
+                  </p>
+                </div>
               </div>
             </div>
 
             <PassengersModal
-              toggleModal={handlePassengerToggle}
-              isOpen={isPassenger}
+              toggleModal={() => handleToggle('passenger')}
+              isOpen={state?.isOpen.passenger}
               className='right-4 md:right-[40px] lg:right-[170px] top-[540px]'
             />
 
             <SeatClassModal
-              toggleModal={handleSeatToggle}
-              isOpen={isSeatClass}
+              toggleModal={() => handleToggle('seatClass')}
+              isOpen={state?.isOpen.seatClass}
               className='right-4 md:right-[170px] top-[540px]'
             />
           </div>
