@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
 import Slider from '../Form/Slider'
 import DestinationModal from '../Modal/DestinationModal'
 import PassengersModal from '../Modal/PassengersModal'
 import SeatClassModal from '../Modal/SeatClassModal'
+import { sumDataNumbers } from '@/utils'
+import { initialValue, searchReducer } from './reducer'
 
 import IconFlight from 'public/icon/material-flight-takeoff.svg'
 import IconReverse from 'public/icon/play-cycle.svg'
@@ -13,26 +15,10 @@ import IconPassenger from 'public/icon/material-airline-seat.svg'
 import DateModal from '../Modal/DateModal'
 
 export default function SearchFlight() {
-  const [isSearch, setIsSearch] = useState(false)
-  const [isDate, setIsDate] = useState(false)
-  const [isPassenger, setIsPassenger] = useState(false)
-  const [isSeatClass, setIsSeatClass] = useState(false)
-  const [isCheck, setIsCheck] = useState(false)
+  const [state, dispatch] = useReducer(searchReducer, initialValue)
 
-  function handleSearchToggle() {
-    setIsSearch(!isSearch)
-  }
-
-  function handlePassengerToggle() {
-    setIsPassenger(!isPassenger)
-  }
-
-  function handleSeatToggle() {
-    setIsSeatClass(!isSeatClass)
-  }
-
-  function handleDateToggle() {
-    setIsDate(!isDate)
+  function handleToggle(payload) {
+    dispatch({ type: 'toggle', payload })
   }
 
   return (
@@ -43,6 +29,8 @@ export default function SearchFlight() {
           <span className='text-primary-purple-4'>Tiketku</span>
         </h4>
 
+        <button onClick={() => handleToggle('search')}>Tes</button>
+
         {/* destination */}
         <div className='mt-6 gap-4 md:gap-[100px] relative grid grid-cols-1 md:grid-cols-2 h-fit md:h-[61px]'>
           {/* from */}
@@ -51,11 +39,12 @@ export default function SearchFlight() {
               <Image src={IconFlight} width={24} height={24} />
               <p className='body-14-regular text-neutral-3'>From</p>
             </div>
-            <input
-              onFocus={() => setIsSearch(true)}
-              value='Jakarta (JKTA)'
-              className='bg-transparent pb-[12px] border-b border-neutral-2 outline-none w-3/4 md:w-full'
-            />
+            <p
+              className='body-14-medium cursor-pointer'
+              onClick={() => handleToggle('search')}
+            >
+              {state?.data.from}
+            </p>
           </div>
 
           {/* to */}
@@ -64,11 +53,12 @@ export default function SearchFlight() {
               <Image src={IconFlight} width={24} height={24} />
               <p className='body-14-regular text-neutral-3'>To</p>
             </div>
-            <input
-              value='Jakarta (JKTA)'
-              onFocus={() => setIsSearch(true)}
-              className='bg-transparent pb-[12px] border-b border-neutral-2 outline-none w-3/4 md:w-full'
-            />
+            <p
+              className='body-14-medium cursor-pointer'
+              onClick={() => handleToggle('search')}
+            >
+              {state?.data.to}
+            </p>
           </div>
 
           <Button className='h-8 w-8 rounded-xl border-[1.5px] border-primary-purple-4 bg-black flex items-center justify-center absolute right-0 top-1/3 md:left-1/2 -translate-x-1/2 -translate-y-1/2'>
@@ -76,8 +66,8 @@ export default function SearchFlight() {
           </Button>
 
           <DestinationModal
-            isOpen={isSearch}
-            toggleModal={handleSearchToggle}
+            isOpen={state?.isOpen.search}
+            toggleModal={() => handleToggle('search')}
             className='left-1/2 -translate-x-1/2 top-[448px]'
           />
         </div>
@@ -96,34 +86,50 @@ export default function SearchFlight() {
                 <label className='title-16-regular text-neutral-3'>
                   Departure
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2023-03-01'
-                  type='date'
-                  onFocus={() => setIsDate(true)}
-                />
+                <p
+                  className='body-14-medium cursor-pointer'
+                  onClick={() => handleToggle('date')}
+                >
+                  {state?.data?.departureDate.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </p>
               </div>
 
               <div className='flex flex-col gap-1'>
                 <label className='title-16-regular text-neutral-3'>
                   Return
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2023-03-01'
-                  type='date'
-                />
+                <p
+                  className={[
+                    'body-14-medium cursor-pointer',
+                    state.isReturnDate ? '' : 'text-primary-purple-4',
+                  ].join(' ')}
+                  onClick={() => handleToggle('date')}
+                >
+                  {state.isOpen.isReturnDate
+                    ? state.data.returnDate
+                      ? state.data.returnDate.toLocaleDateString('id-ID', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })
+                      : 'Pilih Tanggal'
+                    : ''}
+                </p>
               </div>
 
               <DateModal
-                isOpen={isDate}
-                toggleModal={handleDateToggle}
+                isOpen={state?.isOpen.date}
+                toggleModal={() => handleToggle('date')}
               />
             </div>
 
             <Slider
-              isChecked={isCheck}
-              handleClick={() => setIsCheck(!isCheck)}
+              isChecked={state?.isOpen.isReturnDate}
+              handleClick={() => handleToggle('isReturnDate')}
               className='absolute -right-10 -top-1 -translate-x-1/2'
             />
           </div>
@@ -140,34 +146,36 @@ export default function SearchFlight() {
                 <label className='title-16-regular text-neutral-3'>
                   Passengers
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='2 Penumpang'
-                  onFocus={() => setIsPassenger(true)}
-                />
+                <p
+                  className='body-14-medium cursor-pointer'
+                  onClick={() => handleToggle('passenger')}
+                >
+                  {sumDataNumbers(state?.data.passengers)} Penumpang
+                </p>
               </div>
 
               <div className='flex flex-col gap-1'>
                 <label className='title-16-regular text-neutral-3'>
                   Seat Class
                 </label>
-                <input
-                  className='outline-none w-full bg-transparent pb-2 border-b border-neutral-2 text-black'
-                  value='Business'
-                  onFocus={() => setIsSeatClass(true)}
-                />
+                <p
+                  className='body-14-medium cursor-pointer'
+                  onClick={() => handleToggle('passenger')}
+                >
+                  {state?.data.seatClass}
+                </p>
               </div>
             </div>
 
             <PassengersModal
-              toggleModal={handlePassengerToggle}
-              isOpen={isPassenger}
+              toggleModal={() => handleToggle('passenger')}
+              isOpen={state?.isOpen.passenger}
               className='right-4 md:right-[40px] lg:right-[170px] top-[540px]'
             />
 
             <SeatClassModal
-              toggleModal={handleSeatToggle}
-              isOpen={isSeatClass}
+              toggleModal={() => handleToggle('seatClass')}
+              isOpen={state?.isOpen.seatClass}
               className='right-4 md:right-[170px] top-[540px]'
             />
           </div>

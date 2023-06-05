@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Banner />
-      <div className='container -mt-14 relative z-[5px]'>
+      <div className='container -mt-20 relative z-[5px]'>
         <SearchFlight />
       </div>
     </>
