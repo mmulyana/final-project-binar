@@ -9,9 +9,10 @@ const KEY = 'RECENT_SEARCH'
 
 const autoCompletes = ['jakarta', 'surabaya', 'yogyakarta']
 
-function Destination({ toggleModal, dispatch }) {
+function Destination({ toggleModal, dispatch, type }) {
   const [recents, setRecents] = useState([])
   const [search, setSearch] = useState('')
+  const [isAutocomplete, setIsAutocomplete] = useState(false)
 
   useEffect(() => {
     const recenstLocal = localStorage.getItem(KEY)
@@ -20,7 +21,7 @@ function Destination({ toggleModal, dispatch }) {
     }
 
     return () => setRecents([])
-  }, [recents])
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -29,7 +30,29 @@ function Destination({ toggleModal, dispatch }) {
     newRecents.push(search)
     setRecents(newRecents)
 
+    dispatch({
+      type: 'insert',
+      payload: {
+        type,
+        value: search,
+      },
+    })
+
+    dispatch({ type: 'toggle', payload: 'search' })
+
     localStorage.setItem(KEY, JSON.stringify(newRecents))
+  }
+
+  function handleDelRecent(payload) {
+    const newRecents = recents.filter((recent) => recent !== payload)
+    localStorage.setItem(KEY, JSON.stringify(newRecents))
+
+    setRecents(newRecents)
+  }
+
+  function handleRemoveRecent() {
+    localStorage.removeItem(KEY)
+    setRecents([])
   }
 
   return (
@@ -45,6 +68,7 @@ function Destination({ toggleModal, dispatch }) {
                   w={16}
                   className='absolute top-1/2 -translate-y-1/2 left-2 hidden md:block cursor-pointer'
                   onClick={handleSubmit}
+                  alt='search icon'
                 />
                 <form onSubmit={handleSubmit}>
                   <input
@@ -52,51 +76,72 @@ function Destination({ toggleModal, dispatch }) {
                     className='h-10 rounded border border-neutral-3 outline-none px-4 md:px-12 w-full'
                     autoFocus
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                      setSearch(e.target.value)
+                      setIsAutocomplete(true)
+                    }}
                   />
                   <button type='submit' hidden />
                 </form>
               </div>
               <button onClick={toggleModal}>
-                <Image src={IconClose} w={16} h={16} />
+                <Image src={IconClose} w={16} h={16} alt='close button' />
               </button>
             </div>
 
-            <div className='mt-2 px-[22px] py-6 bg-white rounded-xl '>
-              {search !== '' ? (
-                <div className='flex flex-col gap-2'>
-                  {autoCompletes
-                    .filter((item) => item.includes(search.toLowerCase()))
-                    .map((item) => (
-                      <div className='flex items-center py-2 justify-between'>
-                        <p>{item}</p>
-                        <Button>
-                          <Close />
-                        </Button>
-                      </div>
-                    ))}
-                </div>
-              ) : null}
+            {recents.length > 0 || search !== '' ? (
+              <div className='mt-2 px-[22px] py-6 bg-white rounded-xl '>
+                {search !== '' && isAutocomplete ? (
+                  <div className='flex flex-col gap-2'>
+                    {autoCompletes
+                      .filter((item) => item.includes(search.toLowerCase()))
+                      .map((item, index) => (
+                        <div
+                          key={index}
+                          className='flex items-center py-2 justify-between hover:bg-gray-200 px-3 rounded cursor-pointer'
+                          onClick={() => {
+                            setSearch(item)
+                            setIsAutocomplete(false)
+                          }}
+                        >
+                          <p>{item}</p>
+                        </div>
+                      ))}
+                  </div>
+                ) : null}
 
-              {recents.length > 0 && (
-                <div className='flex justify-between items-center mt-2'>
-                  <p className='title-16-medium text-neutral-5'>
-                    Pencarian Terkini
-                  </p>
-                  <Button className='text-alert-danger body-14-medium'>
-                    Hapus
-                  </Button>
-                </div>
-              )}
-              {recents.map((item) => (
-                <div className='flex items-center py-2 justify-between'>
-                  <p>{item}</p>
-                  <Button>
-                    <Close />
-                  </Button>
-                </div>
-              ))}
-            </div>
+                {recents.length > 0 ? (
+                  <div className='flex justify-between items-center mt-2 mb-2'>
+                    <p className='title-16-medium text-neutral-5'>
+                      Pencarian Terkini
+                    </p>
+                    <Button
+                      className='text-alert-danger body-14-medium'
+                      onClick={handleRemoveRecent}
+                    >
+                      Hapus
+                    </Button>
+                  </div>
+                ) : null}
+                {recents.map((item, index) => (
+                  <div
+                    className='flex items-center py-2 justify-between hover:bg-gray-200 px-3 rounded cursor-pointer'
+                    key={index}
+                    onClick={() => setSearch(item)}
+                  >
+                    <p>{item}</p>
+                    <Button
+                      onClick={() => {
+                        handleDelRecent(item)
+                        setIsAutocomplete(false)
+                      }}
+                    >
+                      <Close />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

@@ -18,6 +18,14 @@ export const searchReducer = (state = initialValue, action) => {
           from: tmp,
         },
       }
+    case 'insert':
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.payload.type]: action.payload.value,
+        },
+      }
     default:
       return state
   }
