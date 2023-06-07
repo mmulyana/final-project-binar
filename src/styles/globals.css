@@ -5,6 +5,9 @@
 @tailwind utilities;
 
 @layer components {
+  body {
+    @apply bg-[#F0F1F6];
+  }
   .body-10-regular {
     @apply text-[10px] font-normal leading-[14px];
   }
