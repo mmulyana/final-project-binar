@@ -27,7 +27,7 @@ export default function withModal(WrappedComponent) {
           <WrappedComponent toggleModal={toggleModal} {...props} />
           <div
             onClick={toggleModal}
-            className='fixed top-0 left-0 bg-black/50 h-screen w-full'
+            className='fixed top-0 left-0 bg-black/60 h-screen w-full'
           />
         </div>
       )
