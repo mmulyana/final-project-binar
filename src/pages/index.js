@@ -1,5 +1,7 @@
+import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
+import { flights } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/images/banner.png'
 
@@ -14,13 +16,39 @@ function Home() {
           h={610}
           className='w-full h-full object-cover object-left-bottom md:object-left-top'
         />
-        <div className='absolute bottom-0 left-0 w-full -mb-14 px-4 md:px-0'>
+        <div className='absolute bottom-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0'>
           <div className='max-w-[1200px] mx-auto'>
-
-          <SearchFlight />
+            <SearchFlight />
           </div>
         </div>
       </div>
+
+      {/* section 2 */}
+
+      {/* section 3 */}
+      <section className='bg-white pt-14 pb-20 mt-20'>
+        <div className='container max-w-[1200px] mx-auto'>
+          <h2 className='text-2xl text-[#0E0C25]'>
+            Destinasi internasional yang banyak diminati
+          </h2>
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            {flights.map((flight, index) => (
+              <CardFlight data={flight} key={index} />
+            ))}
+          </div>
+
+          <h2 className='text-2xl text-[#0E0C25] mt-14'>
+            Destinasi Lokal yang banyak diminati
+          </h2>
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            {flights.map((flight, index) => (
+              <CardFlight data={flight} key={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* section 4 */}
     </>
   )
 }

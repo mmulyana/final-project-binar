@@ -77,4 +77,64 @@
   .heading-24-bold {
     @apply text-2xl font-bold leading-9;
   }
+
+  .card-flight {
+    @apply h-[200px] overflow-hidden relative rounded-t-md rounded-b-md shadow-lg text-white;
+  }
+
+  .card-flight__image {
+    @apply w-full h-full -translate-y-0 absolute duration-75 ease-in;
+  }
+
+  .card-flight__layer {
+    @apply absolute z-[3] w-full h-full  bg-gradient-to-t from-[#272222]/60 to-[#272222]/0 top-0 left-0 rounded-lg duration-75;
+  }
+
+  .card-flight__desc {
+    @apply absolute z-[5] bottom-0 left-0 w-full h-[116px] rounded-b-md py-4 px-6;
+  }
+
+  .card-flight__desc-to {
+    @apply text-xl font-semibold duration-75 capitalize;
+  }
+
+  .card-flight__desc-corner {
+    @apply hidden;
+  }
+
+  .card-flight__desc-layer {
+    @apply absolute z-[4] bottom-0 left-0 bg-transparent h-[116px] w-full;
+  }
+
+  .card-flight__desc-below {
+    @apply flex items-end justify-between;
+  }
+
+  .card-flight__desc-top {
+    @apply flex items-center justify-between;
+  }
+
+  .card-flight:hover {
+    @apply text-[#131316];
+  }
+
+  .card-flight:hover .card-flight__desc-layer {
+    @apply bg-white;
+  }
+
+  .card-flight:hover .card-flight__desc-to {
+    @apply ml-2;
+  }
+
+  .card-flight:hover .card-flight__desc-corner {
+    @apply block;
+  }
+
+  .card-flight:hover .card-flight__layer {
+    @apply from-black/0 to-black/0;
+  }
+
+  .card-flight:hover .card-flight__image {
+    @apply -translate-y-10
+  }
 }
