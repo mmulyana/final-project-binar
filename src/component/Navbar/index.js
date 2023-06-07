@@ -1,7 +1,7 @@
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import Button from '../Button'
-const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import Button from "../Button";
+const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
 
 export default function Navbar() {
   return (
@@ -36,14 +36,14 @@ export default function Navbar() {
                   </svg>
                 </Link>
                 <Link
-                  href='/'
-                  className='text-sm text-white px-4 py-2 hover:bg-white/20 rounded'
+                  href="/"
+                  className="text-sm text-white px-4 py-2 hover:bg-white/20 rounded"
                 >
                   Cek Pesanan
                 </Link>
                 <Link
-                  href='/'
-                  className='text-sm text-white px-4 py-2 hover:bg-white/20 rounded'
+                  href="/"
+                  className="text-sm text-white px-4 py-2 hover:bg-white/20 rounded"
                 >
                   Bantuan
                 </Link>
