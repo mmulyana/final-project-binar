@@ -137,4 +137,9 @@
   .card-flight:hover .card-flight__image {
     @apply -translate-y-10
   }
+
+  /* * {
+    @apply border border-red-500;
+  } */
 }
+

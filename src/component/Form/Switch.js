@@ -21,13 +21,13 @@ export default function Switch({
   return (
     <div
       className={[
-        'bg-[#E9E9E9] rounded h-fit flex items-center relative p-1',
+        'bg-[#E9E9E9] rounded h-fit grid grid-cols-2 relative p-1',
         classNameBg !== '' ? classNameBg : null,
       ].join(' ')}
     >
       <div
         className={[
-          'py-3 px-5 text-sm relative rounded z-10 cursor-pointer',
+          'py-2 md:py-3 px-3 md:px-5 text-sm relative rounded z-10 cursor-pointer',
           isOn ? 'bg-white shadow-md' : '',
         ].join(' ')}
         onClick={() => {
@@ -39,7 +39,7 @@ export default function Switch({
       </div>
       <div
         className={[
-          'py-3 px-5 text-sm relative rounded z-10 cursor-pointer',
+          'py-2 md:py-3 px-3 md:px-5 text-sm relative rounded z-10 cursor-pointer',
           !isOn ? 'bg-white shadow-md' : '',
         ].join(' ')}
         onClick={() => {

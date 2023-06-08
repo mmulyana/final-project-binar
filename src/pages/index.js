@@ -4,7 +4,7 @@ import SearchFlight from '@/component/SearchFlight'
 import CardSuggest from '@/component/Card/CardSuggest'
 import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
-import imgBanner from 'public/images/banner-high.jpg'
+import imgBanner from 'public/image/banner-high.jpg'
 
 function Home() {
   return (

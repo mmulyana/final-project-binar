@@ -1,12 +1,15 @@
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import Button from "../Button";
-const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import Button from '../Button'
+import LoginRegisterModal from '../Modal/LoginRegister'
+import { useState } from 'react'
+const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <>
-      <nav className='fixed top-0 left-0 z-50 w-full pt-7'>
+      <nav className='fixed top-0 left-0 z-50 w-screen pt-7'>
         <div className='absolute top-0 left-0 h-full w-full bg-gradient-to-b from-black/40 to-black/0'></div>
         <div className='container max-w-[1200px] px-4 lg:px-0 mx-auto flex items-center justify-between relative z-10 pb-4 border-b border-white/80'>
           <MediaQuery minWidth={786}>
@@ -36,29 +39,32 @@ export default function Navbar() {
                   </svg>
                 </Link>
                 <Link
-                  href="/"
-                  className="text-sm text-white px-4 py-2 hover:bg-white/20 rounded"
+                  href='/'
+                  className='text-sm text-white px-4 py-2 hover:bg-white/20 rounded'
                 >
                   Cek Pesanan
                 </Link>
                 <Link
-                  href="/"
-                  className="text-sm text-white px-4 py-2 hover:bg-white/20 rounded"
+                  href='/'
+                  className='text-sm text-white px-4 py-2 hover:bg-white/20 rounded'
                 >
                   Bantuan
                 </Link>
               </nav>
             </div>
-            <Button className='px-6 py-4 text-[#1E1E1E] font-medium bg-white rounded shadow-sm text-sm'>
+            <Button
+              onClick={() => setIsOpen(true)}
+              className='px-6 py-4 text-[#1E1E1E] font-medium bg-white rounded shadow-sm text-sm'
+            >
               Masuk/Daftar
             </Button>
           </MediaQuery>
-          
+
           <MediaQuery maxWidth={786}>
             <Link href='/' className='text-2xl font-semibold text-white'>
               TrippA
             </Link>
-            
+
             <Button>
               <svg
                 width='24'
@@ -79,6 +85,12 @@ export default function Navbar() {
           </MediaQuery>
         </div>
       </nav>
+
+      <LoginRegisterModal
+        isOpen={isOpen}
+        toggleModal={() => setIsOpen(!isOpen)}
+        zIndex='60'
+      />
     </>
   )
 }
