@@ -10,7 +10,7 @@ import Ic_Plane_Takeoff from 'public/icon/flight_takeoff.svg'
 import Ic_Plane_Land from 'public/icon/flight_land.svg'
 import Ic_Switch from 'public/icon/switch.svg'
 import SuggestionModal from '../Modal/SuggestionModal'
-import Switch from '../Form/Switch/Switch'
+import Switch from '../Form/Switch'
 import DateModal from '../Modal/DateModal'
 
 export default function SearchFlight() {
@@ -32,25 +32,25 @@ export default function SearchFlight() {
           value={state.data.isOneWay}
         />
 
-        <div className='flex items-center gap-10 text-sm mt-10 md:mt-0'>
+        <div className='flex items-start md:items-center flex-col md:flex-row  gap-10 text-sm mt-10 md:mt-0'>
           <div className='flex items-center gap-6'>
-            <div className='flex items-center gap-4'>
-              <Image src={Ic_Passenger} h={24} w={24} />
+            <div className='flex flex-wrap items-center gap-4'>
+              <Image src={Ic_Passenger} h={24} w={24} alt='passenger'/>
               <p>1 Dewasa</p>
               <p>2 Anak</p>
               <p>3 Bayi</p>
             </div>
             <Button>
-              <Image src={Ic_Chevron_Down} h={24} w={24} />
+              <Image src={Ic_Chevron_Down} h={24} w={24} alt='chevron down' />
             </Button>
           </div>
           <div className='flex items-center gap-6'>
             <div className='flex items-center gap-4'>
-              <Image src={Ic_Plane} h={24} w={24} />
+              <Image src={Ic_Plane} h={24} w={24} alt='seat class'/>
               <p>Ekonomi</p>
             </div>
             <Button>
-              <Image src={Ic_Chevron_Down} />
+              <Image src={Ic_Chevron_Down} alt='chevron down'/>
             </Button>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function SearchFlight() {
           <div>
             <p className='text-sm font-medium mb-3'>Terbang dari</p>
             <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
-              <Image src={Ic_Plane_Takeoff} h={24} w={24} />
+              <Image src={Ic_Plane_Takeoff} h={24} w={24} alt='from'/>
               <input
                 onFocus={() => {
                   handleToggle('search')
@@ -79,7 +79,7 @@ export default function SearchFlight() {
                   })
                 }
                 value={state.data.from}
-                className='bg-transparent outline-none'
+                className='bg-transparent outline-none w-full'
               />
             </div>
           </div>
@@ -87,12 +87,12 @@ export default function SearchFlight() {
             onClick={() => dispatch({ type: 'switchDestionation' })}
             className='w-8 h-8 rounded-full flex items-center justify-center absolute left-1/2 top-[70%] -translate-x-1/2 -translate-y-1/2 bg-white z-20 shadow-md'
           >
-            <Image src={Ic_Switch} h={24} w={24} />
+            <Image src={Ic_Switch} h={24} w={24} alt='switch button'/>
           </Button>
           <div>
             <p className='text-sm font-medium mb-3'>Pergi ke</p>
             <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
-              <Image src={Ic_Plane_Land} h={24} w={24} />
+              <Image src={Ic_Plane_Land} h={24} w={24} alt='destination'/>
               <input
                 onFocus={() => {
                   handleToggle('search')
@@ -108,7 +108,7 @@ export default function SearchFlight() {
                   })
                 }
                 value={state.data.to}
-                className='bg-transparent outline-none'
+                className='bg-transparent outline-none w-full'
               />
             </div>
           </div>

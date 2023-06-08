@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import imgCard from 'public/images/card.png'
+import imgCard from 'public/image/card.png'
 
 export default function CardFlight({ data }) {
   return (
@@ -11,6 +11,7 @@ export default function CardFlight({ data }) {
           h={400}
           w={400}
           className='w-full h-full object-cover rounded-b-lg'
+          alt={data.to}
         />
       </div>
       <div className='card-flight__desc'>
