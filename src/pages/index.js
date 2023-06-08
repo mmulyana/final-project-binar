@@ -62,6 +62,33 @@ function Home() {
       </section>
 
       {/* section 4 */}
+
+      <div className='bg-gray-100 pt-16 px-4'>
+        <h1 className='text-center font-semibold text-xl'>Partner Maskapai</h1>
+        <p className='text-center mt-4 text-[#131316]/80 max-w-[600px] mx-auto text-sm'>
+          Kerjasama kami dengan maskapai penerbangan di seluruh dunia
+          memungkinkan kami mengantar Anda ke tujuan impian Anda, tak peduli di
+          mana itu berada!
+        </p>
+
+        <div className='mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]'>
+          <img src='/image/Garuda.svg' alt='Garuda' />
+
+          <img src='/image/LionAir.svg' alt='LionAir' />
+
+          <img src='/image/BatikAir.svg' alt='BatikAir' />
+
+          <img src='/image/AirAsia.svg' alt='AirAsia' />
+        </div>
+
+        <div className='mt-8 md:mt-10 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[100px]'>
+          <img src='/image/Qatar.svg' alt='Qatar' />
+
+          <img src='/image/jal.svg' alt='Japan' />
+
+          <img src='/image/Lufthansa.svg' alt='Lufthansa' />
+        </div>
+      </div>
     </>
   )
 }
