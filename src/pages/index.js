@@ -2,7 +2,7 @@ import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
 import CardSuggest from '@/component/Card/CardSuggest'
-import { flights } from '@/utils/local'
+import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/images/banner.png'
 
@@ -25,12 +25,12 @@ function Home() {
       </div>
 
       {/* section 2 */}
-      <section className="pt-14 pb-14 mt-20">
-        <div className="container max-w-[1200px] mx-auto">
-          <p className="text-2xl ">Yuk jelajahi dunia kembali</p>
+      <section className="pt-14 mt-16">
+        <div className="max-w-[1200px] mx-auto">
+          <p className="text-2xl text-slate-900">Yuk jelajahi dunia kembali</p>
           <p className="text-sm text-[#A5A4A9]">Nikmati petualangan yang menanti di berbagai destinasi.</p>
-          <div className="mt-10">
-            <CardSuggest />
+          <div className="mt-6">
+            <CardSuggest data={suggestDestination}/>
           </div>
         </div>
       </section>
