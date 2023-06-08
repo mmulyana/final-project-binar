@@ -32,7 +32,7 @@ export default function Register() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-[9rem] px-[7rem]">
-          <h2 className="text-2xl mb-4 font-bold">Daftar</h2>
+          <h2 className="text-2xl mb-4 font-bold">Daftar Akun Baru</h2>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="p-1">
               <label className="block mb-2 text-sm font-medium text-gray-700">
