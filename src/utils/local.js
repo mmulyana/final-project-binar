@@ -1,3 +1,8 @@
+import pic1 from 'public/image/picture1.png'
+import pic2 from 'public/image/picture2.png'
+import pic3 from 'public/image/picture3.png'
+import pic4 from 'public/image/picture4.png'
+
 const seatClassData = [
   {
     id: 0,
@@ -79,4 +84,23 @@ const flights = [
   },
 ]
 
-export { seatClassData, suggestions, flights }
+const suggestDestination = [
+  {
+    nation: 'singapura',
+    img: pic1,
+  },
+  {
+    nation: 'korea selatan',
+    img: pic2,
+  },
+  {
+    nation: 'jepang',
+    img: pic3,
+  },
+  {
+    nation: 'swiss',
+    img: pic4,
+  }
+]
+
+export { seatClassData, suggestions, flights, suggestDestination }
