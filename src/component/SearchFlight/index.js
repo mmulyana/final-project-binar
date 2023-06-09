@@ -96,7 +96,7 @@ export default function SearchFlight() {
           </div>
           <Button
             onClick={() => dispatch({ type: 'switchDestionation' })}
-            className='border border-slate-300 md:border-none h-12 w-12 md:w-8 md:h-8 rounded-full flex items-center justify-center absolute left-[90%] md:left-1/2 top-[58%] md:top-[70%] -translate-x-1/2 -translate-y-1/2 bg-white z-20 shadow-none md:shadow-md'
+            className='border border-slate-300 md:border-none h-12 w-12 md:w-8 md:h-8 rounded-full flex items-center justify-center absolute left-[90%] md:left-1/2 top-[58%] md:top-[70%] -translate-x-1/2 -translate-y-1/2 bg-white z-10 shadow-none md:shadow-md'
           >
             <Image src={Ic_Switch} h={24} w={24} alt='switch button' />
           </Button>
@@ -182,7 +182,7 @@ export default function SearchFlight() {
                 {!state.data.isOneWay && (
                   <Image
                     src='/icon/calendar.svg'
-                    alt='departured date'
+                    alt='return date'
                     height={20}
                     width={20}
                     className='absolute right-4 top-1/2 -translate-y-1/2'

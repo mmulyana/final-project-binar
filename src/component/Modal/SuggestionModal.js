@@ -46,7 +46,7 @@ export default function SuggestionModal({
         <div className='flex items-center justify-between px-4 py-3 mb-2 border-b border-gray-300'>
           <p>Pilih Kota atau bandara populer</p>
           <Button onClick={toggleModal}>
-            <Image src={Ic_Close} h={24} w={24} />
+            <Image src={Ic_Close} h={24} w={24} alt='close modal button'/>
           </Button>
         </div>
         <div className='flex flex-col gap-1 px-4'>
