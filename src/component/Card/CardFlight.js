@@ -9,8 +9,8 @@ export default function CardFlight({ data }) {
       <div className='card-flight__image'>
         <Image
           src={imgCard}
-          h={1000}
-          w={1000}
+          h={400}
+          w={400}
           className='w-full h-full object-cover rounded-b-lg'
           alt={data.to}
         />

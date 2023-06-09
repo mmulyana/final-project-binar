@@ -29,7 +29,6 @@ export default function SuggestionModal({
   }, [isOpen, toggleModal, handleKeyDown])
 
   const handleClick = (value) => {
-    console.log(value)
     dispatch({
       type: 'onchange',
       payload: {
