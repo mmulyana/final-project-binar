@@ -1,36 +1,95 @@
+import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
+import CardSuggest from '@/component/Card/CardSuggest'
+import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
-import imgBanner from 'public/images/banner.png'
+import imgBanner from 'public/image/banner-high.jpg'
 
 function Home() {
   return (
     <>
-      <Banner />
-      <div className='container -mt-20 relative z-[5px]'>
-        <SearchFlight />
+      <div className='w-full h-[610px] relative'>
+        <Image
+          src={imgBanner}
+          alt='banner'
+          width={1440}
+          height={880}
+          className='w-full h-full object-cover object-left-bottom md:object-center'
+          priority
+        />
+        <div className='absolute bottom-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0'>
+          <div className='max-w-[1200px] mx-auto'>
+            <SearchFlight />
+          </div>
+        </div>
+      </div>
+
+      {/* section 2 */}
+      <section className='pt-14 mt-16'>
+        <div className='max-w-[1200px] mx-auto'>
+          <p className='text-2xl text-slate-900'>Yuk jelajahi dunia kembali</p>
+          <p className='text-sm text-[#A5A4A9]'>
+            Nikmati petualangan yang menanti di berbagai destinasi.
+          </p>
+          <div className='mt-6'>
+            <CardSuggest data={suggestDestination} />
+          </div>
+        </div>
+      </section>
+
+      {/* section 3 */}
+      <section className='bg-white pt-14 pb-20 mt-20'>
+        <div className='max-w-[1200px] mx-auto'>
+          <h2 className='text-2xl text-[#0E0C25]'>
+            Destinasi internasional yang banyak diminati
+          </h2>
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            {flights.map((flight, index) => (
+              <CardFlight data={flight} key={index} />
+            ))}
+          </div>
+
+          <h2 className='text-2xl text-[#0E0C25] mt-14'>
+            Destinasi Lokal yang banyak diminati
+          </h2>
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            {flights.map((flight, index) => (
+              <CardFlight data={flight} key={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* section 4 */}
+
+      <div className='bg-gray-100 pt-16 px-4'>
+        <h1 className='text-center font-semibold text-xl'>Partner Maskapai</h1>
+        <p className='text-center mt-4 text-[#131316]/80 max-w-[600px] mx-auto text-sm'>
+          Kerjasama kami dengan maskapai penerbangan di seluruh dunia
+          memungkinkan kami mengantar Anda ke tujuan impian Anda, tak peduli di
+          mana itu berada!
+        </p>
+
+        <div className='mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]'>
+          <img src='/image/Garuda.svg' alt='Garuda' />
+
+          <img src='/image/LionAir.svg' alt='LionAir' />
+
+          <img src='/image/BatikAir.svg' alt='BatikAir' />
+
+          <img src='/image/AirAsia.svg' alt='AirAsia' />
+        </div>
+
+        <div className='mt-8 md:mt-10 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[100px]'>
+          <img src='/image/Qatar.svg' alt='Qatar' />
+
+          <img src='/image/jal.svg' alt='Japan' />
+
+          <img src='/image/Lufthansa.svg' alt='Lufthansa' />
+        </div>
       </div>
     </>
-  )
-}
-
-function Banner() {
-  return (
-    <div className='relative w-full'>
-      <div className='h-[150px] w-full bg-primary-purple-4/50 mt-28 md:mt-[148px]'></div>
-      <div className='h-[232px] w-[1210px] max-w-full rounded-none md:rounded-[20px] bg-primary-cream-3 mx-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 md:px-8 lg:px-16 overflow-hidden'>
-        <div className='relative z-[11]'>
-          <h3 className='font-extrabold italic text-4xl'>Diskon Hari ini</h3>
-          <p className='text-4xl text-primary-purple-4 font-extrabold italic'>
-            85%!
-          </p>
-        </div>
-        <div className='bg-gradient-to-l from-primary-cream-3/0 to-primary-cream-3 absolute top-0 right-0 w-[761px] h-full z-10' />
-        <div className='w-[760px] h-full absolute right-0 top-0 bg-gray-50'>
-          <Image src={imgBanner} h={232} w={760} priority alt='banner' />
-        </div>
-      </div>
-    </div>
   )
 }
 

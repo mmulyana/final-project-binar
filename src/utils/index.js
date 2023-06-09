@@ -10,32 +10,37 @@ function sumDataNumbers(object) {
   return sum
 }
 
-function formatDate(dateString) {
-    let date = dateString.split('-')
-    let year = date[0]
-    let month = date[1]
-    let day = date[2]
-  
-    let months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-  
-    let monthName = months[parseInt(month) - 1]
-  
-    let formattedDate = `${monthName} ${day}, ${year}`
-    return formattedDate
-  }
-  
+function formatDate(date) {
+  let year = date.getFullYear()
+  let month = date.getMonth()
+  let day = date.getDate()
 
-export { sumDataNumbers, formatDate }
+  let months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+
+  let monthName = months[parseInt(month) - 1]
+
+  let formattedDate = `${monthName} ${day}, ${year}`
+  return formattedDate
+}
+
+function changeToRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  }).format(number)
+}
+
+export { sumDataNumbers, formatDate, changeToRupiah }

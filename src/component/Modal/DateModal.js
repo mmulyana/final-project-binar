@@ -1,29 +1,75 @@
-import React, { useEffect, useRef, useState } from 'react'
-import withModal from './withModal'
+import React, { useEffect, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
+import Button from '../Button'
 
-function Dates({ isSingle = false, toggleModal }) {
+export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
   const [selected, setSelected] = useState(new Date())
 
-  return (
-    <div className='relative max-w-[968px] mx-auto h-full'>
-      <div className='absolute top-[540px] left-1/2 -translate-x-1/2 z-50 w-full'>
-        <div className='max-w-[635px] h-fit bg-white mx-auto rounded-2xl pt-4 pb-1'>
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      toggleModal()
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+    } else {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, toggleModal, handleKeyDown])
+
+  useEffect(() => {
+    setSelected(new Date())
+  }, [isOneWay])
+
+  function handleClick() {
+    dispatch({
+      type: 'onchange',
+      payload: {
+        type: 'departureDate',
+        value: isOneWay ? selected : selected.from,
+      },
+    })
+
+    if (!isOneWay) {
+      dispatch({
+        type: 'onchange',
+        payload: {
+          type: 'returnDate',
+          value: selected.to,
+        },
+      })
+    }
+
+    dispatch({ type: 'toggle', payload: 'date' })
+  }
+
+  if (isOpen) {
+    return (
+      <div className='absolute top-28 left-1/2 -translate-x-1/2 w-full'>
+        <div className='w-fit h-fit bg-white rounded pt-1 pb-3 mx-auto shadow-lg shadow-slate-300/50'>
           <DayPicker
             selected={selected}
             onSelect={setSelected}
-            numberOfMonths={isSingle ? 1 : 2}
+            numberOfMonths={isOneWay ? 1 : 2}
             pagedNavigation
-            mode={isSingle ? 'single' : 'range'}
-            modifiersClassNames={{
-              selected: 'my-selected',
-            }}
+            mode={isOneWay ? 'single' : 'range'}
           />
+          <div className='flex justify-end px-4 mt-2 w-full'>
+            <Button
+              onClick={handleClick}
+              className='px-4 py-2 rounded bg-gray-100 text-[#4642FF] font-medium hover:bg-gray-200 duration-75 ease-in'
+            >
+              Simpan
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
-
-const DateModal = withModal(Dates)
-export default DateModal

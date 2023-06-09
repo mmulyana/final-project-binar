@@ -8,7 +8,15 @@ export const searchReducer = (state = initialValue, action) => {
           [action.payload]: !state.isOpen[action.payload],
         },
       }
-    case 'reverseDestination':
+    case 'onchangeIsOpen':
+      return {
+        ...state,
+        isOpen: {
+          ...state.isOpen,
+          [action.payload.type]: action.payload.value,
+        },
+      }
+    case 'switchDestionation':
       let tmp = state.data.to
       return {
         ...state,
@@ -18,7 +26,7 @@ export const searchReducer = (state = initialValue, action) => {
           from: tmp,
         },
       }
-    case 'insert':
+    case 'onchange':
       return {
         ...state,
         data: {
@@ -50,5 +58,6 @@ export const initialValue = {
       baby: 0,
     },
     seatClass: 'Bussines',
+    isOneWay: true,
   },
 }
