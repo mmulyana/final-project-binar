@@ -50,7 +50,7 @@ export const initialValue = {
   data: {
     from: 'Jakarta',
     to: 'Melbourne',
-    departureDate: new Date(),
+    departureDate: '',
     returnDate: '',
     passengers: {
       adult: 1,

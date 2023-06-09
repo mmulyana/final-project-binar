@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
 import { initialValue, searchReducer } from './reducer'
@@ -28,6 +28,13 @@ export default function SearchFlight() {
   const sumPassenger = useMemo(() => {
     return Object.values(state.data.passengers).reduce((acc, obj) => acc + obj, 0)
   }, [state.data.passengers])
+
+  useEffect(() => {
+    dispatch({type: 'onchange', payload: {
+      type: 'departureDate',
+      value: new Date()
+    }})
+  }, [])
 
   return (
     <div className='bg-white rounded-xl w-full h-fit mx-auto mt-20 shadow-high relative z-20 pb-2'>
@@ -145,11 +152,11 @@ export default function SearchFlight() {
                   className='text-slate-900'
                   onClick={() => handleToggle('date')}
                 >
-                  {state.data.departureDate.toLocaleDateString('id-ID', {
+                  {state.data.departureDate !== '' ? state.data.departureDate.toLocaleDateString('id-ID', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric',
-                  })}
+                  }) : null}
 
                   <Image
                     src='/icon/calendar.svg'
