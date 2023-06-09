@@ -124,7 +124,7 @@ export default function SearchFlight() {
                   dispatch({
                     type: 'onchange',
                     payload: {
-                      type: 'from',
+                      type: 'to',
                       value: e.target.value,
                     },
                   })
