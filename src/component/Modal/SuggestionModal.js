@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Ic_Close from 'public/icon/close.svg'
 import Image from 'next/image'
 import Button from '../Button'
@@ -46,7 +46,7 @@ export default function SuggestionModal({
         <div className='flex items-center justify-between px-4 py-3 mb-2 border-b border-gray-300'>
           <p>Pilih Kota atau bandara populer</p>
           <Button onClick={toggleModal}>
-            <Image src={Ic_Close} h={24} w={24} />
+            <Image src={Ic_Close} h={24} w={24} alt='close modal button'/>
           </Button>
         </div>
         <div className='flex flex-col gap-1 px-4'>
@@ -55,9 +55,9 @@ export default function SuggestionModal({
               key={index}
               className='px-4 py-2 rounded hover:bg-gray-100 text-gray-900'
             >
-              <Button onClick={() => handleClick(item.city)}>
+              <button onClick={() => handleClick(item.city)}>
                 {item.city}, {item.nation}
-              </Button>
+              </button>
             </div>
           ))}
         </div>

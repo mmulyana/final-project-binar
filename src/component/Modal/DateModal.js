@@ -11,6 +11,22 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
     }
   }
 
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+    } else {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, toggleModal, handleKeyDown])
+
+  useEffect(() => {
+    setSelected(new Date())
+  }, [isOneWay])
+
   function handleClick() {
     dispatch({
       type: 'onchange',
@@ -33,18 +49,6 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
     dispatch({ type: 'toggle', payload: 'date' })
   }
 
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown)
-    } else {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isOpen, toggleModal, handleKeyDown])
-
   if (isOpen) {
     return (
       <div className='absolute top-28 left-1/2 -translate-x-1/2 w-full'>
@@ -55,14 +59,11 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
             numberOfMonths={isOneWay ? 1 : 2}
             pagedNavigation
             mode={isOneWay ? 'single' : 'range'}
-            modifiersClassNames={{
-              selected: 'my-selected',
-            }}
           />
           <div className='flex justify-end px-4 mt-2 w-full'>
             <Button
               onClick={handleClick}
-              className='px-4 py-2 rounded bg-[#4642FF] text-white text-sm font-medium'
+              className='px-4 py-2 rounded bg-gray-100 text-[#4642FF] font-medium hover:bg-gray-200 duration-75 ease-in'
             >
               Simpan
             </Button>

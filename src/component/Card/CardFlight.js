@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import imgCard from 'public/image/card.png'
+import { changeToRupiah } from '@/utils'
 
 export default function CardFlight({ data }) {
   return (
@@ -46,10 +47,10 @@ export default function CardFlight({ data }) {
           </p>
         </div>
         <div className='card-flight__desc-below'>
-          <p className='text-sm'>{data.airline}</p>
+          <p className='text-sm capitalize'>{data.airline}</p>
           <div>
             <p className='opacity-80 text-xs'>mulai dari</p>
-            <p>Rp {data.price}</p>
+            <p className='text-medium'>{changeToRupiah(data.price).slice(0,-3)}</p>
           </div>
         </div>
       </div>

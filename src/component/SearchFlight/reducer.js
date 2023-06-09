@@ -8,6 +8,14 @@ export const searchReducer = (state = initialValue, action) => {
           [action.payload]: !state.isOpen[action.payload],
         },
       }
+    case 'onchangeIsOpen':
+      return {
+        ...state,
+        isOpen: {
+          ...state.isOpen,
+          [action.payload.type]: action.payload.value,
+        },
+      }
     case 'switchDestionation':
       let tmp = state.data.to
       return {
@@ -42,14 +50,14 @@ export const initialValue = {
   data: {
     from: 'Jakarta',
     to: 'Melbourne',
-    departureDate: new Date(),
+    departureDate: '',
     returnDate: '',
     passengers: {
       adult: 1,
-      kids: 0,
+      kid: 0,
       baby: 0,
     },
-    seatClass: 'Bussines',
+    seatClass: 'Ekonomi',
     isOneWay: true,
   },
 }

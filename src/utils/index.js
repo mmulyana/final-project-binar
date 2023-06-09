@@ -36,4 +36,11 @@ function formatDate(date) {
   return formattedDate
 }
 
-export { sumDataNumbers, formatDate }
+function changeToRupiah(number) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  }).format(number)
+}
+
+export { sumDataNumbers, formatDate, changeToRupiah }
