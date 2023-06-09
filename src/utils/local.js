@@ -6,26 +6,22 @@ import pic4 from 'public/image/picture4.png'
 const seatClassData = [
   {
     id: 0,
-    name: 'economy',
-    price: 4950000,
+    name: 'Ekonomi',
     isSelected: true,
   },
   {
     id: 1,
-    name: 'premium economy',
-    price: 7550000,
+    name: 'Ekonomi Premium',
     isSelected: false,
   },
   {
     id: 2,
-    name: 'business',
-    price: 29220000,
+    name: 'Bisnis',
     isSelected: false,
   },
   {
     id: 3,
-    name: 'first class',
-    price: 87620000,
+    name: 'First',
     isSelected: false,
   },
 ]

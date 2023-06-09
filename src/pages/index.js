@@ -9,16 +9,16 @@ import imgBanner from 'public/image/banner-high.jpg'
 function Home() {
   return (
     <>
-      <div className='w-full h-[610px] relative'>
+      <div className='w-full h-[610px] relative mb-56 md:mb-0 z-10'>
         <Image
           src={imgBanner}
           alt='banner'
           width={1440}
           height={880}
-          className='w-full h-full object-cover object-left-bottom md:object-center'
+          className='w-full h-[300px] md:h-full object-cover object-left-bottom md:object-center'
           priority
         />
-        <div className='absolute bottom-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0'>
+        <div className='absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0'>
           <div className='max-w-[1200px] mx-auto'>
             <SearchFlight />
           </div>
@@ -26,7 +26,7 @@ function Home() {
       </div>
 
       {/* section 2 */}
-      <section className='pt-14 mt-16'>
+      <section className='pt-14 mt-16 px-4 md:px-0'>
         <div className='max-w-[1200px] mx-auto'>
           <p className='text-2xl text-slate-900'>Yuk jelajahi dunia kembali</p>
           <p className='text-sm text-[#A5A4A9]'>
@@ -39,7 +39,7 @@ function Home() {
       </section>
 
       {/* section 3 */}
-      <section className='bg-white pt-14 pb-20 mt-20'>
+      <section className='bg-white pt-14 pb-20 mt-20 px-4 md:px-0'>
         <div className='max-w-[1200px] mx-auto'>
           <h2 className='text-2xl text-[#0E0C25]'>
             Destinasi internasional yang banyak diminati

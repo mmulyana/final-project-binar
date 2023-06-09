@@ -6,16 +6,16 @@ export default function CardSuggest({ data }) {
       {data.map((suggest, index) => (
         <div
           key={index}
-          className='grid grid-cols-2 md:grid-cols-[160px_1fr] gap-6 rounded-lg h-[104px] items-center relative rounded-t-md rounded-b-md bg-white hover:shadow-sm'
+          className='md:grid grid-cols-2 md:grid-cols-[160px_1fr] gap-6 rounded-lg h-[104px] items-center relative rounded-t-md rounded-b-md bg-white hover:shadow-sm flex '
         >
           <Image
             src={suggest.img}
-            height={104}
+            height={160}
             width={160}
             className='h-full rounded-l-md object-cover'
             alt={suggest.nation}
           />
-          <h5 className='text-base md:text-lg font-medium text-slate-800'>
+          <h5 className='text-base capitalize md:text-lg text-slate-600'>
             {suggest.nation}
           </h5>
         </div>

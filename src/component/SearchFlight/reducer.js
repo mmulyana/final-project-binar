@@ -54,10 +54,10 @@ export const initialValue = {
     returnDate: '',
     passengers: {
       adult: 1,
-      kids: 0,
+      kid: 0,
       baby: 0,
     },
-    seatClass: 'Bussines',
+    seatClass: 'Ekonomi',
     isOneWay: true,
   },
 }

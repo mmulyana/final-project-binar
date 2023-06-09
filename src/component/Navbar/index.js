@@ -9,7 +9,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <>
-      <nav className='fixed top-0 left-0 z-50 w-full pt-7'>
+      <nav className='fixed top-0 left-0 z-50 w-full pt-4'>
         <div className='absolute top-0 left-0 h-full w-full bg-gradient-to-b from-black/40 to-black/0'></div>
         <div className='container max-w-[1200px] px-4 lg:px-0 mx-auto flex items-center justify-between relative z-10 pb-4 border-b border-white/80'>
           <MediaQuery minWidth={786}>

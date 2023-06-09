@@ -21,14 +21,14 @@ export default function Switch({
   return (
     <div
       className={[
-        'rounded h-fit grid grid-cols-2 relative gap-2',
+        'rounded h-fit grid grid-cols-2 relative gap-2 w-full md:w-fit',
         classNameBg !== '' ? classNameBg : null,
       ].join(' ')}
     >
       <div
         className={[
-          'py-2 md:py-3 px-3 md:px-5 text-sm relative cursor-pointer border-b-[4px]',
-          isOn ? 'bg-white border-blue-600' : 'text-slate-500 border-transparent',
+          'py-2 md:py-3 px-3 md:px-5 text-sm relative cursor-pointer border-b-[4px] text-center',
+          isOn ? 'border-blue-600 text-slate-800 bg-gray-100/60 md:bg-transparent' : 'text-slate-500 border-transparent',
         ].join(' ')}
         onClick={() => {
           handleClick(true)
@@ -39,8 +39,8 @@ export default function Switch({
       </div>
       <div
         className={[
-          'py-2 md:py-3 px-3 md:px-5 text-sm relative cursor-pointer border-b-[4px]',
-          !isOn ? 'bg-white border-blue-600' : 'text-slate-500 border-transparent',
+          'py-2 md:py-3 px-3 md:px-5 text-sm relative cursor-pointer border-b-[4px] text-center',
+          !isOn ? 'border-blue-600 text-slate-800 bg-gray-100/60 md:bg-transparent' : 'text-slate-500 border-transparent',
         ].join(' ')}
         onClick={() => {
           handleClick(false)

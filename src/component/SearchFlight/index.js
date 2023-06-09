@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useMemo, useReducer, useState } from 'react'
 import Image from 'next/image'
 import Button from '../Button'
 import { initialValue, searchReducer } from './reducer'
@@ -21,10 +21,18 @@ export default function SearchFlight() {
     dispatch({ type: 'toggle', payload })
   }
 
+  function handleSearch() {
+    console.log(state.data)
+  }
+
+  const sumPassenger = useMemo(() => {
+    return Object.values(state.data.passengers).reduce((acc, obj) => acc + obj, 0)
+  }, [state.data.passengers])
+
   return (
     <div className='bg-white rounded-xl w-full h-fit mx-auto mt-20 shadow-high relative z-20 pb-2'>
       {/* top */}
-      <div className='w-full h-fit pt-5 flex items-start md:items-center justify-between flex-col md:flex-row px-6 border-b border-gray-200'>
+      <div className='w-full h-fit pt-5 flex items-center md:items-center justify-between flex-col md:flex-row px-6 border-b border-gray-200'>
         <Switch
           dispatch={dispatch}
           leftText='Sekali jalan'
@@ -39,7 +47,7 @@ export default function SearchFlight() {
           >
             <Image src={Ic_Passenger} h={24} w={24} alt='passenger' />
             <p className='font-semibold text-slate-800'>
-              1 <span className='font-normal'>Penumpang,</span> Ekonomi
+              {sumPassenger} <span className='font-normal'>Penumpang,</span> {state.data.seatClass}
             </p>
           </div>
           <Button
@@ -51,6 +59,7 @@ export default function SearchFlight() {
             isOpen={state?.isOpen.passenger}
             toggleModal={() => handleToggle('passenger')}
             dispatch={dispatch}
+            state={state}
           />
         </div>
       </div>
@@ -87,11 +96,11 @@ export default function SearchFlight() {
           </div>
           <Button
             onClick={() => dispatch({ type: 'switchDestionation' })}
-            className='w-8 h-8 rounded-full flex items-center justify-center absolute left-1/2 top-[70%] -translate-x-1/2 -translate-y-1/2 bg-white z-20 shadow-md'
+            className='border border-slate-300 md:border-none h-12 w-12 md:w-8 md:h-8 rounded-full flex items-center justify-center absolute left-[90%] md:left-1/2 top-[58%] md:top-[70%] -translate-x-1/2 -translate-y-1/2 bg-white z-20 shadow-none md:shadow-md'
           >
             <Image src={Ic_Switch} h={24} w={24} alt='switch button' />
           </Button>
-          <div>
+          <div className='mt-5 md:mt-0'>
             <p className='text-sm font-medium mb-3'>Pergi ke</p>
             <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
               <Image src={Ic_Plane_Land} h={24} w={24} alt='destination' />
@@ -141,6 +150,14 @@ export default function SearchFlight() {
                     month: 'long',
                     year: 'numeric',
                   })}
+
+                  <Image
+                    src='/icon/calendar.svg'
+                    alt='departured date'
+                    height={20}
+                    width={20}
+                    className='absolute right-4 top-1/2 -translate-y-1/2'
+                  />
                 </Button>
               </div>
             </div>
@@ -161,6 +178,16 @@ export default function SearchFlight() {
                       : 'Pilih Tanggal'}
                   </Button>
                 ) : null}
+
+                {!state.data.isOneWay && (
+                  <Image
+                    src='/icon/calendar.svg'
+                    alt='departured date'
+                    height={20}
+                    width={20}
+                    className='absolute right-4 top-1/2 -translate-y-1/2'
+                  />
+                )}
               </div>
             </div>
 
@@ -171,8 +198,18 @@ export default function SearchFlight() {
               dispatch={dispatch}
             />
           </div>
-          <Button className='block h-[59px] rounded bg-[#4642FF] text-white font-semibold shadow shadow-[#4642FF]/20'>
+          <Button
+            onClick={handleSearch}
+            className='h-14 rounded bg-[#4642FF] text-white font-medium shadow shadow-[#4642FF]/20 text-sm flex items-center justify-center gap-2'
+          >
             Cari Tiket
+            <Image
+              src='/icon/search-md-white.svg'
+              as='image'
+              alt='search ticket icon'
+              height={16}
+              width={16}
+            />
           </Button>
         </div>
       </div>
