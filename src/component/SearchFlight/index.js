@@ -12,10 +12,12 @@ import SuggestionModal from '../Modal/SuggestionModal'
 import Switch from '../Form/SwitchFlight'
 import DateModal from '../Modal/DateModal'
 import PassengerModal from '../Modal/PassengerModal'
+import { useRouter } from 'next/router'
 
 export default function SearchFlight() {
   const [state, dispatch] = useReducer(searchReducer, initialValue)
   const [searchType, setSearchType] = useState('')
+  const router = useRouter()
 
   function handleToggle(payload) {
     dispatch({ type: 'toggle', payload })
@@ -23,6 +25,7 @@ export default function SearchFlight() {
 
   function handleSearch() {
     console.log(state.data)
+    router.push(`/result?departure=${state.data.from}&destination=${state.data.to}&departureDate=${state.data.departureDate.getDate()}`)
   }
 
   const sumPassenger = useMemo(() => {
