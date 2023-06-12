@@ -1,13 +1,13 @@
 import React from 'react'
+import { DarkNavbar } from '../Navbar'
 import Footer from '../Footer'
-import { Navbar } from '../Navbar';
 
 export default function DefaultLayout({ children }) {
   return (
     <>
-      <Navbar />
-      {children}
+      <DarkNavbar />
+      <main className='pb-[120px]'>{children}</main>
       <Footer />
     </>
-  );
+  )
 }
