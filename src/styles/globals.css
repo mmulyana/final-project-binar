@@ -150,6 +150,13 @@
     @apply border-[#4642FF];
   }
 
+  .ticket__divider {
+    @apply border-[#DFDEE2];
+  }
+  .ticket:hover .ticket__divider {
+    @apply border-[#4642FF];
+  }
+
   /* * {
     @apply border border-red-500;
   } */

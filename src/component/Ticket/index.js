@@ -52,7 +52,7 @@ export default function Ticket({ data }) {
         <div className='hidden md:block absolute -left-[10px] -top-[18px] w-5 h-4 bg-[#F0F1F6]' />
         <div className='absolute -left-[10px] -bottom-[10px] w-5 h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
         <div className='hidden md:block absolute -left-[10px] -bottom-[18px] w-5 h-4 bg-[#F0F1F6]' />
-        <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-0 w-[60%] border border-dashed rotate-90 border-[#DFDEE2]'></hr>
+        <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-0 w-[60%] border border-dashed rotate-90 ticket__divider'></hr>
 
         <div className='h-full grow flex flex-col items-end justify-center '>
           <p className='text-xl font-medium'>Rp 1.400.000</p>
