@@ -47,18 +47,20 @@ export default function Ticket({ data }) {
           </div>
         </div>
       </div>
-      <div className='relative p-5 flex flex-col w-[calc(100%-24px)]'>
-        <div className='absolute -left-[10px] -top-[10px] w-5 h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
-        <div className='hidden md:block absolute -left-[10px] -top-[18px] w-5 h-4 bg-[#F0F1F6]' />
-        <div className='absolute -left-[10px] -bottom-[10px] w-5 h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
-        <div className='hidden md:block absolute -left-[10px] -bottom-[18px] w-5 h-4 bg-[#F0F1F6]' />
-        <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-0 w-[60%] border border-dashed rotate-90 ticket__divider'></hr>
+      <div className='relative p-5 flex flex-row md:flex-col w-full items-center justify-between md:w-[calc(100%-24px)]'>
+        <div className='absolute left-[calc(100%-16px)] md:-left-[10px] -top-[16px] md:-top-[10px] w-8 md:w-5 h-8 md:h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
+        <div className='absolute left-[calc(100%+2px)] md:-left-[10px] -top-[16px] md:-top-[18px] w-5 h-8 md:h-4 bg-[#F0F1F6]' />
 
-        <div className='h-full grow flex flex-col items-end justify-center '>
+        <div className='absolute -left-[16px] md:-left-[10px] bottom-[calc(100%-16px)] md:-bottom-[10px] w-8 md:w-5 h-8 md:h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
+        <div className='absolute -left-[22px] md:-left-[10px] bottom-[calc(100%-16px)] md:-bottom-[18px] w-5 h-8 md:h-4 bg-[#F0F1F6]' />
+
+        <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-0 md:top-1/2 left-1/2 md:left-0 w-[90%] md:w-[60%] border border-dashed rotate-0 md:rotate-90 ticket__divider'></hr>
+
+        <div className='h-full w-full md:grow flex flex-col items-start md:items-end justify-center'>
           <p className='text-xl font-medium'>Rp 1.400.000</p>
-          <p className='text-xs text-slate-300 mt-2'>per orang</p>
+          <p className='text-xs text-slate-300 mt-1 md:mt-2'>per orang</p>
         </div>
-        <Button className='py-2 w-full bg-[#EFF0F3] hover:bg-[#4642FF] text-[#4642FF] hover:text-white rounded'>
+        <Button className='px-12 py-3 md:py-2 md:w-full bg-[#EFF0F3] hover:bg-[#4642FF] text-[#4642FF] hover:text-white rounded text-sm md:text-base font-medium'>
           Pilih
         </Button>
       </div>
