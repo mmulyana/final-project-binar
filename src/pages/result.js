@@ -1,6 +1,7 @@
 import TimeFilterCollapsible from '@/component/Collapsible/TimeFilterCollapsible'
 import TransitFilterCollapsible from '@/component/Collapsible/TransitFilterCollapsible'
 import { SecondaryLayout } from '@/component/Layout'
+import Ticket from '@/component/Ticket'
 import React from 'react'
 
 function Result() {
@@ -22,11 +23,10 @@ function Result() {
           </div>
         </div>
         <div className='h-20 border border-gray-100'>
-          <div className='grid grid-cols-3 gap-6'>
-            {/* filter ticket */}
-          </div>
+          <div className='grid grid-cols-3 gap-6'>{/* filter ticket */}</div>
           <div className='flex flex-col gap-6'>
             {/* ticket */}
+            <Ticket />
           </div>
         </div>
       </div>
