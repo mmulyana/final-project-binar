@@ -6,7 +6,7 @@ export default function DefaultLayout({ children }) {
   return (
     <>
       <DarkNavbar />
-      <main className='pb-[120px]'>{children}</main>
+      {children}
       <Footer />
     </>
   )
