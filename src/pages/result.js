@@ -6,11 +6,20 @@ import Image from 'next/image'
 import Flight from 'public/image/flight.svg'
 import Ic_Switch from 'public/icon/switch.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
-import Ellipse from 'public/icon/ellipse.svg'
 import Ticket from '@/component/Ticket'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 function Result() {
+  const router = useRouter()
+  const [query, setQuery] = useState(null)
+
+  useEffect(() => {
+    setQuery(router.query)
+  }, [router])
+
+  console.log(query)
+
   return (
     <>
       <div className='h-fit md:h-[264px] w-full bg-white pt-[84px]'>
@@ -26,7 +35,7 @@ function Result() {
                 </p>
                 <div className='flex flex-row my-2 flex-wrap'>
                   <p className='text-base md:text-2xl text-medium text-[#131316]'>
-                    Jakarta
+                    {query?.departure}
                   </p>{' '}
                   <Image
                     className='mx-3'
@@ -36,7 +45,7 @@ function Result() {
                     alt='switch icon'
                   />
                   <p className='text-base md:text-2xl text-medium text-[#131316]'>
-                    Yogyakarta
+                    {query?.destination}
                   </p>{' '}
                 </div>
                 <div className='flex flex-wrap gap-4'>
@@ -48,16 +57,20 @@ function Result() {
                       alt='calendar icon'
                     />
                     <p className='text-[#131316]/80 text-xs md:text-base'>
-                      8 Juni - 4 Juli 2023
+                      {query?.departureDate} {query?.type == 0 ? `- ${query?.returnDate}` : null}
                     </p>
                   </div>
                   <div className='flex gap-2 items-center'>
                     <div className='bg-[#CACBCF] rounded-full w-2 h-2'></div>
-                    <p className='text-[#131316]/80 text-sm md:text-base'>5 Penumpang</p>
+                    <p className='text-[#131316]/80 text-sm md:text-base'>
+                      {query?.adult} Penumpang
+                    </p>
                   </div>
                   <div className='flex gap-2 items-center'>
                     <div className='bg-[#CACBCF] rounded-full w-2 h-2'></div>
-                    <p className='text-[#131316]/80 text-sm md:text-base'>Ekonomi</p>
+                    <p className='text-[#131316]/80 text-sm md:text-base'>
+                      {query?.class}
+                    </p>
                   </div>
                 </div>
               </div>
