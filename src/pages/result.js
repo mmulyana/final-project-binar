@@ -18,8 +18,6 @@ function Result() {
     setQuery(router.query)
   }, [router])
 
-  console.log(query)
-
   return (
     <>
       <div className='h-fit md:h-[264px] w-full bg-white pt-[84px]'>
