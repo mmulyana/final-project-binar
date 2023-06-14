@@ -7,12 +7,15 @@ import Flight from 'public/image/flight.svg'
 import Ic_Switch from 'public/icon/switch.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
 import Ticket from '@/component/Ticket'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+import { filterTicketByPriceAndTime } from '@/utils/local'
+import { SelectFilter } from '@/component/Select'
 
 function Result() {
   const router = useRouter()
   const [query, setQuery] = useState(null)
+  const [filterClasses, setFilterClasses] = useState(filterTicketByPriceAndTime)
 
   useEffect(() => {
     setQuery(router.query)
@@ -55,7 +58,8 @@ function Result() {
                       alt='calendar icon'
                     />
                     <p className='text-[#131316]/80 text-xs md:text-base'>
-                      {query?.departureDate} {query?.type == 0 ? `- ${query?.returnDate}` : null}
+                      {query?.departureDate}{' '}
+                      {query?.type == 0 ? `- ${query?.returnDate}` : null}
                     </p>
                   </div>
                   <div className='flex gap-2 items-center'>
@@ -94,7 +98,12 @@ function Result() {
           </div>
         </div>
         <div className='h-fit'>
-          <div className='grid grid-cols-3 gap-6'>{/* filter ticket */}</div>
+          <div className='grid grid-cols-3 gap-2 md:gap-6'>
+            {/* filter ticket */}
+            {filterClasses.map((data) => (
+              <SelectFilter data={data} />
+            ))}
+          </div>
           <div className='flex flex-col gap-6'>
             {/* ticket */}
             <Ticket />
