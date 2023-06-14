@@ -52,7 +52,7 @@ const flights = [
     airline: 'garuda',
     daparturedDate: '2023-06-07',
     arrivalDate: '2023-06-20',
-    price: 900000
+    price: 900000,
   },
   {
     from: 'jakarta',
@@ -60,7 +60,7 @@ const flights = [
     airline: 'singapore airline',
     daparturedDate: '2023-06-07',
     arrivalDate: '2023-06-20',
-    price: 7603200
+    price: 7603200,
   },
   {
     from: 'jakarta',
@@ -68,7 +68,7 @@ const flights = [
     airline: 'qatar airline',
     daparturedDate: '2023-06-07',
     arrivalDate: '2023-06-30',
-    price: 1200000
+    price: 1200000,
   },
   {
     from: 'jakarta',
@@ -76,7 +76,7 @@ const flights = [
     airline: 'japan airline',
     daparturedDate: '2023-06-07',
     arrivalDate: '2023-06-30',
-    price: 900000
+    price: 900000,
   },
 ]
 
@@ -96,7 +96,28 @@ const suggestDestination = [
   {
     nation: 'swiss',
     img: pic4,
-  }
+  },
 ]
 
-export { seatClassData, suggestions, flights, suggestDestination }
+const filterTicketByPriceAndTime = [
+  {
+    name: 'Termurah',
+    price: 809000,
+  },
+  {
+    name: 'Tercepat',
+    price: 1209000,
+  },
+  {
+    name: 'Terbaik',
+    price: 1009000,
+  },
+]
+
+export {
+  seatClassData,
+  suggestions,
+  flights,
+  suggestDestination,
+  filterTicketByPriceAndTime,
+}
