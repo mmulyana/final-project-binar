@@ -12,28 +12,38 @@ import SuggestionModal from '../Modal/SuggestionModal'
 import Switch from '../Form/SwitchFlight'
 import DateModal from '../Modal/DateModal'
 import PassengerModal from '../Modal/PassengerModal'
+import { useRouter } from 'next/router'
 
 export default function SearchFlight() {
   const [state, dispatch] = useReducer(searchReducer, initialValue)
   const [searchType, setSearchType] = useState('')
+  const router = useRouter()
 
   function handleToggle(payload) {
     dispatch({ type: 'toggle', payload })
   }
 
   function handleSearch() {
-    console.log(state.data)
+    router.push(
+      `/result?departure=${state.data.from}&destination=${state.data.to}&departureDate=${state.data.departureDate.getDate()}${state.data.isOneWay == false ? '&returnDate='+state.data.returnDate.getDate() : ''}&adult=${state.data.passengers.adult}${state.data.passengers.kid > 0 ? '&kid='+state.data.passengers.kid : ''}${state.data.passengers.baby > 0 ? '&baby='+state.data.passengers.baby : ''}&type=${state.data.isOneWay ? 1 : 0}&class=${state.data.seatClass}`
+    )
   }
 
   const sumPassenger = useMemo(() => {
-    return Object.values(state.data.passengers).reduce((acc, obj) => acc + obj, 0)
+    return Object.values(state.data.passengers).reduce(
+      (acc, obj) => acc + obj,
+      0
+    )
   }, [state.data.passengers])
 
   useEffect(() => {
-    dispatch({type: 'onchange', payload: {
-      type: 'departureDate',
-      value: new Date()
-    }})
+    dispatch({
+      type: 'onchange',
+      payload: {
+        type: 'departureDate',
+        value: new Date(),
+      },
+    })
   }, [])
 
   return (
@@ -54,7 +64,8 @@ export default function SearchFlight() {
           >
             <Image src={Ic_Passenger} h={24} w={24} alt='passenger' />
             <p className='font-semibold text-slate-800'>
-              {sumPassenger} <span className='font-normal'>Penumpang,</span> {state.data.seatClass}
+              {sumPassenger} <span className='font-normal'>Penumpang,</span>{' '}
+              {state.data.seatClass}
             </p>
           </div>
           <Button
@@ -152,11 +163,13 @@ export default function SearchFlight() {
                   className='text-slate-900'
                   onClick={() => handleToggle('date')}
                 >
-                  {state.data.departureDate !== '' ? state.data.departureDate.toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  }) : null}
+                  {state.data.departureDate !== ''
+                    ? state.data.departureDate.toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })
+                    : null}
 
                   <Image
                     src='/icon/calendar.svg'
