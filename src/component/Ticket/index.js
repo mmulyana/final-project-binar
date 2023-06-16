@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import React from 'react'
 import Button from '../Button'
+import Link from 'next/link'
 
-export default function Ticket({ data }) {
+export default function Ticket({ data, query }) {
   return (
     <div className='ticket'>
       <div className='p-6'>
@@ -60,9 +61,9 @@ export default function Ticket({ data }) {
           <p className='text-xl font-medium'>Rp 1.400.000</p>
           <p className='text-xs text-slate-300 mt-1 md:mt-2'>per orang</p>
         </div>
-        <Button className='px-12 py-3 md:py-2 md:w-full bg-[#EFF0F3] hover:bg-[#4642FF] text-[#4642FF] hover:text-white rounded text-sm md:text-base font-medium'>
+        <Link href={`/checkout/order?adult=${query?.adult}`} className='px-12 py-3 md:py-2 md:w-full bg-[#EFF0F3] hover:bg-[#4642FF] text-[#4642FF] hover:text-white rounded text-sm md:text-base font-medium text-center'>
           Pilih
-        </Button>
+        </Link>
       </div>
     </div>
   )

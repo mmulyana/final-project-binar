@@ -7,7 +7,7 @@ import Flight from 'public/image/flight.svg'
 import Ic_Switch from 'public/icon/switch.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
 import Ticket from '@/component/Ticket'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { filterTicketByPriceAndTime } from '@/utils/local'
 import { SelectFilter } from '@/component/Select'
@@ -106,7 +106,7 @@ function Result() {
           </div>
           <div className='flex flex-col gap-6'>
             {/* ticket */}
-            <Ticket />
+            <Ticket query={query}/>
           </div>
         </div>
       </div>
