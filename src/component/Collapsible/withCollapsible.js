@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import Portal from '../Portal'
+import { useState } from 'react'
 import Button from '../Button'
 import Image from 'next/image'
 

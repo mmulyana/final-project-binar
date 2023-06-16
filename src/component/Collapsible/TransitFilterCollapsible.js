@@ -1,11 +1,14 @@
-import React from 'react'
-import withCollapsible from './withCollapsible'
+import React from "react";
+import withCollapsible from "./withCollapsible";
+import { SelectWithCheckbox } from "../Select";
 
 function TransitFilter() {
   return (
-    <div>TransitFilterCollapsible</div>
-  )
+    <div className="">
+      <SelectWithCheckbox name="Langsung" />
+    </div>
+  );
 }
 
-const TransitFilterCollapsible = withCollapsible(TransitFilter)
-export default TransitFilterCollapsible
+const TransitFilterCollapsible = withCollapsible(TransitFilter);
+export default TransitFilterCollapsible;

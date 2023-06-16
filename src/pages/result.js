@@ -15,9 +15,7 @@ import { SelectFilter } from '@/component/Select'
 function Result() {
   const router = useRouter()
   const [query, setQuery] = useState(null)
-  const [filterTicketByPrice, setFilterTicketByPrice] = useState(
-    filterTicketByPriceAndTime
-  )
+  const [filterTicketByPrice, setFilterTicketByPrice] = useState(filterTicketByPriceAndTime)
 
   useEffect(() => {
     setQuery(router.query)
