@@ -101,16 +101,22 @@ const suggestDestination = [
 
 const filterTicketByPriceAndTime = [
   {
+    id: 0,
     name: 'Termurah',
     price: 809000,
+    isActive: true
   },
   {
+    id: 1,
     name: 'Tercepat',
     price: 1209000,
+    isActive: false
   },
   {
+    id: 2,
     name: 'Terbaik',
     price: 1009000,
+    isActive: false
   },
 ]
 

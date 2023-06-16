@@ -47,7 +47,7 @@ export default function Ticket({ data }) {
           </div>
         </div>
       </div>
-      <div className='relative p-5 flex flex-row lg:flex-col w-full items-center justify-between lg:w-[calc(100%-24px)]'>
+      <div className='relative p-5 flex flex-row lg:flex-col w-full items-center justify-between lg:w-[calc(100%-24px)] gap-4'>
         <div className='absolute left-[calc(100%-16px)] lg:-left-[10px] -top-[16px] lg:-top-[10px] w-8 lg:w-5 h-8 lg:h-5 rounded-full bg-[#F0F1F6] ticket__circle' />
         <div className='absolute left-[calc(100%+2px)] lg:-left-[10px] -top-[16px] lg:-top-[18px] w-5 h-8 lg:h-4 bg-[#F0F1F6]' />
 
@@ -56,7 +56,7 @@ export default function Ticket({ data }) {
 
         <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-0 lg:top-1/2 left-1/2 lg:left-0 w-[90%] lg:w-[60%] border border-dashed rotate-0 lg:rotate-90 ticket__divider'></hr>
 
-        <div className='h-full w-full md:grow flex flex-col items-start md:items-end justify-center'>
+        <div className='h-full w-full md:grow flex flex-col items-start lg:items-end justify-center'>
           <p className='text-xl font-medium'>Rp 1.400.000</p>
           <p className='text-xs text-slate-300 mt-1 md:mt-2'>per orang</p>
         </div>

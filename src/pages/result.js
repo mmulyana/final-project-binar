@@ -15,18 +15,35 @@ import { SelectFilter } from '@/component/Select'
 function Result() {
   const router = useRouter()
   const [query, setQuery] = useState(null)
-  const [filterClasses, setFilterClasses] = useState(filterTicketByPriceAndTime)
+  const [filterTicketByPrice, setFilterTicketByPrice] = useState(
+    filterTicketByPriceAndTime
+  )
 
   useEffect(() => {
     setQuery(router.query)
   }, [router])
+
+  function handleFilterTicketByPrice(id) {
+    const newFilterTickets = filterTicketByPrice
+      .map((ticket) => {
+        return { ...ticket, isActive: false }
+      })
+      .map((ticket) => {
+        if (ticket.id === id) {
+          return { ...ticket, isActive: true }
+        }
+        return ticket
+      })
+
+    setFilterTicketByPrice(newFilterTickets)
+  }
 
   return (
     <>
       <div className='h-fit md:h-[264px] w-full bg-white pt-[84px]'>
         <div className='max-w-[1200px] mx-auto px-4 md:px-0'>
           {/* flight destination */}
-          <div className='flex flex-col md:flex-row w-full pt-5 md:pt-10 items-start md:items-center justify-between pb-4 md:pb-0'>
+          <div className='flex flex-col md:flex-row w-full pt-5 md:pt-10 items-start md:items-center justify-between px-4 lg:px-0 pb-4 md:pb-0'>
             <div className='flex gap-3 md:gap-6 items-start'>
               <Image className='' h={50} w={50} src={Flight} alt='flight' />
 
@@ -87,7 +104,7 @@ function Result() {
           </div>
         </div>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[320px_820px] justify-between gap-y-6 mt-4 max-w-[1200px] mx-auto px-4 lg:px-0'>
+      <div className='grid grid-cols-1 md:grid-cols-[1fr_2fr] lg:grid-cols-[320px_820px] justify-between md:gap-4 gap-y-6 mt-4 max-w-[1200px] mx-auto px-4 lg:px-0'>
         <div className='h-fit'>
           <p className='text-xl'>Filter</p>
           <div className='bg-white mt-4 rounded h-fit px-4'>
@@ -100,11 +117,15 @@ function Result() {
         <div className='h-fit'>
           <div className='grid grid-cols-3 gap-2 md:gap-6'>
             {/* filter ticket */}
-            {filterClasses.map((data) => (
-              <SelectFilter data={data} />
+            {filterTicketByPrice.map((data, index) => (
+              <SelectFilter
+                data={data}
+                handleClick={handleFilterTicketByPrice}
+                key={index}
+              />
             ))}
           </div>
-          <div className='flex flex-col gap-6'>
+          <div className='flex flex-col gap-6 mt-6'>
             {/* ticket */}
             <Ticket />
           </div>
