@@ -114,10 +114,19 @@ const filterTicketByPriceAndTime = [
   },
 ]
 
+const seatesFlight = [
+  { row: 'A', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+  { row: 'B', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+  { row: '', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+  { row: 'C', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+  { row: 'D', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+]
+
 export {
   seatClassData,
   suggestions,
   flights,
   suggestDestination,
   filterTicketByPriceAndTime,
+  seatesFlight,
 }

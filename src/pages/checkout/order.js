@@ -1,6 +1,8 @@
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPhone from '@/component/Form/TextfieldPhone'
 import { CheckoutLayout } from '@/component/Layout'
+import SelectSeat from '@/component/Select/SelectSeat'
+import { seatesFlight } from '@/utils/local'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -306,6 +308,12 @@ function Order() {
                 : null}
             </div>
           </div>
+
+          <div className='pt-6 p-8 bg-white rounded border border-[#DFDEE2]'>
+            <p>Pilih kursi Anda</p>
+            <SelectSeat data={seatesFlight} />
+          </div>
+
           <button
             type='submit'
             className='flex items-center justify-center bg-[#4642FF] text-white text-sm rounded font-medium py-4'
