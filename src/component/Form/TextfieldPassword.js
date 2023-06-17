@@ -2,39 +2,49 @@ import React, { useState } from 'react'
 import Button from '../Button'
 import Image from 'next/image'
 
-export default function TextfieldPassword({ name, value, onChange, ...props }) {
+export default function TextfieldPassword({
+  name,
+  value,
+  onChange,
+  label,
+  ...props
+}) {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <div
-      className={[
-        'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center',
-        props.disabled ? 'text-gray-400' : '',
-      ].join(' ')}
-    >
-      <input
-        type={isOpen ? 'text' : 'password'}
-        name={name}
-        value={value}
-        id={props.id}
-        {...props}
-        className='bg-transparent outline-none w-full bg-[#F4F4F4]'
-        onChange={onChange}
-      />
+    <div>
       <label
-        className={[
-          'absolute left-4 top-3 text-base text-gray-500 capitalize cursor-text',
-          value !== '' ? 'hidden' : '',
-        ].join(' ')}
+        className='text-xs text-gray-400 mb-1 block font-medium capitalize'
         htmlFor={props.id}
       >
-        {props.label}
+        password
       </label>
-      <div onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? (
-          <Image src='/icon/eye-off.svg' height={24} width={24} alt='password' />
-        ) : (
-          <Image src='/icon/eye.svg' height={24} width={24} alt='password' />
-        )}
+      <div
+        className={[
+          'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center',
+          props.disabled ? 'text-gray-400' : '',
+        ].join(' ')}
+      >
+        <input
+          type={isOpen ? 'text' : 'password'}
+          name={name}
+          value={value}
+          id={props.id}
+          {...props}
+          className='bg-transparent outline-none w-full bg-[#F4F4F4]'
+          onChange={onChange}
+        />
+        <div onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
+            <Image
+              src='/icon/eye-off.svg'
+              height={24}
+              width={24}
+              alt='password'
+            />
+          ) : (
+            <Image src='/icon/eye.svg' height={24} width={24} alt='password' />
+          )}
+        </div>
       </div>
     </div>
   )
