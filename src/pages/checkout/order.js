@@ -74,7 +74,8 @@ function Order() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(JSON.stringify(form))
+    localStorage.setItem('order', JSON.stringify(form))
+    router.push('/checkout/payment')
   }
 
   function handleChange(e, type, index) {
