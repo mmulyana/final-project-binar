@@ -121,7 +121,7 @@ function Order() {
 
       <div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr] gap-4 justify-between items-start px-4 lg:px-0'>
         <form onSubmit={handleSubmit}>
-          <div className='bg-white rounded border border-[#DFDEE2] pt-6 p-8 pb-10 shadow-sm shadow-gray-300'>
+          <div className='bg-white rounded border border-[#DFDEE2] pt-6 p-8 pb-10'>
             <p>Data Diri Pemesan</p>
             <label className='text-sm mt-4 mb-2 block'>Nama</label>
             <Textfield value='Rengoku kyojuro' disabled />
