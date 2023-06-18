@@ -21,7 +21,9 @@ export default function Register({ toggleModal }) {
     e.preventDefault()
     toggleModal()
 
-    localStorage('MUST_VERIFY', form.email)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('MUST_VERIFY', form.email)
+    }
 
     router.push(`otp/${form.email}`)
   }
