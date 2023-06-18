@@ -34,6 +34,8 @@ export default function Login({ toggleModal }) {
           label='email'
           value={form.email}
           onChange={handleChange}
+          withLabel
+          placeholder='example@mail.com'
         />
         <TextfieldPassword
           name='password'

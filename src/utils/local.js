@@ -120,10 +120,83 @@ const filterTicketByPriceAndTime = [
   },
 ]
 
+const seatesFlight = [
+  {
+    row: 'A',
+    col: [
+      { no: 1, isSelected: false },
+      { no: 2, isSelected: false },
+      { no: 3, isSelected: false },
+      { no: 4, isSelected: false },
+      { no: 5, isSelected: false },
+      { no: 6, isSelected: false },
+      { no: 7, isSelected: false },
+      { no: 8, isSelected: false },
+      { no: 9, isSelected: false },
+      { no: 10, isSelected: false },
+      { no: 11, isSelected: false },
+      { no: 12, isSelected: false },
+    ],
+  },
+  {
+    row: 'B',
+    col: [
+      { no: 1, isSelected: false },
+      { no: 2, isSelected: false },
+      { no: 3, isSelected: false },
+      { no: 4, isSelected: false },
+      { no: 5, isSelected: false },
+      { no: 6, isSelected: false },
+      { no: 7, isSelected: false },
+      { no: 8, isSelected: false },
+      { no: 9, isSelected: false },
+      { no: 10, isSelected: false },
+      { no: 11, isSelected: false },
+      { no: 12, isSelected: false },
+    ],
+  },
+  { row: '', col: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+  {
+    row: 'C',
+    col: [
+      { no: 1, isSelected: false },
+      { no: 2, isSelected: false },
+      { no: 3, isSelected: false },
+      { no: 4, isSelected: false },
+      { no: 5, isSelected: false },
+      { no: 6, isSelected: false },
+      { no: 7, isSelected: false },
+      { no: 8, isSelected: false },
+      { no: 9, isSelected: false },
+      { no: 10, isSelected: false },
+      { no: 11, isSelected: false },
+      { no: 12, isSelected: false },
+    ],
+  },
+  {
+    row: 'D',
+    col: [
+      { no: 1, isSelected: false },
+      { no: 2, isSelected: false },
+      { no: 3, isSelected: false },
+      { no: 4, isSelected: false },
+      { no: 5, isSelected: false },
+      { no: 6, isSelected: false },
+      { no: 7, isSelected: false },
+      { no: 8, isSelected: false },
+      { no: 9, isSelected: false },
+      { no: 10, isSelected: false },
+      { no: 11, isSelected: false },
+      { no: 12, isSelected: false },
+    ],
+  },
+]
+
 export {
   seatClassData,
   suggestions,
   flights,
   suggestDestination,
   filterTicketByPriceAndTime,
+  seatesFlight,
 }
