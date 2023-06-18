@@ -43,4 +43,19 @@ function changeToRupiah(number) {
   }).format(number)
 }
 
-export { sumDataNumbers, formatDate, changeToRupiah }
+function hideEmail(email) {
+  const atIndex = email.indexOf('@') // Find the index of the '@' symbol
+
+  if (atIndex > 1) {
+    const firstChar = email[0] // Extract the first character
+    const hiddenPart = '*'.repeat(atIndex - 1) // Replace remaining characters with '*'
+    const domain = email.substring(atIndex) // Extract the domain part
+
+    return `${firstChar}${hiddenPart}${domain}`
+  }
+
+  // Return the original email if it doesn't meet the condition
+  return email
+}
+
+export { sumDataNumbers, formatDate, changeToRupiah, hideEmail }
