@@ -2,6 +2,7 @@ import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
 import TextfieldPhone from '@/component/Form/TextfieldPhone'
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 const initialValues = {
@@ -12,13 +13,15 @@ const initialValues = {
 }
 
 export default function Register({ toggleModal }) {
+  const router = useRouter()
   const [form, setForm] = useState(initialValues)
   const [hasFillEmail, setHasFieldEmail] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(form)
     toggleModal()
+
+    router.push(`otp/${form.email}`)
   }
 
   function handleChange(e) {
