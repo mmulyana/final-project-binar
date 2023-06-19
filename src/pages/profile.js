@@ -41,8 +41,7 @@ function ProfileCard() {
             <h3 className='text-base text-gray-800  font-semibold '>Keluar</h3>
           </div>
           <hr></hr>
-        </div>
-
+        </div> 
         <div
           className='bg-white p-8 rounded-lg shadow-md'
           style={{ width: '518px', height: '462px', marginLeft: '24px' }}
