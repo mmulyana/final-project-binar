@@ -5,18 +5,17 @@ import Button from '../Button'
 function TicketHistory({ onClose, ...props }) {
   return (
     <div className='px-4'>
-      <div className='flex items-center justify-between py-3 border-b border-gray-300'>
-        <p>Detail</p>
-        <Button onClick={onClose} className='text-red-500 text-sm'>
+      <div className='flex items-center justify-start gap-4 py-3 '>
+        <Button onClick={onClose} className='text-slate-400 text-sm p-2 hover:bg-gray-100/80 rounded'>
           <svg
-            width='20'
-            height='20'
+            width='24'
+            height='24'
             viewBox='0 0 24 24'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              d='M18 6L6 18M6 6L18 18'
+              d='M18 17L13 12L18 7M11 17L6 12L11 7'
               stroke='currentColor'
               strokeWidth='2'
               strokeLinecap='round'
@@ -26,8 +25,6 @@ function TicketHistory({ onClose, ...props }) {
         </Button>
       </div>
 
-      {/* add below */}
-      
     </div>
   )
 }

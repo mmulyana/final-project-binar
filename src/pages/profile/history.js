@@ -1,6 +1,6 @@
 import TicketHistoryDrawer from '@/component/Drawer/TicketHistoryDrawer'
 import { ProfileLayout } from '@/component/Layout'
-import Ticket from '@/component/Ticket'
+import Ticket, { TicketHistory } from '@/component/Ticket'
 import React, { useState } from 'react'
 
 function History() {
@@ -12,7 +12,9 @@ function History() {
 
   return (
     <>
-      <div className='flex flex-col gap-2'>
+      <div className='max-w-[540px] flex flex-col gap-5'>
+        <TicketHistory onClick={() => setIsOpen(true)}/>
+        <TicketHistory onClick={() => setIsOpen(true)}/>
       </div>
       <TicketHistoryDrawer isOpen={isOpen} onClose={handleClose} />
     </>

@@ -10,8 +10,8 @@ export default function ProfileLayout({ children, location }) {
   return (
     <>
       <DarkNavbar />
-      <div className='pt-[84px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] items-start justify-between gap-6 max-w-[1200px] mx-auto px-4 lg:px-0'>
-        <div className='bg-white border border-gray-200 p-4 rounded mt-2'>
+      <div className='pt-[84px] pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] items-start justify-between gap-6 max-w-[1200px] mx-auto px-4 lg:px-0'>
+        <div className='bg-white border border-gray-200 p-4 rounded mt-6'>
           <div className='flex items-center gap-2 pb-4 border-b border-gray-200'>
             <Avvvatars size={50} value='Rengoku' />
             <div>
@@ -21,8 +21,9 @@ export default function ProfileLayout({ children, location }) {
           </div>
 
           <div className='mt-2'>
-            {menus.map((menu) => (
+            {menus.map((menu, index) => (
               <Link
+                key={index}
                 className={[
                   'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2',
                   location === menu.name
@@ -37,7 +38,7 @@ export default function ProfileLayout({ children, location }) {
             ))}
           </div>
         </div>
-        <div className='mt-2'>{children}</div>
+        <div className='mt-6'>{children}</div>
       </div>
     </>
   )

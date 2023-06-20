@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Flight from 'public/image/flight.svg'
 import Ic_Switch from 'public/icon/switch.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
-import Ticket from '@/component/Ticket'
+import { Ticket } from '@/component/Ticket'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { filterTicketByPriceAndTime } from '@/utils/local'
@@ -15,7 +15,9 @@ import { SelectFilter } from '@/component/Select'
 function Result() {
   const router = useRouter()
   const [query, setQuery] = useState(null)
-  const [filterTicketByPrice, setFilterTicketByPrice] = useState(filterTicketByPriceAndTime)
+  const [filterTicketByPrice, setFilterTicketByPrice] = useState(
+    filterTicketByPriceAndTime
+  )
 
   useEffect(() => {
     setQuery(router.query)
@@ -125,7 +127,7 @@ function Result() {
           </div>
           <div className='flex flex-col gap-6 mt-6'>
             {/* ticket */}
-            <Ticket query={query}/>
+            <Ticket query={query} />
           </div>
         </div>
       </div>
