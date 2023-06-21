@@ -5,7 +5,7 @@ import LoginRegisterModal from '../Modal/LoginRegister'
 import { useState } from 'react'
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
-export default function Navbar() {
+export default function DarkNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <>

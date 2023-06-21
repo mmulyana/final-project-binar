@@ -40,7 +40,7 @@ function changeToRupiah(number) {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
-  }).format(number)
+  }).format(number).slice(0, -3)
 }
 
 function hideEmail(email) {
@@ -58,4 +58,11 @@ function hideEmail(email) {
   return email
 }
 
-export { sumDataNumbers, formatDate, changeToRupiah, hideEmail }
+function convertToHoursMinutes(minutes) {
+  let hours = Math.floor(minutes / 60)
+  let remainingMinutes = minutes % 60
+
+  return `${hours}h ${remainingMinutes}m`
+}
+
+export { sumDataNumbers, formatDate, changeToRupiah, hideEmail, convertToHoursMinutes }
