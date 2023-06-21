@@ -40,7 +40,9 @@ function changeToRupiah(number) {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
-  }).format(number).slice(0, -3)
+  })
+    .format(number)
+    .slice(0, -3)
 }
 
 function hideEmail(email) {
@@ -65,4 +67,26 @@ function convertToHoursMinutes(minutes) {
   return `${hours}h ${remainingMinutes}m`
 }
 
-export { sumDataNumbers, formatDate, changeToRupiah, hideEmail, convertToHoursMinutes }
+function parseJwt(jwt) {
+  let base64Url = jwt.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  let jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      })
+      .join('')
+  )
+
+  return JSON.parse(jsonPayload)
+}
+
+export {
+  sumDataNumbers,
+  formatDate,
+  changeToRupiah,
+  hideEmail,
+  convertToHoursMinutes,
+  parseJwt,
+}

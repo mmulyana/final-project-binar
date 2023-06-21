@@ -5,19 +5,21 @@ import CardSuggest from '@/component/Card/CardSuggest'
 import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/image/banner-high.jpg'
-import api from '@/services/api'
 import { useEffect } from 'react'
+import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { getProfile } from '@/redux/actions/authActions'
 
 function Home() {
-  async function getData() {
-    try {
-      const res = await api('flights/favorite-city')
-      console.log(res)
-    } catch(err) {}
-  }
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    getData()
-  },[])
+    const id = Cookies.get('id')
+    if (id) {
+      dispatch(getProfile(id))
+    }
+  }, [])
+
   return (
     <>
       <div className='w-full h-[610px] relative mb-56 md:mb-0 z-10'>

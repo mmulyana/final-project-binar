@@ -2,10 +2,11 @@ import { Inter } from 'next/font/google'
 
 import '@/styles/globals.css'
 import 'react-day-picker/dist/style.css'
+import { wrapper } from '@/redux'
 
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '700'] })
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const getLayout = Component.getLayout ?? ((pages) => pages)
   return (
     <main className={inter.className}>
@@ -13,3 +14,5 @@ export default function App({ Component, pageProps }) {
     </main>
   )
 }
+
+export default wrapper.withRedux(App)
