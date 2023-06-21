@@ -24,8 +24,6 @@ export default function Navbar() {
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
 
-  console.log(user)
-
   useEffect(() => {
     const handleClick = (event) => {
       handleClickOutside(event, notificationRef, setOpenNotify)
