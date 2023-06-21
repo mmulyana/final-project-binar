@@ -16,7 +16,7 @@ export default function TextfieldPassword({
         className='text-xs text-gray-400 mb-1 block font-medium capitalize'
         htmlFor={props.id}
       >
-        password
+        {label}
       </label>
       <div
         className={[
