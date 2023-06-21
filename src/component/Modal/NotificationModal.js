@@ -16,4 +16,6 @@ const NotificationModal = forwardRef((props, ref) => {
   )
 })
 
+NotificationModal.displayName = 'NotificationModal'
+
 export default NotificationModal
