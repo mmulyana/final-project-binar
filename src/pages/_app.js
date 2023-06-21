@@ -4,7 +4,7 @@ import '@/styles/globals.css'
 import 'react-day-picker/dist/style.css'
 import { wrapper } from '@/redux'
 
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '700'] })
+const inter = Inter({ subsets: ['latin'] })
 
 function App({ Component, pageProps }) {
   const getLayout = Component.getLayout ?? ((pages) => pages)

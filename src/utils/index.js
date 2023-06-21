@@ -1,3 +1,5 @@
+import Cookies from "js-cookie"
+
 function sumDataNumbers(object) {
   let sum = 0
 
