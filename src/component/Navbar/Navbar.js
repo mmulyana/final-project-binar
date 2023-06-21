@@ -7,33 +7,46 @@ import { useSelector } from 'react-redux'
 import { selectAuth } from '@/redux/reducers/auth'
 import Avvvatars from 'avvvatars-react'
 import NotificationModal from '../Modal/NotificationModal'
+import MenuModal from '../Modal/MenuModal'
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
+
+const handleClickOutside = (event, ref, setOpen) => {
+  if (ref.current && !ref.current.contains(event.target)) {
+    setOpen(false)
+  }
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [openNotify, setOpenNotify] = useState(false)
+  const [openMenu, setOpenMenu] = useState(false)
   const { user } = useSelector(selectAuth)
   const notificationRef = useRef(null)
-
-  const handleClickOutside = useCallback(
-    (event) => {
-      if (
-        notificationRef.current &&
-        !notificationRef.current.contains(event.target)
-      ) {
-        setOpenNotify(false)
-      }
-    },
-    [openNotify]
-  )
+  const menuRef = useRef(null)
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside)
+    const handleClick = (event) => {
+      handleClickOutside(event, notificationRef, setOpenNotify)
+    }
+
+    document.addEventListener('mousedown', handleClick)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handleClick)
     }
-  }, [handleClickOutside])
+  }, [notificationRef, setOpenNotify])
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      handleClickOutside(event, menuRef, setOpenMenu)
+    }
+
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [menuRef, setOpenNotify])
 
   return (
     <>
@@ -80,7 +93,7 @@ export default function Navbar() {
                 </Link>
               </nav>
             </div>
-            {user ? (
+            {user !== null ? (
               <div className='flex gap-4 items-center'>
                 <div className='relative h-8 w-8 flex items-center justify-center bg-white/30 rounded-full'>
                   <Button
@@ -105,7 +118,12 @@ export default function Navbar() {
                   </Button>
                   {!!openNotify && <NotificationModal ref={notificationRef} />}
                 </div>
-                <Avvvatars value={user.email} />
+                <div className='relative h-8 w-8'>
+                  <Button onClick={() => setOpenMenu(true)}>
+                    <Avvvatars value={user.email} />
+                  </Button>
+                  {!!openMenu && <MenuModal ref={menuRef} data={user} />}
+                </div>
               </div>
             ) : (
               <div className='flex gap-4 items-center'>
