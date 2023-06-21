@@ -1,8 +1,12 @@
-import Button from "@/component/Button";
-import Textfield from "@/component/Form/Textfield";
-import TextfieldPassword from "@/component/Form/TextfieldPassword";
-import api from "@/services/api";
-import React, { useState } from "react";
+import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import Button from '@/component/Button'
+import Textfield from '@/component/Form/Textfield'
+import TextfieldPassword from '@/component/Form/TextfieldPassword'
+import Cookies from 'js-cookie'
+import api from '@/services/api'
+import { setUser } from '@/redux/reducers/auth'
+import { parseJwt } from '@/utils'
 
 const initialValues = {
   email: "",
@@ -10,18 +14,23 @@ const initialValues = {
 };
 
 export default function Login({ toggleModal }) {
-  const [form, setForm] = useState(initialValues);
+  const [form, setForm] = useState(initialValues)
+  const dispatch = useDispatch()
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const response = await axios.post(
-        "https://final-project-be-develop.up.railway.app/auth/login",
-        form
-      );
-      console.log(response);
+      const { data } = await api.post('auth/login', form)
+      if (data.status) {
+        const jwt = parseJwt(data.data.token)
+        Cookies.set('jwt', jwt, { expires: 1 })
+        Cookies.set('id', jwt.id, { expires: 1 })
+
+        const { data: dataProfile } = await api(`/users/${jwt.id}`)
+        dispatch(setUser(dataProfile.data))
+        toggleModal()
+      }
     } catch (err) {}
-    toggleModal();
   }
 
   function handleChange(e) {
