@@ -9,7 +9,7 @@ export const getProfile = (id) => async (dispatch, getState) => {
     }
 
     try {
-      const { data } = await api(`users/${id}`)
+      const { data } = await api(`/users/${id}`)
 
       if (data.status) {
         dispatch(setUser(data.data))
