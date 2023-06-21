@@ -2,6 +2,7 @@ import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
 import TextfieldPhone from '@/component/Form/TextfieldPhone'
+import api from '@/services/api'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
@@ -9,7 +10,8 @@ const initialValues = {
   name: '',
   email: '',
   password: '',
-  phoneNumber: '',
+  phone_number: '',
+  confirmPassword: '',
 }
 
 export default function Register({ toggleModal }) {
@@ -17,15 +19,9 @@ export default function Register({ toggleModal }) {
   const [form, setForm] = useState(initialValues)
   const [hasFillEmail, setHasFieldEmail] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    toggleModal()
 
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('MUST_VERIFY', form.email)
-    }
-
-    router.push(`otp/${form.email}`)
   }
 
   function handleChange(e) {
@@ -46,6 +42,8 @@ export default function Register({ toggleModal }) {
             label='email'
             value={form.email}
             onChange={handleChange}
+            withLabel
+            placeholder='example@mail.com'
           />
         ) : (
           <div className='flex flex-col gap-6'>
@@ -54,6 +52,7 @@ export default function Register({ toggleModal }) {
               id='email'
               label='email'
               value={form.email}
+              withLabel
               disabled
             />
             <Textfield
@@ -62,19 +61,28 @@ export default function Register({ toggleModal }) {
               label='nama lengkap'
               value={form.name}
               onChange={handleChange}
+              withLabel
               autoFocus
             />
             <TextfieldPhone
-              name='phoneNumber'
-              value={form.phoneNumber}
+              name='phone_number'
+              value={form.phone_number}
               onChange={handleChange}
               id='phoneNumber'
             />
             <TextfieldPassword
               name='password'
               id='password'
-              label='Password'
+              label='password'
               value={form.password}
+              onChange={handleChange}
+            />
+
+            <TextfieldPassword
+              name='confirmPassword'
+              id='confirmPassword'
+              label='confirm Password'
+              value={form.confirmPassword}
               onChange={handleChange}
             />
           </div>

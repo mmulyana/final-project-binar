@@ -5,8 +5,19 @@ import CardSuggest from '@/component/Card/CardSuggest'
 import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/image/banner-high.jpg'
+import api from '@/services/api'
+import { useEffect } from 'react'
 
 function Home() {
+  async function getData() {
+    try {
+      const res = await api('flights/favorite-city')
+      console.log(res)
+    } catch(err) {}
+  }
+  useEffect(() => {
+    getData()
+  },[])
   return (
     <>
       <div className='w-full h-[610px] relative mb-56 md:mb-0 z-10'>

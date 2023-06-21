@@ -1,6 +1,7 @@
 import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
+import api from '@/services/api'
 import React, { useState } from 'react'
 
 const initialValues = {
@@ -11,9 +12,9 @@ const initialValues = {
 export default function Login({ toggleModal }) {
   const [form, setForm] = useState(initialValues)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log(form)
+
     toggleModal()
   }
 

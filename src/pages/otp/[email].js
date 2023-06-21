@@ -5,10 +5,11 @@ import { useRouter } from 'next/router'
 import { hideEmail } from '@/utils'
 import { useRef, useState } from 'react'
 import Button from '@/component/Button'
+import api from '@/services/api'
 
 export default function OtpPage() {
   const router = useRouter()
-  const [otp, setOtp] = useState(['', '', '', ''])
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const otpInputs = useRef([])
 
   function handleChange(e, index) {
@@ -40,6 +41,29 @@ export default function OtpPage() {
       setOtp(newOtp)
     }
   }
+
+  async function submit() {
+    const body = {
+      email: router.query.email,
+      otp: otp.join('')
+    }
+
+    try {
+      const response = await api.post('/auth/verify-otp', body)
+      console.log(response)
+      router.push('/')
+    } catch(err) {}
+  }
+
+  async function resentOtp() {
+    try {
+      const response = await api.post('auth/resend-otp', {
+        email: router.query.email,
+      })
+      console.log(response)
+    } catch (err) {}
+  }
+
   return (
     <div className='max-w-[900px] mx-auto pt-10'>
       <Image
@@ -61,7 +85,7 @@ export default function OtpPage() {
         {otp.map((digit, index) => (
           <div
             key={index}
-            className='h-16 md:h-20 w-14 md:w-16 flex items-center justify-center rounded bg-slate-200'
+            className='h-16 md:h-20 w-10 md:w-16 flex items-center justify-center rounded bg-slate-200'
           >
             <input
               type='text'
@@ -77,8 +101,10 @@ export default function OtpPage() {
         ))}
       </div>
       <div className='mt-8 flex flex-col items-center justify-center gap-2'>
-        <Button className='px-10 py-3 text-sm bg-[#4642FF] rounded text-white'>Verifikasi</Button>
-        <Button className='mt-2 text-sm text-gray-500'>Kirim kode lagi</Button>
+        <Button onClick={submit} className='px-10 py-3 text-sm bg-[#4642FF] rounded text-white'>
+          Verifikasi
+        </Button>
+        <Button onClick={resentOtp} className='mt-2 text-sm text-gray-500'>Kirim kode lagi</Button>
       </div>
     </div>
   )
