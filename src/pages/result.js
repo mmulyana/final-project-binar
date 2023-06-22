@@ -4,13 +4,14 @@ import { SecondaryLayout } from '@/component/Layout'
 import Button from '../component/Button'
 import Image from 'next/image'
 import Flight from 'public/image/flight.svg'
-import Ic_Switch from 'public/icon/switch.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
 import { Ticket } from '@/component/Ticket'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { filterTicketByPriceAndTime } from '@/utils/local'
 import { SelectFilter } from '@/component/Select'
+import { getCityByIata, getDiffBetweenMonth, getMonthFromDate } from '@/utils'
+import api from '@/services/api'
 
 function Result() {
   const router = useRouter()
@@ -22,6 +23,28 @@ function Result() {
   useEffect(() => {
     setQuery(router.query)
   }, [router])
+
+  useEffect(() => {
+    if (query === null) return
+    console.log(query)
+    
+    getFlight(query)
+    return () => {}
+  }, [query])
+
+  async function getFlight(query) {
+    try {
+      const body = {
+        origin_airport: query.or,
+        destination_airport: query.ds,
+        flight_date: query.dd,
+        passenger_cnt: parseInt(query.c),
+      }
+      const { data } = await api.post('/flights', body)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   function handleFilterTicketByPrice(id) {
     const newFilterTickets = filterTicketByPrice
@@ -51,19 +74,47 @@ function Result() {
                 <p className='text-[#131316]/60 text-sm md:text-base'>
                   Silakan pilih keberangkatan penerbangan.
                 </p>
-                <div className='flex flex-row my-2 flex-wrap'>
+                <div className='flex flex-row my-2 flex-wrap items-center gap-2'>
                   <p className='text-base md:text-2xl text-medium text-[#131316]'>
-                    {query?.departure}
+                    {getCityByIata(query?.or)}
                   </p>{' '}
-                  <Image
-                    className='mx-3'
-                    src={Ic_Switch}
-                    height='14'
-                    width='14'
-                    alt='switch icon'
-                  />
+                  <div className='text-[#326BF1]'>
+                    {query?.iow === 'true' ? (
+                      <svg
+                        width='20'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                      >
+                        <path
+                          d='M5 12H19M19 12L12 5M19 12L12 19'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width='20'
+                        height='20'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                      >
+                        <path
+                          d='M20 17H4M4 17L8 13M4 17L8 21M4 7H20M20 7L16 3M20 7L16 11'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                        />
+                      </svg>
+                    )}
+                  </div>
                   <p className='text-base md:text-2xl text-medium text-[#131316]'>
-                    {query?.destination}
+                    {getCityByIata(query?.ds)}
                   </p>{' '}
                 </div>
                 <div className='flex flex-wrap gap-4'>
@@ -75,20 +126,28 @@ function Result() {
                       alt='calendar icon'
                     />
                     <p className='text-[#131316]/80 text-xs md:text-base'>
-                      {query?.departureDate}{' '}
-                      {query?.type == 0 ? `- ${query?.returnDate}` : null}
+                      {query?.dd.split('-')[2]}{' '}
+                      {query?.dr !== '0'
+                        ? `${
+                            getDiffBetweenMonth(query?.dd, query?.dr)
+                              ? getMonthFromDate(query?.dd)
+                              : ''
+                          } - ${query?.dr.split('-')[2]} ${getMonthFromDate(
+                            query?.dr
+                          )}`
+                        : getMonthFromDate(query?.dd)}
                     </p>
                   </div>
                   <div className='flex gap-2 items-center'>
-                    <div className='bg-[#CACBCF] rounded-full w-2 h-2'></div>
+                    <div className='bg-[#CACBCF] rounded-full w-1 h-1'></div>
                     <p className='text-[#131316]/80 text-sm md:text-base'>
-                      {query?.adult} Penumpang
+                      {query?.c} Penumpang
                     </p>
                   </div>
                   <div className='flex gap-2 items-center'>
-                    <div className='bg-[#CACBCF] rounded-full w-2 h-2'></div>
+                    <div className='bg-[#CACBCF] rounded-full w-1 h-1'></div>
                     <p className='text-[#131316]/80 text-sm md:text-base'>
-                      {query?.class}
+                      {query?.l}
                     </p>
                   </div>
                 </div>

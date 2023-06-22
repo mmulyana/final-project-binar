@@ -5,12 +5,14 @@ import CardSuggest from '@/component/Card/CardSuggest'
 import { flights, suggestDestination } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/image/banner-high.jpg'
-import { useEffect } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
 import { getProfile } from '@/redux/actions/authActions'
+import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
 
 function Home() {
+  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -31,11 +33,27 @@ function Home() {
           className='w-full h-[300px] md:h-full object-cover object-left-bottom md:object-center'
           priority
         />
-        <div className='absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0'>
+        <div className='absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0 z-20'>
           <div className='max-w-[1200px] mx-auto'>
-            <SearchFlight />
+            <SearchFlight state={state} dispatch={dispatchReducer} />
           </div>
         </div>
+
+        {(state.isOpen.searchDeparture ||
+          state.isOpen.searchReturn ||
+          state.isOpen.date ||
+          state.isOpen.passenger ||
+          state.isOpen.seatClass ||
+          state.isOpen.isReturnDate) && (
+          <div
+            className='fixed top-0 left-0 h-full w-full bg-black/50 z-10'
+            onClick={() => {
+              dispatchReducer({
+                type: 'makeAllFalse',
+              })
+            }}
+          />
+        )}
       </div>
 
       {/* section 2 */}

@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Ic_Close from 'public/icon/close.svg'
 import Image from 'next/image'
 import Button from '../Button'
 import { suggestions } from '@/utils/local'
+import airports from '@/utils/airports'
 
-export default function SuggestionModal({
-  toggleModal,
-  dispatch,
-  type,
-  isOpen,
-}) {
+export default function SuggestionModal({ dispatch, type, isOpen, data }) {
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
-      toggleModal()
+      dispatch({ type: 'hideSearch' })
     }
   }
 
@@ -26,9 +22,9 @@ export default function SuggestionModal({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isOpen, toggleModal, handleKeyDown])
+  }, [isOpen, handleKeyDown])
 
-  const handleClick = (value) => {
+  const handleClick = (value, iata) => {
     dispatch({
       type: 'onchange',
       payload: {
@@ -37,30 +33,110 @@ export default function SuggestionModal({
       },
     })
 
-    dispatch({ type: 'toggle', payload: 'search' })
+    dispatch({
+      type: 'onchange',
+      payload: {
+        type: type === 'to' ? 'destination' : 'origin',
+        value: iata,
+      },
+    })
+
+    dispatch({ type: 'hideSearch' })
+    dispatch({ type: 'resetForm' })
   }
 
   if (isOpen) {
     return (
-      <div className='absolute w-full z-50 top-24 bg-white shadow-lg shadow-slate-300/50 pb-4 rounded-md'>
-        <div className='flex items-center justify-between px-4 py-3 mb-2 border-b border-gray-300'>
-          <p>Pilih Kota atau bandara populer</p>
-          <Button onClick={toggleModal}>
-            <Image src={Ic_Close} h={24} w={24} alt='close modal button'/>
+      <div className='absolute w-full z-50 top-24 bg-white pb-4 rounded border'>
+        <div className='flex items-center justify-end px-4 py-3 mb-2 border-b border-gray-300'>
+          <Button onClick={() => dispatch({ type: 'hideSearch' })}>
+            <Image src={Ic_Close} h={24} w={24} alt='close modal button' />
           </Button>
         </div>
         <div className='flex flex-col gap-1 px-4'>
-          {suggestions.map((item, index) => (
-            <div
-              key={index}
-              className='px-4 py-2 rounded hover:bg-gray-100 text-gray-900'
-            >
-              <button onClick={() => handleClick(item.city)}>
-                {item.city}, {item.nation}
-              </button>
-            </div>
-          ))}
+          {type === 'from' && data.valueFrom !== '' ? (
+            <>
+              {data.valueFrom !== ''
+                ? airports
+                    .filter((airport) =>
+                      airport.city
+                        .toLowerCase()
+                        .includes(data.valueFrom.toLowerCase())
+                    )
+                    .splice(0, 10)
+                    .map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleClick(item.city, item.iata_code)}
+                        className='p-2 rounded hover:bg-gray-100 text-gray-700 text-left'
+                      >
+                        <p>
+                          {item.city},{' '}
+                          <span className='text-gray-900'>
+                            {item.iata_code}
+                          </span>
+                        </p>
+                        <p className='text-xs text-gray-400'>
+                          bandara {item.name}
+                        </p>
+                      </button>
+                    ))
+                : null}
+            </>
+          ) : (
+            <>
+              {data.valueTo !== ''
+                ? airports
+                    .filter((airport) =>
+                      airport.city
+                        .toLowerCase()
+                        .includes(data.valueTo.toLowerCase())
+                    )
+                    .splice(0, 10)
+                    .map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleClick(item.city, item.iata_code)}
+                        className='p-2 rounded hover:bg-gray-100 text-gray-700 text-left'
+                      >
+                        <p>
+                          {item.city},{' '}
+                          <span className='text-gray-900'>
+                            {item.iata_code}
+                          </span>
+                        </p>
+                        <p className='text-xs text-gray-400'>
+                          bandara {item.name}
+                        </p>
+                      </button>
+                    ))
+                : null}
+            </>
+          )}
         </div>
+        {data.valueFrom === '' && data.valueTo === '' ? (
+          <div className='px-4'>
+            <p className='text-slate-800 text-sm mb-1'>
+              Pilih Kota atau bandara populer
+            </p>
+
+            <div className='flex flex-col gap-1'>
+              {airports.slice(0, 5).map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleClick(item.city, item.iata_code)}
+                  className='p-2 rounded hover:bg-gray-100 text-gray-700 text-left'
+                >
+                  <p>
+                    {item.city},{' '}
+                    <span className='text-gray-900'>{item.iata_code}</span>
+                  </p>
+                  <p className='text-xs text-gray-400'>bandara {item.name}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     )
   }
