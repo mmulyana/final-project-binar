@@ -1,4 +1,19 @@
-import Cookies from "js-cookie"
+import airports from './airports'
+
+let months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
 function sumDataNumbers(object) {
   let sum = 0
@@ -16,21 +31,6 @@ function formatDate(date) {
   let year = date.getFullYear()
   let month = date.getMonth()
   let day = date.getDate()
-
-  let months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
 
   let monthName = months[parseInt(month) - 1]
 
@@ -84,6 +84,49 @@ function parseJwt(jwt) {
   return JSON.parse(jsonPayload)
 }
 
+function getMonthFromDate(dateString) {
+  if (!dateString) return
+  const date = dateString.split('-')[1]
+  const month = parseInt(date)
+  const monthName = months[month - 1]
+
+  return monthName
+}
+
+function convertToDateString(dateString) {
+  const date = new Date(dateString)
+
+  const year = date.getFullYear()
+  const month = ('0' + (date.getMonth() + 1)).slice(-2)
+  const day = ('0' + date.getDate()).slice(-2)
+
+  return `${year}-${month}-${day}`
+}
+
+function getDiffBetweenMonth(date1, date2) {
+  if (!date1 || !date2) return
+  const part1 = date1.split('-')[1]
+  const part2 = date2.split('-')[1]
+
+  return part2 > part1 ? 1 : 0
+}
+
+function getCityByIata(iata) {
+  if (!iata) return
+  const airport = airports.filter(
+    (airport) => airport.iata_code.toLowerCase() === iata.toLowerCase()
+  )
+  return airport[0].city
+}
+
+function convertDateTicket(type, dateString) {
+  if (!dateString) return
+  const date = new Date(dateString)
+  const options = { weekday: 'long', day: 'numeric', month: 'long' }
+
+  return date.toLocaleDateString(type, options)
+}
+
 export {
   sumDataNumbers,
   formatDate,
@@ -91,4 +134,9 @@ export {
   hideEmail,
   convertToHoursMinutes,
   parseJwt,
+  getMonthFromDate,
+  convertToDateString,
+  getDiffBetweenMonth,
+  getCityByIata,
+  convertDateTicket,
 }

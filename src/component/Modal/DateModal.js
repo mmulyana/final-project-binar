@@ -51,8 +51,8 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
 
   if (isOpen) {
     return (
-      <div className='absolute top-28 left-1/2 -translate-x-1/2 w-full'>
-        <div className='w-fit h-fit bg-white rounded pt-1 pb-3 mx-auto shadow-lg shadow-slate-300/50'>
+      <div className='absolute top-28 left-1/2 -translate-x-1/2 w-fit'>
+        <div className='w-fit h-fit bg-white rounded pt-1 pb-3 mx-auto shadow-lg border'>
           <DayPicker
             selected={selected}
             onSelect={setSelected}
