@@ -20,6 +20,7 @@ export default function Textfield({
         className={[
           'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center border',
           props.disabled ? 'text-gray-400' : '',
+          props.className ? props.className : ''
         ].join(' ')}
       >
         <input
