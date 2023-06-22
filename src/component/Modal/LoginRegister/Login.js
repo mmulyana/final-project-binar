@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 import api from '@/services/api'
 import { setUser } from '@/redux/reducers/auth'
 import { parseJwt } from '@/utils'
+import Link from 'next/link'
 
 const initialValues = {
   email: "",
@@ -60,6 +61,7 @@ export default function Login({ toggleModal }) {
           value={form.password}
           onChange={handleChange}
         />
+        <Link href='/forgotpassword' className='block ml-auto -mt-4 text-sm text-[#326BF1]'>Lupa password?</Link>
       </div>
 
       <Button
