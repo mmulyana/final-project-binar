@@ -22,7 +22,7 @@ const NotificationModal = forwardRef((props, ref) => {
           <div
             key={index}
             className={[
-              "flex gap-4 items-start py-3 px-4 relative",
+              "grid grid-cols-[1fr_8fr] gap-2 items-start py-3 px-4 relative",
               data.isMarked ? "bg-white" : "bg-blue-100 hover:bg-blue-200",
               index === 0 ? "rounded-t" : "",
               index === dataNotif.length - 1 ? "rounded-b" : "",
@@ -52,9 +52,9 @@ const NotificationModal = forwardRef((props, ref) => {
                 />
               </svg>
             </div>
-            <div>
-              <p className="capitalize text-sm text-slate-700">{data.type}</p>
-              <p className="mt-1 text-slate-700">
+            <div className='pr-2'>
+              <p className="capitalize text-xs font-medium text-slate-700">{data.type}</p>
+              <p className="mt-1 text-[13px] text-slate-700">
                 {data.title}
               </p>
               {data.message !== "" ? (
@@ -62,7 +62,7 @@ const NotificationModal = forwardRef((props, ref) => {
                   {data.message}
                 </p>
               ) : null}
-              <p className="mt-2 text-xs text-slate-400">{data.date}</p>
+              <p className="mt-2 text-xs text-slate-800">{data.date}</p>
             </div>
             {!data.isMarked && (
               <div className="absolute right-3 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-blue-500" />
