@@ -139,22 +139,7 @@
   }
 
   .ticket {
-    @apply grid grid-cols-1 lg:grid-cols-[600px_240px] bg-white border-2 border-[#DFDEE2] hover:border-[#4642FF] rounded-lg;
-  }
-
-  .ticket__circle {
-    @apply border-2 border-[#DFDEE2];
-  }
-
-  .ticket:hover .ticket__circle {
-    @apply border-[#4642FF];
-  }
-
-  .ticket__divider {
-    @apply border-[#DFDEE2];
-  }
-  .ticket:hover .ticket__divider {
-    @apply border-[#4642FF];
+    @apply grid grid-cols-1 lg:grid-cols-[600px_1fr] overflow-hidden bg-white rounded-lg;
   }
 
   /* * {
