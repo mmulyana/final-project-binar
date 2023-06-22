@@ -138,10 +138,6 @@
     @apply -translate-y-10;
   }
 
-  .ticket {
-    @apply grid grid-cols-1 lg:grid-cols-[600px_1fr] overflow-hidden bg-white rounded-lg;
-  }
-
   /* * {
     @apply border border-red-500;
   } */

@@ -10,23 +10,22 @@ import {
 
 export default function Ticket({ data, query }) {
   return (
-    <div className='ticket'>
+    <div className='grid grid-cols-1 lg:grid-cols-[600px_1fr] bg-white rounded-lg overflow-hidden'>
       <div>
-        <div className='h-9 w-full bg-teal-700 px-4 flex items-center justify-between text-sm text-white'>
+        <div className='h-9 w-full bg-teal-700 px-4 flex items-center justify-start text-sm text-white relative'>
           <p>{data.flight_number}</p>
-          <p>{data.airline_code}</p>
         </div>
         <div className='flex items-center justify-between px-4 mt-2'>
           <div>
             <p className='text-xs text-slate-400 font-light'>
               Maskapai penerbangan
             </p>
-            <p className='text-slate-800'>{data.airline}</p>
+            <p className='text-slate-800 text-sm mt-1'>{data.airline}</p>
           </div>
           <div className='text-right'>
             <p className='text-xs text-slate-400 font-light'>Keberangkatan</p>
-            <p className='text-sm'>
-              {convertDateTicket('id-ID', data.flight_date)}
+            <p className='text-sm mt-1'>
+              {convertDateTicket('id-ID', data.flight_date)}, {data.departure_time}
             </p>
           </div>
         </div>
@@ -61,9 +60,9 @@ export default function Ticket({ data, query }) {
           </div>
         </div>
       </div>
-      <div className='relative bg-gray-50 h-24 md:h-full'>
-        {/* <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-0 lg:top-1/2 left-1/2 lg:left-[1px] w-[74%] border border-slate-200 border-dashed rotate-0 lg:rotate-90' /> */}
-        <div className='h-9 w-full bg-white md:bg-teal-800 px-4 flex items-center justify-end text-sm text-slate-800 md:text-white'>
+      <div className='relative bg-gray-50 md:bg-white h-24 md:h-full'>
+        <hr className='absolute w-[calc(100%-60px)] border border-slate-300 border-dashed lg:rotate-90 top-[116px] -left-0 -translate-x-1/2' />
+        <div className='h-9 w-full bg-white md:bg-teal-700 px-4 flex items-center justify-end text-sm text-slate-800 md:text-white'>
           <p className='text-xs'>{data.class}</p>
         </div>
         <div className='h-[calc(100%-36px)] w-full flex flex-row md:flex-col justify-between items-center md:items-end gap-4 md:gap-2 p-4'>
