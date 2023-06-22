@@ -76,7 +76,7 @@ export default function SeatClassModal({
 
   if (isOpen) {
     return (
-      <div className='absolute top-8 right-0  border bg-white  border-gray-200 rounded-2xl w-full md:w-[calc(100%+200px)] z-20'>
+      <div className='absolute top-8 right-0 border bg-white border-gray-200 rounded-2xl w-full md:w-[calc(100%+200px)] z-20  shadow-lg'>
         <div className='h-fit'>
           <div className='py-[14px] flex justify-end items-center border-b border-neutral-2 px-4'>
             <button onClick={toggleModal}>

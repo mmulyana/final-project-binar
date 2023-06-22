@@ -2,6 +2,11 @@ import Image from 'next/image'
 import React from 'react'
 import Button from '../Button'
 import Link from 'next/link'
+import {
+  changeToRupiah,
+  convertDateTicket,
+  convertToHoursMinutes,
+} from '@/utils'
 
 export default function Ticket({ data, query }) {
   return (
@@ -9,21 +14,19 @@ export default function Ticket({ data, query }) {
       <div className='p-6'>
         <div className='flex items-center justify-between'>
           <div className='flex gap-2 items-center'>
-            <Image
-              src='/image/AirAsia.svg'
-              alt='airline logo'
-              height={24}
-              width={24}
-            />
-            <p className='font-medium'>Air Asia</p>
+            <p className='font-medium'>{data.airline}</p>
           </div>
-          <p className='text-sm'>Jumat, 16 Juni</p>
+          <p className='text-sm'>
+            {convertDateTicket('id-ID', data.flight_date)}
+          </p>
         </div>
         <div className='flex items-center justify-between mt-6'>
           <div className='text-left'>
-            <p className='text-sm text-slate-500'>Jakarta</p>
-            <p className='text-2xl font-medium mt-2 text-slate-600'>JKT</p>
-            <p className='mt-2 text-sm'>10:00</p>
+            <p className='text-sm text-slate-500'>{data.departure_city}</p>
+            <p className='text-2xl font-medium mt-2 text-slate-600'>
+              {data.departure_code}
+            </p>
+            <p className='mt-2 text-sm'>{data.departure_time}</p>
           </div>
           <div className='grow relative h-10'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full lg:w-[256px] border border-dashed border-[#C2C5CF]'>
@@ -37,14 +40,16 @@ export default function Ticket({ data, query }) {
                 className='absolute left-1/2 -top-1/2 -translate-y-1/2 -translate-x-1/2'
               />
               <p className='absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-gray-400'>
-                1j 60m
+                {convertToHoursMinutes(data.flight_duration)}
               </p>
             </div>
           </div>
           <div className='text-right'>
-            <p className='text-sm text-slate-500'>Yogyakarta</p>
-            <p className='text-2xl font-medium mt-2 text-slate-600'>YOG</p>
-            <p className='mt-2 text-sm'>18:50</p>
+            <p className='text-sm text-slate-500'>{data.arrival_city}</p>
+            <p className='text-2xl font-medium mt-2 text-slate-600'>
+              {data.arrival_code}
+            </p>
+            <p className='mt-2 text-sm'>{data.arrival_time}</p>
           </div>
         </div>
       </div>
@@ -58,7 +63,7 @@ export default function Ticket({ data, query }) {
         <hr className='absolute -translate-y-1/2 -translate-x-1/2 top-0 lg:top-1/2 left-1/2 lg:left-0 w-[90%] lg:w-[60%] border border-dashed rotate-0 lg:rotate-90 ticket__divider'></hr>
 
         <div className='h-full w-full md:grow flex flex-col items-start lg:items-end justify-center'>
-          <p className='text-xl font-medium'>Rp 1.400.000</p>
+          <p className='text-xl font-medium'>{changeToRupiah(data.price)}</p>
           <p className='text-xs text-slate-300 mt-1 md:mt-2'>per orang</p>
         </div>
         <Link
