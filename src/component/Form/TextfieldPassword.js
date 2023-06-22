@@ -22,6 +22,7 @@ export default function TextfieldPassword({
         className={[
           'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center',
           props.disabled ? 'text-gray-400' : '',
+          props.className ?? ''
         ].join(' ')}
       >
         <input
@@ -33,7 +34,7 @@ export default function TextfieldPassword({
           className='bg-transparent outline-none w-full bg-[#F4F4F4]'
           onChange={onChange}
         />
-        <div onClick={() => setIsOpen(!isOpen)}>
+        <div className='cursor-pointer' onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (
             <Image
               src='/icon/eye-off.svg'
