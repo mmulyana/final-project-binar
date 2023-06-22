@@ -15,21 +15,22 @@ import api from '@/services/api'
 
 function Result() {
   const router = useRouter()
+  const [flights, setFlights] = useState([])
   const [query, setQuery] = useState(null)
   const [filterTicketByPrice, setFilterTicketByPrice] = useState(
     filterTicketByPriceAndTime
   )
 
   useEffect(() => {
-    setQuery(router.query)
-  }, [router])
+    if (router.isReady) {
+      setQuery(router.query)
+    }
+  }, [router.isReady])
 
   useEffect(() => {
     if (query === null) return
-    console.log(query)
-    
     getFlight(query)
-    return () => {}
+    return () => setFlights([])
   }, [query])
 
   async function getFlight(query) {
@@ -41,6 +42,8 @@ function Result() {
         passenger_cnt: parseInt(query.c),
       }
       const { data } = await api.post('/flights', body)
+      console.log(data.data)
+      setFlights(data.data)
     } catch (err) {
       console.log(err)
     }
@@ -60,6 +63,8 @@ function Result() {
 
     setFilterTicketByPrice(newFilterTickets)
   }
+
+  if (!query) return <></>
 
   return (
     <>
@@ -126,7 +131,7 @@ function Result() {
                       alt='calendar icon'
                     />
                     <p className='text-[#131316]/80 text-xs md:text-base'>
-                      {query?.dd.split('-')[2]}{' '}
+                      {!!query && query?.dd.split('-')[2]}
                       {query?.dr !== '0'
                         ? `${
                             getDiffBetweenMonth(query?.dd, query?.dr)
@@ -186,7 +191,15 @@ function Result() {
           </div>
           <div className='flex flex-col gap-6 mt-6'>
             {/* ticket */}
-            <Ticket query={query} />
+            {flights.length > 0 ? (
+              <>
+                {flights.map((flight, index) => (
+                  <Ticket query={query} data={flight} key={index} />
+                ))}
+              </>
+            ) : (
+              <p>kosong</p>
+            )}
           </div>
         </div>
       </div>

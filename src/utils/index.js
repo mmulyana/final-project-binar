@@ -1,4 +1,4 @@
-import airports from "./airports"
+import airports from './airports'
 
 let months = [
   'January',
@@ -85,7 +85,7 @@ function parseJwt(jwt) {
 }
 
 function getMonthFromDate(dateString) {
-  if(!dateString) return
+  if (!dateString) return
   const date = dateString.split('-')[1]
   const month = parseInt(date)
   const monthName = months[month - 1]
@@ -104,7 +104,7 @@ function convertToDateString(dateString) {
 }
 
 function getDiffBetweenMonth(date1, date2) {
-  if(!date1 || !date2) return
+  if (!date1 || !date2) return
   const part1 = date1.split('-')[1]
   const part2 = date2.split('-')[1]
 
@@ -112,9 +112,19 @@ function getDiffBetweenMonth(date1, date2) {
 }
 
 function getCityByIata(iata) {
-  if(!iata) return
-  const airport = airports.filter(airport => airport.iata_code.toLowerCase() === iata.toLowerCase())
+  if (!iata) return
+  const airport = airports.filter(
+    (airport) => airport.iata_code.toLowerCase() === iata.toLowerCase()
+  )
   return airport[0].city
+}
+
+function convertDateTicket(type, dateString) {
+  if (!dateString) return
+  const date = new Date(dateString)
+  const options = { weekday: 'long', day: 'numeric', month: 'long' }
+
+  return date.toLocaleDateString(type, options)
 }
 
 export {
@@ -127,5 +137,6 @@ export {
   getMonthFromDate,
   convertToDateString,
   getDiffBetweenMonth,
-  getCityByIata
+  getCityByIata,
+  convertDateTicket,
 }
