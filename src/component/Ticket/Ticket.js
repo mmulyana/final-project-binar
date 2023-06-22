@@ -2,7 +2,11 @@ import Image from 'next/image'
 import React from 'react'
 import Button from '../Button'
 import Link from 'next/link'
-import { changeToRupiah, convertDateTicket, convertToHoursMinutes } from '@/utils'
+import {
+  changeToRupiah,
+  convertDateTicket,
+  convertToHoursMinutes,
+} from '@/utils'
 
 export default function Ticket({ data, query }) {
   return (
@@ -12,13 +16,17 @@ export default function Ticket({ data, query }) {
           <div className='flex gap-2 items-center'>
             <p className='font-medium'>{data.airline}</p>
           </div>
-          <p className='text-sm'>{convertDateTicket('id-ID', data.flight_date)}</p>
+          <p className='text-sm'>
+            {convertDateTicket('id-ID', data.flight_date)}
+          </p>
         </div>
         <div className='flex items-center justify-between mt-6'>
           <div className='text-left'>
-            <p className='text-sm text-slate-500'>{data.arrival_city}</p>
-            <p className='text-2xl font-medium mt-2 text-slate-600'>{data.arrival_code}</p>
-            <p className='mt-2 text-sm'>{data.arrival_time}</p>
+            <p className='text-sm text-slate-500'>{data.departure_city}</p>
+            <p className='text-2xl font-medium mt-2 text-slate-600'>
+              {data.departure_code}
+            </p>
+            <p className='mt-2 text-sm'>{data.departure_time}</p>
           </div>
           <div className='grow relative h-10'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full lg:w-[256px] border border-dashed border-[#C2C5CF]'>
@@ -37,9 +45,11 @@ export default function Ticket({ data, query }) {
             </div>
           </div>
           <div className='text-right'>
-            <p className='text-sm text-slate-500'>{data.departure_city}</p>
-            <p className='text-2xl font-medium mt-2 text-slate-600'>{data.departure_code}</p>
-            <p className='mt-2 text-sm'>{data.departure_time}</p>
+            <p className='text-sm text-slate-500'>{data.arrival_city}</p>
+            <p className='text-2xl font-medium mt-2 text-slate-600'>
+              {data.arrival_code}
+            </p>
+            <p className='mt-2 text-sm'>{data.arrival_time}</p>
           </div>
         </div>
       </div>
