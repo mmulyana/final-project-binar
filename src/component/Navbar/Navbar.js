@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Button from '../Button'
 import LoginRegisterModal from '../Modal/LoginRegister'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '@/redux/reducers/auth'
 import Avvvatars from 'avvvatars-react'
@@ -62,11 +62,11 @@ export default function Navbar({ isDark = false }) {
         <div
           className={[
             'absolute top-0 left-0 h-full w-full duration-75 ease-in',
-            !isDark && offset > 0
-              ? 'bg-white'
-              : isDark
-              ? 'bg-white'
-              : 'bg-gradient-to-b from-black/40 to-black/0',
+            !isDark
+              ? offset > 0
+                ? 'bg-white'
+                : 'bg-gradient-to-b from-black/40 to-black/0'
+              : 'bg-white',
           ].join(' ')}
         ></div>
         <div className='container max-w-[1200px] px-4 lg:px-0 mx-auto flex items-center justify-between relative z-10 pb-4 border-b border-white/80'>
