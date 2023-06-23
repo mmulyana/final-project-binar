@@ -76,7 +76,7 @@ export const initialValue = {
     to: 'yogyakarta',
     valueFrom:'',
     valueTo:'',
-    origin: 'CGK',
+    origin: 'HLP',
     destination: 'JOG',
     departureDate: '',
     returnDate: '',

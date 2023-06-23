@@ -1,11 +1,11 @@
 import React from 'react'
-import { DarkNavbar } from '../Navbar'
+import { Navbar } from '../Navbar'
 import Footer from '../Footer'
 
 export default function SecondaryLayout({ children }) {
   return (
     <>
-      <DarkNavbar />
+      <Navbar isDark/>
       {children}
       <Footer />
     </>

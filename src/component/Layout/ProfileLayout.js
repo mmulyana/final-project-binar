@@ -1,15 +1,11 @@
-import { DarkNavbar } from '../Navbar'
-import Image from 'next/image'
-import Ic_edit from 'public/icon/edit.svg'
-import Ic_settings from 'public/icon/settings.svg'
-import Ic_logout from 'public/icon/logout.svg'
+import { Navbar } from '../Navbar'
 import Avvvatars from 'avvvatars-react'
 import Link from 'next/link'
 
 export default function ProfileLayout({ children, location }) {
   return (
     <>
-      <DarkNavbar />
+      <Navbar isDark/>
       <div className='pt-[84px] pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] items-start justify-between gap-6 max-w-[1200px] mx-auto px-4 lg:px-0'>
         <div className='bg-white border border-gray-200 p-4 rounded mt-6'>
           <div className='flex items-center gap-2 pb-4 border-b border-gray-200'>

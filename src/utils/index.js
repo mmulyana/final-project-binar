@@ -127,6 +127,24 @@ function convertDateTicket(type, dateString) {
   return date.toLocaleDateString(type, options)
 }
 
+function formatTimestamp(timestamp) {
+  let date = new Date(timestamp)
+  let formattedDate = date.toLocaleString('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: '2-digit',
+  })
+  return formattedDate
+}
+
+function getTimeByTimestamp(timestamp) {
+  let date = new Date(timestamp)
+  let hours = date.getHours().toString().padStart(2, '0')
+  let minutes = date.getMinutes().toString().padStart(2, '0')
+  return `${hours}:${minutes}`
+}
+
 export {
   sumDataNumbers,
   formatDate,
@@ -139,4 +157,6 @@ export {
   getDiffBetweenMonth,
   getCityByIata,
   convertDateTicket,
+  formatTimestamp,
+  getTimeByTimestamp,
 }
