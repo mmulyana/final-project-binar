@@ -18,12 +18,15 @@ export const searchReducer = (state = initialValue, action) => {
       }
     case 'switchDestionation':
       let tmp = state.data.to
+      let tmpIata = state.data.destination
       return {
         ...state,
         data: {
           ...state.data,
           to: state.data.from,
+          destination: state.data.origin,
           from: tmp,
+          origin: tmpIata
         },
       }
     case 'onchange':
@@ -34,6 +37,26 @@ export const searchReducer = (state = initialValue, action) => {
           [action.payload.type]: action.payload.value,
         },
       }
+    case 'hideSearch':
+      return {
+        ...state,
+        isOpen: {
+          ...state.isOpen,
+          searchDeparture: false,
+          searchReturn: false
+        }
+      }
+    case 'resetForm':
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          valueFrom: '',
+          valueTo: ''
+        }
+      }
+    case 'makeAllFalse':
+      return { ...state, isOpen: { ...makeAllFalse({ ...state }) } }
     default:
       return state
   }
@@ -41,15 +64,20 @@ export const searchReducer = (state = initialValue, action) => {
 
 export const initialValue = {
   isOpen: {
-    search: false,
+    searchDeparture: false,
+    searchReturn: false,
     date: false,
     passenger: false,
     seatClass: false,
     isReturnDate: false,
   },
   data: {
-    from: 'Jakarta',
-    to: 'Melbourne',
+    from: 'jakarta',
+    to: 'yogyakarta',
+    valueFrom:'',
+    valueTo:'',
+    origin: 'HLP',
+    destination: 'JOG',
     departureDate: '',
     returnDate: '',
     passengers: {
@@ -60,4 +88,13 @@ export const initialValue = {
     seatClass: 'Ekonomi',
     isOneWay: true,
   },
+}
+
+function makeAllFalse(obj) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      obj[key] = false
+    }
+  }
+  return obj
 }
