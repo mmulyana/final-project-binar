@@ -8,19 +8,33 @@ import imgBanner from 'public/image/banner-high.jpg'
 import { useEffect, useReducer, useState } from 'react'
 import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
-import { getProfile } from '@/redux/actions/authActions'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
 import { setUser } from '@/redux/reducers/auth'
+import axios from 'axios'
+import api from '@/services/api'
 
 function Home() {
   const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const dispatch = useDispatch()
+  const [flightsData, setFlightsData] = useState([])
+
+  const fetchFlightsData = async () => {
+    try {
+      const response = await api('/flights/data?start=1&length=10')
+      setFlightsData(response.data.data)
+      console.log(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
     const profile = Cookies.get('profile')
     if (profile) {
       dispatch(setUser(JSON.parse(profile)))
     }
+
+    fetchFlightsData()
   }, [])
 
   return (
@@ -74,19 +88,10 @@ function Home() {
       <section className='bg-white pt-14 pb-20 mt-20 px-4 md:px-0'>
         <div className='max-w-[1200px] mx-auto'>
           <h2 className='text-2xl text-[#0E0C25]'>
-            Destinasi internasional yang banyak diminati
-          </h2>
-          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
-            {flights.map((flight, index) => (
-              <CardFlight data={flight} key={index} />
-            ))}
-          </div>
-
-          <h2 className='text-2xl text-[#0E0C25] mt-14'>
             Destinasi Lokal yang banyak diminati
           </h2>
           <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
-            {flights.map((flight, index) => (
+            {flightsData.slice(0, 8).map((flight, index) => (
               <CardFlight data={flight} key={index} />
             ))}
           </div>
