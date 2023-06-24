@@ -1,56 +1,55 @@
-import React, { useEffect, useReducer, useState } from "react";
-import axios from "axios";
-import CardFlight from "@/component/Card/CardFlight";
-import DefaultLayout from "@/component/Layout/DefaultLayout";
-import SearchFlight from "@/component/SearchFlight";
-import CardSuggest from "@/component/Card/CardSuggest";
-import { flights, suggestDestination } from "@/utils/local";
-import Image from "next/image";
-import imgBanner from "public/image/banner-high.jpg";
-import { useDispatch } from "react-redux";
-import { getProfile } from "@/redux/actions/authActions";
-import { initialValue, searchReducer } from "@/component/SearchFlight/reducer";
-import Cookies from "js-cookie";
+import CardFlight from '@/component/Card/CardFlight'
+import DefaultLayout from '@/component/Layout/DefaultLayout'
+import SearchFlight from '@/component/SearchFlight'
+import CardSuggest from '@/component/Card/CardSuggest'
+import { flights, suggestDestination } from '@/utils/local'
+import Image from 'next/image'
+import imgBanner from 'public/image/banner-high.jpg'
+import { useEffect, useReducer, useState } from 'react'
+import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
+import { setUser } from '@/redux/reducers/auth'
+import axios from 'axios'
+import api from '@/services/api'
 
 function Home() {
-  const [state, dispatchReducer] = useReducer(searchReducer, initialValue);
-  const dispatch = useDispatch();
-  const [flightsData, setFlightsData] = useState([]);
+  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
+  const dispatch = useDispatch()
+  const [flightsData, setFlightsData] = useState([])
+
+  const fetchFlightsData = async () => {
+    try {
+      const response = await api('/flights/data?start=1&length=10')
+      setFlightsData(response.data.data)
+      console.log(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
-    const fetchFlightsData = async () => {
-      try {
-        const response = await axios.get(
-          "https://final-project-be-develop.up.railway.app/flights/data?start=1&length=4"
-        );
-        setFlightsData(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const id = Cookies.get("id");
-    if (id) {
-      dispatch(getProfile(id));
+    const profile = Cookies.get('profile')
+    if (profile) {
+      dispatch(setUser(JSON.parse(profile)))
     }
 
-    fetchFlightsData();
-  }, []);
+    fetchFlightsData()
+  }, [])
 
   return (
     <>
-      <div className="w-full h-[610px] relative mb-56 md:mb-0 z-10">
+      <div className='w-full h-[610px] relative mb-56 md:mb-0 z-10'>
         <Image
           src={imgBanner}
-          alt="banner"
+          alt='banner'
           width={1440}
           height={880}
-          className="w-full h-[300px] md:h-full object-cover object-left-bottom md:object-center"
+          className='w-full h-[300px] md:h-full object-cover object-left-bottom md:object-center'
           priority
         />
-        <div className="absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0 z-20">
-          <div className="max-w-[1200px] mx-auto">
+        <div className='absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0 z-20'>
+          <div className='max-w-[1200px] mx-auto'>
             <SearchFlight state={state} dispatch={dispatchReducer} />
           </div>
         </div>
@@ -62,49 +61,37 @@ function Home() {
           state.isOpen.seatClass ||
           state.isOpen.isReturnDate) && (
           <div
-            className="fixed top-0 left-0 h-full w-full bg-black/50 z-10"
+            className='fixed top-0 left-0 h-full w-full bg-black/50 z-10'
             onClick={() => {
               dispatchReducer({
-                type: "makeAllFalse",
-              });
+                type: 'makeAllFalse',
+              })
             }}
           />
         )}
       </div>
 
       {/* section 2 */}
-      <section className="pt-14 mt-16 px-4 md:px-0">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="text-2xl text-slate-900">Yuk jelajahi dunia kembali</p>
-          <p className="text-sm text-[#A5A4A9]">
+      <section className='pt-14 mt-16 px-4 md:px-0'>
+        <div className='max-w-[1200px] mx-auto'>
+          <p className='text-2xl text-slate-900'>Yuk jelajahi dunia kembali</p>
+          <p className='text-sm text-[#A5A4A9]'>
             Nikmati petualangan yang menanti di berbagai destinasi.
           </p>
-          <div className="mt-6">
-            {/* {Array.isArray(flightsData) &&
-              flightsData.map((flight, index) => (
-                <CardFlight data={flight} key={index} />
-              ))} */}
+          <div className='mt-6'>
+            <CardSuggest data={suggestDestination} />
           </div>
         </div>
       </section>
 
       {/* section 3 */}
-      <section className="bg-white pt-14 pb-20 mt-20 px-4 md:px-0">
-        <div className="max-w-[1200px] mx-auto">
-          <h2 className="text-2xl text-[#0E0C25]">
-            Destinasi internasional yang banyak diminati
-          </h2>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-4 gap-6">
-            {flightsData.map((flight, index) => (
-              <CardFlight data={flight} key={index} />
-            ))}
-          </div>
-
-          <h2 className="text-2xl text-[#0E0C25] mt-14">
+      <section className='bg-white pt-14 pb-20 mt-20 px-4 md:px-0'>
+        <div className='max-w-[1200px] mx-auto'>
+          <h2 className='text-2xl text-[#0E0C25]'>
             Destinasi Lokal yang banyak diminati
           </h2>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-4 gap-6">
-            {flightsData.map((flight, index) => (
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+            {flightsData.slice(0, 8).map((flight, index) => (
               <CardFlight data={flight} key={index} />
             ))}
           </div>
@@ -113,38 +100,38 @@ function Home() {
 
       {/* section 4 */}
 
-      <div className="bg-gray-100 pt-16 px-4">
-        <h1 className="text-center font-semibold text-xl">Partner Maskapai</h1>
-        <p className="text-center mt-4 text-[#131316]/80 max-w-[600px] mx-auto text-sm">
+      <div className='bg-gray-100 pt-16 px-4'>
+        <h1 className='text-center font-semibold text-xl'>Partner Maskapai</h1>
+        <p className='text-center mt-4 text-[#131316]/80 max-w-[600px] mx-auto text-sm'>
           Kerjasama kami dengan maskapai penerbangan di seluruh dunia
           memungkinkan kami mengantar Anda ke tujuan impian Anda, tak peduli di
           mana itu berada!
         </p>
 
-        <div className="mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]">
-          <img src="/image/Garuda.svg" alt="Garuda" />
+        <div className='mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]'>
+          <img src='/image/Garuda.svg' alt='Garuda' />
 
-          <img src="/image/LionAir.svg" alt="LionAir" />
+          <img src='/image/LionAir.svg' alt='LionAir' />
 
-          <img src="/image/BatikAir.svg" alt="BatikAir" />
+          <img src='/image/BatikAir.svg' alt='BatikAir' />
 
-          <img src="/image/AirAsia.svg" alt="AirAsia" />
+          <img src='/image/AirAsia.svg' alt='AirAsia' />
         </div>
 
-        <div className="mt-8 md:mt-10 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[100px]">
-          <img src="/image/Qatar.svg" alt="Qatar" />
+        <div className='mt-8 md:mt-10 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[100px]'>
+          <img src='/image/Qatar.svg' alt='Qatar' />
 
-          <img src="/image/jal.svg" alt="Japan" />
+          <img src='/image/jal.svg' alt='Japan' />
 
-          <img src="/image/Lufthansa.svg" alt="Lufthansa" />
+          <img src='/image/Lufthansa.svg' alt='Lufthansa' />
         </div>
       </div>
     </>
-  );
+  )
 }
 
 Home.getLayout = (page) => {
-  return <DefaultLayout>{page}</DefaultLayout>;
-};
+  return <DefaultLayout>{page}</DefaultLayout>
+}
 
-export default Home;
+export default Home
