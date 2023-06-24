@@ -63,7 +63,7 @@ export default function Order() {
 
   function addToSeates(param) {
     let length = 0
-    param.forEach((p, index) => {
+    param.forEach((p) => {
       if ([p] in query) {
         let tmp = parseInt(query[p], 10)
         length += tmp

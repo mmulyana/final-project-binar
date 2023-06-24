@@ -7,7 +7,7 @@ let timestamp = '2023-06-20T11:37:50.551Z'
 
 function Success() {
   return (
-    <div className='max-w-[400px] h-screen pb-4 mx-auto px-4 pt-10 flex flex-col justify-between'>
+    <div className='max-w-[400px] h-screen pb-4 mx-auto px-4 pt-10'>
       <div className='w-full h-fit pb-8 bg-white rounded-lg mt-5 relative'>
         <div className='text-center flex flex-col gap-1 items-center justify-center relative h-28'>
           <div className='text-white h-14 w-14 rounded-full bg-emerald-500 flex items-center justify-center relative pt-[2px] -mt-12 border-[4px] border-white shadow'>
@@ -59,7 +59,7 @@ function Success() {
         </div>
       </div>
 
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col gap-3 mt-5'>
         <Button className='py-3 rounded bg-gray-200 text-slate-800'>Cetak Tiket</Button>
         <Link href='/' className='py-3 rounded bg-[#326BF1] text-white text-center'>Kembali ke beranda</Link>
       </div>

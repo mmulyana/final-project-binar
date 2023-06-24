@@ -11,11 +11,21 @@ import Ic_Ma from '/public/icon/mastercard-card.png'
 import Ic_Vs from '/public/icon/visa-card.webp'
 import Ic_Ticket from '/public/icon/ticket.svg'
 import Ic_plane from 'public/icon/plane2.svg'
+import { useEffect, useState } from 'react'
+import { changeToRupiah } from '@/utils'
 
 function Payment() {
   const router = useRouter()
+  const [flight, setFlight] = useState(null)
+
+  useEffect(() => {
+    if (router.isReady) {
+      setFlight(router.query)
+    }
+  }, [router.isReady])
 
   function handlePay() {
+    
     router.push('/checkout/success')
   }
 
@@ -50,15 +60,44 @@ function Payment() {
         <div className='bg-white rounded py-4'>
           <div className='flex items-center gap-2 pb-6 relative px-4'>
             <Image src={Ic_Ticket} alt='ticket code' />
-            <p className='text-sm'>123456</p>
+            <p className='text-sm'>{flight?.tr}</p>
             <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -left-[10px] bottom-0' />
-              <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -right-[10px] bottom-0' />
-              <div className='w-[90%] border border-dashed border-gray-200 absolute bottom-[10px] left-1/2 -translate-x-1/2' />
+            <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -right-[10px] bottom-0' />
+            <div className='w-[90%] border border-dashed border-gray-200 absolute bottom-[10px] left-1/2 -translate-x-1/2' />
           </div>
 
-          <div className='flex items-center gap-2 mt-3 px-4'>
-            <Image src={Ic_plane} alt='plane destination' />
-            <p className='text-sm'>Jakarta → Yogyakarta</p>
+          <div className='flex flex-col items-center gap-2 mt-3 px-4'>
+            <div className='flex items-center justify-center gap-4 pt-2 pb-3'>
+              <p className='text-left text-base text-slate-700'>
+                {flight?.dc}{' '}
+                <span className='text-sm font-semibold text-slate-800'>
+                  ({flight?.or})
+                </span>
+              </p>
+              <Image
+                src={Ic_plane}
+                width={22}
+                height={22}
+                alt={`plane destination to ${flight?.dc}`}
+              />
+              <p className='text-right text-base text-slate-700'>
+                {flight?.ac}{' '}
+                <span className='text-sm font-semibold text-slate-800'>
+                  ({flight?.ds})
+                </span>
+              </p>
+            </div>
+
+            <div className='grid grid-cols-2 justify-between w-full'>
+              <div className='text-left'>
+                <p className='text-xs text-gray-400'>total pembayaran</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{changeToRupiah(flight?.t)}</p>
+              </div>
+              <div className='text-right'>
+                <p className='text-xs text-gray-400'>class</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{flight?.c}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -3,11 +3,12 @@ import Link from 'next/link'
 import Button from '../Button'
 import LoginRegisterModal from '../Modal/LoginRegister'
 import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { selectAuth } from '@/redux/reducers/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectAuth, setUser } from '@/redux/reducers/auth'
 import Avvvatars from 'avvvatars-react'
 import NotificationModal from '../Modal/NotificationModal'
 import MenuModal from '../Modal/MenuModal'
+import Cookies from 'js-cookie'
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
 const handleClickOutside = (event, ref, setOpen) => {
@@ -24,6 +25,16 @@ export default function Navbar({ isDark = false }) {
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
   const [offset, setOffset] = useState(0)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (user) return
+
+    const profile = Cookies.get('profile')
+    if (profile) {
+      dispatch(setUser(JSON.parse(profile)))
+    }
+  }, [user])
 
   useEffect(() => {
     const handleClick = (event) => {

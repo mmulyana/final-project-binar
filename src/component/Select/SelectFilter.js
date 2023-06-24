@@ -13,7 +13,7 @@ export default function SelectFilter({ data, handleClick }) {
       <p className='text-sm'>{data.name}</p>
       <div className='text-right text-xs'>
         <p className='opacity-50 mb-2'>mulai dari</p>
-        <p className='font-medium'>{changeToRupiah(data.price).slice(0, -3)}</p>
+        <p className='font-medium'>{changeToRupiah(data.price)}</p>
       </div>
     </div>
   )
