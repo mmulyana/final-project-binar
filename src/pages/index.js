@@ -2,38 +2,27 @@ import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
 import CardSuggest from '@/component/Card/CardSuggest'
-import { flights, suggestDestination } from '@/utils/local'
+import { suggestDestination } from '@/utils/local'
 import Image from 'next/image'
 import imgBanner from 'public/image/banner-high.jpg'
 import { useEffect, useReducer, useState } from 'react'
-import Cookies from 'js-cookie'
-import { useDispatch } from 'react-redux'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
-import { setUser } from '@/redux/reducers/auth'
-import axios from 'axios'
 import api from '@/services/api'
 
 function Home() {
   const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
-  const dispatch = useDispatch()
   const [flightsData, setFlightsData] = useState([])
 
   const fetchFlightsData = async () => {
     try {
       const response = await api('/flights/data?start=1&length=10')
       setFlightsData(response.data.data)
-      console.log(response.data.data)
     } catch (error) {
       console.error(error)
     }
   }
 
   useEffect(() => {
-    const profile = Cookies.get('profile')
-    if (profile) {
-      dispatch(setUser(JSON.parse(profile)))
-    }
-
     fetchFlightsData()
   }, [])
 

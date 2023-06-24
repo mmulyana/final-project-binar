@@ -65,8 +65,8 @@ export default function Ticket({ data, query }) {
           </div>
         </div>
       </div>
-      <div className='relative bg-gray-50 md:bg-white h-24 md:h-full'>
-        <hr className='absolute w-[calc(100%-60px)] border border-slate-300 border-dashed lg:rotate-90 top-[116px] -left-0 -translate-x-1/2' />
+      <div className='relative bg-gray-50 h-24 md:h-full'>
+        <hr className='absolute w-full border border-[#F0F1F6] border-dashed lg:rotate-90 top-[100px] -left-0 -translate-x-1/2' />
         <div className='h-9 w-full bg-white md:bg-teal-700 px-4 flex items-center justify-end text-sm text-slate-800 md:text-white'>
           <p className='text-xs'>{data.class}</p>
         </div>
