@@ -10,15 +10,16 @@ import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
 import { getProfile } from '@/redux/actions/authActions'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
+import { setUser } from '@/redux/reducers/auth'
 
 function Home() {
   const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const id = Cookies.get('id')
-    if (id) {
-      dispatch(getProfile(id))
+    const profile = Cookies.get('profile')
+    if (profile) {
+      dispatch(setUser(JSON.parse(profile)))
     }
   }, [])
 
