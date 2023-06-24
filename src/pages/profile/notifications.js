@@ -52,6 +52,8 @@ Notifications.getLayout = (page) => {
   return <ProfileLayout location='notifications'>{page}</ProfileLayout>
 }
 
+Notifications.auth = { hasLoggedIn: true }
+
 export default Notifications
 
 const dataNotif = [

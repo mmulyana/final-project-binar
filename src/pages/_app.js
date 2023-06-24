@@ -38,7 +38,7 @@ function Auth({ children, hasLoggedIn }) {
 
   const profile = Cookies.get('profile')
   const jwt = Cookies.get('jwt')
-  
+
   // jika user null tapi ada data di cookie
   if (!user && profile) {
     dispatch(setUser(JSON.parse(profile)))

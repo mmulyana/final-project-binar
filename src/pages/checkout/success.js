@@ -71,4 +71,6 @@ Success.getLayout = (page) => {
   return <CheckoutLayout index={3}>{page}</CheckoutLayout>
 }
 
+Success.auth = { hasLoggedIn: true }
+
 export default Success

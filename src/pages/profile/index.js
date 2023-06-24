@@ -34,4 +34,6 @@ Profile.getLayout = (page) => {
   return <ProfileLayout location='profile'>{page}</ProfileLayout>
 }
 
+Profile.auth = { hasLoggedIn: true }
+
 export default Profile
