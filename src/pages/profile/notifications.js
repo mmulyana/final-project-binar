@@ -13,7 +13,7 @@ function Notifications() {
   async function getNotification() {
     try {
       const jwt = Cookies.get('jwt')
-      const { data } = await api(`/notifications/${user.id}`, {
+      const { data } = await api(`/notifications?user_id=${user.id}`, {
         headers: {
           Authorization: jwt,
         },
@@ -25,6 +25,8 @@ function Notifications() {
   }
 
   useEffect(() => {
+    if(!user) return
+    
     getNotification()
   }, [])
 

@@ -13,20 +13,38 @@ import Ic_Ticket from '/public/icon/ticket.svg'
 import Ic_plane from 'public/icon/plane2.svg'
 import { useEffect, useState } from 'react'
 import { changeToRupiah } from '@/utils'
+import api from '@/services/api'
+import { headers } from 'next/dist/client/components/headers'
+import Cookies from 'js-cookie'
 
 function Payment() {
   const router = useRouter()
-  const [flight, setFlight] = useState(null)
+  const [query, setQuery] = useState(null)
 
   useEffect(() => {
     if (router.isReady) {
-      setFlight(router.query)
+      setQuery(router.query)
     }
   }, [router.isReady])
 
-  function handlePay() {
-    
-    router.push('/checkout/success')
+  async function handlePay() {
+    try {
+      const body = {
+        "transaction_id": query.tr
+      }
+      const jwt = Cookies.get('jwt')
+      const { data } = await api.post(`/payments`, body, {
+        headers: {
+          Authorization: jwt
+        }
+      })
+
+      if(data.status) {
+        router.push(`/checkout/success?t=${query.t}&tm=${query.tm}`)
+      }
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -60,7 +78,7 @@ function Payment() {
         <div className='bg-white rounded py-4'>
           <div className='flex items-center gap-2 pb-6 relative px-4'>
             <Image src={Ic_Ticket} alt='ticket code' />
-            <p className='text-sm'>{flight?.tr}</p>
+            <p className='text-sm'>{query?.tr}</p>
             <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -left-[10px] bottom-0' />
             <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -right-[10px] bottom-0' />
             <div className='w-[90%] border border-dashed border-gray-200 absolute bottom-[10px] left-1/2 -translate-x-1/2' />
@@ -69,21 +87,21 @@ function Payment() {
           <div className='flex flex-col items-center gap-2 mt-3 px-4'>
             <div className='flex items-center justify-center gap-4 pt-2 pb-3'>
               <p className='text-left text-base text-slate-700'>
-                {flight?.dc}{' '}
+                {query?.dc}{' '}
                 <span className='text-sm font-semibold text-slate-800'>
-                  ({flight?.or})
+                  ({query?.or})
                 </span>
               </p>
               <Image
                 src={Ic_plane}
                 width={22}
                 height={22}
-                alt={`plane destination to ${flight?.dc}`}
+                alt={`plane destination to ${query?.dc}`}
               />
               <p className='text-right text-base text-slate-700'>
-                {flight?.ac}{' '}
+                {query?.ac}{' '}
                 <span className='text-sm font-semibold text-slate-800'>
-                  ({flight?.ds})
+                  ({query?.ds})
                 </span>
               </p>
             </div>
@@ -91,11 +109,11 @@ function Payment() {
             <div className='grid grid-cols-2 justify-between w-full'>
               <div className='text-left'>
                 <p className='text-xs text-gray-400'>total pembayaran</p>
-                <p className='text-sm mt-1 font-medium text-gray-800'>{changeToRupiah(flight?.t)}</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{changeToRupiah(query?.t)}</p>
               </div>
               <div className='text-right'>
                 <p className='text-xs text-gray-400'>class</p>
-                <p className='text-sm mt-1 font-medium text-gray-800'>{flight?.c}</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{query?.c}</p>
               </div>
             </div>
           </div>
@@ -116,9 +134,9 @@ function CreditCard() {
     <div className='flex w-full items-center justify-between cursor-pointer'>
       <p>Credit Card</p>
       <div className='flex gap-2 items-center'>
-        <Image src={Ic_Ae} width={24} className='h-fit object-cover' />
-        <Image src={Ic_Ma} width={24} className='h-fit object-cover' />
-        <Image src={Ic_Vs} width={24} className='h-fit object-cover' />
+        <Image src={Ic_Ae} width={24} className='h-fit object-cover' alt='logo credit card' />
+        <Image src={Ic_Ma} width={24} className='h-fit object-cover' alt='logo credit card' />
+        <Image src={Ic_Vs} width={24} className='h-fit object-cover' alt='logo credit card' />
       </div>
     </div>
   )

@@ -12,16 +12,15 @@ export default function TicketHistory({ data, onClick, id }) {
   const router = useRouter()
 
   function handlePayment() {
-    sessionStorage.setItem('TMP_PAYMENT', JSON.stringify(data))
     router.push(
-      `/checkout/payment?tr=${data.transaction_id}&us=${id}&ac=${data.arrival_city}&dc=${data.departure_city}&t=${data.total_bill}&c=${data.class}&or=${data.departure_code}&ds=${data.arrival_code}`
+      `/checkout/payment?tr=${data.transaction_id}&us=${id}&ac=${data.arrival_city}&dc=${data.departure_city}&t=${data.total_bill}&c=${data.class}&or=${data.departure_code}&ds=${data.arrival_code}&tm=${data.transaction_date}`
     )
   }
 
   return (
     <div className='bg-white rounded-lg overflow-hidden'>
       <div className='py-2 w-full px-4 flex items-center justify-between text-sm relative border-b border-gray-200 bg-gray-50'>
-        <p className='text-slate-600'>No. pesanan {data.flight_number}</p>
+        <p className='text-slate-600'>No. pesanan {data.transaction_id}</p>
         <Label
           text={data.payment_status ? 'lunas' : changeToRupiah(data.total_bill)}
           state={data.payment_status ? 'success' : 'failed'}
@@ -78,14 +77,14 @@ export default function TicketHistory({ data, onClick, id }) {
       <div className='flex justify-end items-center bg-gray-50 px-4 py-2 border-t border-gray-200 mt-3'>
         {data.payment_status ? (
           <Button
-            className='block px-5 py-1 rounded hover:bg-gray-100 text-sm text-blue-600 font-medium'
+            className='block px-5 py-1 rounded hover:bg-blue-600 text-sm text-blue-600 hover:text-white'
             onClick={handlePayment}
           >
             Cetak
           </Button>
         ) : (
           <Button
-            className='block px-5 py-1 rounded hover:bg-gray-100 text-sm text-slate-600 font-medium'
+            className='block px-5 py-1 rounded hover:bg-gray-200 text-sm text-slate-600'
             onClick={handlePayment}
           >
             Bayar
