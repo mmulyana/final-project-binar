@@ -450,14 +450,14 @@ export default function Order() {
                   <div className='flex gap-3'>
                     <img
                       className='w-10 object-contain'
-                      src={flight.airline.icon_url}
+                      src={flight?.airline.icon_url}
                     />
                     <p className='text-slate-900'>{flight?.airline.name}</p>
                   </div>
                   <div className='text-right'>
                     <p className='text-xs text-gray-400'>pesawat</p>
                     <p className='text-sm text-gray-700'>
-                      {flight.airplane.model}
+                      {flight?.airplane.model}
                     </p>
                   </div>
                 </div>
