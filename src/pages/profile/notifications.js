@@ -43,7 +43,7 @@ function Notifications() {
       </div>
       <div className='mt-4 flex flex-col border border-gray-200 rounded'>
         {dataNotif.map((data, index) => (
-          <CardNotifications data={data} index={index} lenght={dataNotif.lenght}/>
+          <CardNotifications data={data} index={index} lenght={dataNotif.length}/>
         ))}
       </div>
     </div>
