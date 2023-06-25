@@ -74,7 +74,7 @@ function Notifications() {
             </>
           ) : null}
         </div>
-        <Button className='text-sm text-[#4642FF]'>Sudah dibaca</Button>
+        {/* <Button className='text-sm text-[#4642FF]'>Sudah dibaca</Button> */}
       </div>
       <div className='mt-4 flex flex-col border border-gray-200 rounded'>
         {data && data.length > 0

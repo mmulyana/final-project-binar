@@ -2,31 +2,74 @@ import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPhone from '@/component/Form/TextfieldPhone'
 import { ProfileLayout } from '@/component/Layout'
-import { removeUser, selectAuth } from '@/redux/reducers/auth'
+import { removeUser, selectAuth, updateUser } from '@/redux/reducers/auth'
 import api from '@/services/api'
 import { logout } from '@/utils/authUtils'
-import { useState } from 'react'
+import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 function Profile() {
   const { user } = useSelector(selectAuth)
+  const [isDisable, setDisable] = useState(true)
   const dispatch = useDispatch()
   const [data, setData] = useState({
-    name: 'Rengoku kyojuro',
-    phoneNumber: '123456789',
-    email: 'rengoku@hashira.com',
+    email: '',
+    name: '',
+    phone_number: '',
   })
+
+  function handleChange(e) {
+    const { name, value } = e.target
+
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  useEffect(() => {
+    if (!user) return
+    setData(user)
+  }, [])
 
   async function handleDeleteAccount() {
     try {
       const { data } = await api.delete(`users/${user.auth}`)
 
-      if(data.status) {
+      if (data.status) {
         logout()
         dispatch(removeUser())
       }
+    } catch (err) {}
+  }
 
-    } catch(err) {}
+  async function handleUpdateProfile() {
+    try {
+      const body = {
+        name: data.name,
+        phone_number: data.phone_number,
+      }
+      const jwt = Cookies.get('jwt')
+      
+      const res = await api.put(`users/${user.id}`, body, {
+        headers: {
+          Authorization: jwt,
+        },
+      })
+
+      if (res.data.status) {
+        dispatch(updateUser({
+          name: data.name,
+          phone_number: data.phone_number
+        }))
+        setDisable(true)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  function handleCancel() {
+    setDisable(true)
+    setData(user)
   }
 
   return (
@@ -34,21 +77,55 @@ function Profile() {
       <div className='bg-white p-8 rounded border border-gray-200 max-w-[540px]'>
         <p className='text-sm mb-5'>Data Diri</p>
         <div className='flex flex-col gap-6'>
-          <Textfield label='name lengkap' value={data.name} withLabel />
-          <TextfieldPhone
-            label='no. handphone'
-            value={data.phoneNumber}
+          <Textfield
+            label='name lengkap'
+            value={data.name}
             withLabel
+            disabled={isDisable}
+            name='name'
+            onChange={handleChange}
+          />
+          <TextfieldPhone
+            name='phone_number'
+            label='no. handphone'
+            value={data.phone_number}
+            onChange={handleChange}
+            disabled={isDisable}
           />
           <Textfield label='Email' value={data.email} withLabel disabled />
         </div>
         <div className='flex justify-between items-center mt-4'>
-          <Button onClick={handleDeleteAccount} className='text-red-400 rounded text-sm capitalize'>
+          <Button
+            onClick={handleDeleteAccount}
+            className='text-red-400 rounded text-sm capitalize'
+          >
             hapus akun
           </Button>
-          <Button className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'>
-            Simpan
-          </Button>
+          <div className='flex items-center gap-4'>
+            {isDisable ? (
+              <Button
+                onClick={() => setDisable(false)}
+                className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
+              >
+                Edit profile
+              </Button>
+            ) : (
+              <>
+                <Button
+                  onClick={handleCancel}
+                  className='text-slate-600 py-2 px-4 rounded text-sm'
+                >
+                  batal
+                </Button>
+                <Button
+                  onClick={handleUpdateProfile}
+                  className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
+                >
+                  Update
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>

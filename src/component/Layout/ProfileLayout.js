@@ -60,7 +60,7 @@ export default function ProfileLayout({ children, location }) {
               <Button
                 key={index}
                 className={[
-                  'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2',
+                  'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2 w-full',
                   location === menu.name
                     ? 'bg-gray-100 hover:bg-gray-200'
                     : 'hover:bg-gray-200',

@@ -9,6 +9,7 @@ import Avvvatars from 'avvvatars-react'
 import NotificationModal from '../Modal/NotificationModal'
 import MenuModal from '../Modal/MenuModal'
 import Cookies from 'js-cookie'
+import { selectNotif } from '@/redux/reducers/notifications'
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
 const handleClickOutside = (event, ref, setOpen) => {
@@ -21,11 +22,13 @@ export default function Navbar({ isDark = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const [openNotify, setOpenNotify] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
-  const { user } = useSelector(selectAuth)
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
   const [offset, setOffset] = useState(0)
   const dispatch = useDispatch()
+
+  const { user } = useSelector(selectAuth)
+  const { data } = useSelector(selectNotif)
 
   useEffect(() => {
     if (user) return
@@ -200,7 +203,14 @@ export default function Navbar({ isDark = false }) {
                       />
                     </svg>
                   </Button>
-                  {!!openNotify && <NotificationModal ref={notificationRef} />}
+                  {!!data && (
+                    <div className='absolute -top-[5px] -right-[5px] h-4 w-4 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs'>
+                      <p>{data.filter((d) => d.is_read === false).length}</p>
+                    </div>
+                  )}
+                  {!!openNotify && (
+                    <NotificationModal data={data} ref={notificationRef} />
+                  )}
                 </div>
                 <div className='relative h-8 w-8'>
                   <Button onClick={() => setOpenMenu(!openMenu)}>
