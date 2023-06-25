@@ -141,4 +141,5 @@ Profile.getLayout = (page) => {
 
 Profile.auth = { hasLoggedIn: true }
 
+
 export default Profile
