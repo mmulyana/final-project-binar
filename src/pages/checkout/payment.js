@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 import { changeToRupiah } from '@/utils'
 import api from '@/services/api'
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
 
 function Payment() {
   const router = useRouter()
@@ -39,10 +40,10 @@ function Payment() {
       })
 
       if(data.status) {
-        router.push(`/checkout/success?t=${query.t}&tm=${query.tm}`)
+        router.push(`/checkout/success?t=${query.t}&tm=${query.tm}&mt=credit card`)
       }
     } catch(err) {
-      console.log(err)
+      toast.error(err.response.data.message)
     }
   }
 

@@ -6,6 +6,7 @@ import { hideEmail } from '@/utils'
 import { useRef, useState } from 'react'
 import Button from '@/component/Button'
 import api from '@/services/api'
+import { toast } from 'react-toastify'
 
 export default function OtpPage() {
   const router = useRouter()
@@ -45,23 +46,29 @@ export default function OtpPage() {
   async function submit() {
     const body = {
       email: router.query.email,
-      otp: otp.join('')
+      otp: otp.join(''),
     }
 
     try {
-      const response = await api.post('/auth/verify-otp', body)
-      console.log(response)
-      router.push('/')
-    } catch(err) {}
+      const { data } = await api.post('/auth/verify-otp', body)
+      if (data.status) {
+        toast.success('your email has been verified')
+        router.push('/')
+      }
+    } catch (err) {
+      toast.error(err.response.data.message)
+    }
   }
 
   async function resentOtp() {
     try {
-      const response = await api.post('auth/resend-otp', {
+      const { data } = await api.post('auth/resend-otp', {
         email: router.query.email,
       })
-      console.log(response)
-    } catch (err) {}
+      toast.success(data.message)
+    } catch (err) {
+      toast.error(err.response.data.message)
+    }
   }
 
   return (
@@ -101,10 +108,15 @@ export default function OtpPage() {
         ))}
       </div>
       <div className='mt-8 flex flex-col items-center justify-center gap-2'>
-        <Button onClick={submit} className='px-10 py-3 text-sm bg-[#4642FF] rounded text-white'>
+        <Button
+          onClick={submit}
+          className='px-10 py-3 text-sm bg-[#4642FF] rounded text-white'
+        >
           Verifikasi
         </Button>
-        <Button onClick={resentOtp} className='mt-2 text-sm text-gray-500'>Kirim kode lagi</Button>
+        <Button onClick={resentOtp} className='mt-2 text-sm text-gray-500'>
+          Kirim kode lagi
+        </Button>
       </div>
     </div>
   )

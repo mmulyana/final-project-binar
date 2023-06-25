@@ -8,6 +8,7 @@ import api from '@/services/api'
 import { setUser } from '@/redux/reducers/auth'
 import { parseJwt } from '@/utils'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 const initialValues = {
   email: '',
@@ -36,8 +37,12 @@ export default function Login({ toggleModal }) {
 
         dispatch(setUser(dataProfile.data))
         toggleModal()
+
+        toast.success(`welcome back ${dataProfile.data.name}`)
       }
-    } catch (err) {}
+    } catch (err) {
+      toast.error(err.response.data.message)
+    }
   }
 
   function handleChange(e) {

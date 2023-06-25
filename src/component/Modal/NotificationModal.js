@@ -32,27 +32,36 @@ const NotificationModal = forwardRef((props, ref) => {
   return (
     <div
       ref={ref}
-      className='absolute top-9 right-0 w-[500px] h-auto rounded-lg bg-white p-4'
+      className='absolute top-9 right-0 w-[500px] h-auto rounded-lg bg-white p-4 shadow'
     >
       <div className='flex justify-between items-center pb-2 border-b border-gray-200'>
         <div className='flex gap-3 items-center'>
           <p className='text-slate-600 text-sm'>Notifikasi</p>
-          <div className='w-5 h-5 rounded-lg bg-[#326BF1] flex items-center justify-center text-white text-sm'>
-            {sortNotifications.filter((data) => data.is_read === false).length}
-          </div>
+          {sortNotifications && sortNotifications.length > 0 ? (
+            <div className='w-5 h-5 rounded-lg bg-[#326BF1] flex items-center justify-center text-white text-sm'>
+              {
+                sortNotifications.filter((data) => data.is_read === false)
+                  .length
+              }
+            </div>
+          ) : null}
         </div>
         {/* <Button className='text-[#326BF1] text-xs'>Sudah dibaca</Button> */}
       </div>
       <div className='flex flex-col rounded'>
-        {sortNotifications.map((data, index) => (
-          <CardNotifications
-            key={index}
-            data={data}
-            index={index}
-            handleNotif={handleNotif}
-            lenght={dataNotif.length}
-          />
-        ))}
+        {sortNotifications && sortNotifications.length > 0 ? (
+          sortNotifications.map((data, index) => (
+            <CardNotifications
+              key={index}
+              data={data}
+              index={index}
+              handleNotif={handleNotif}
+              lenght={dataNotif.length}
+            />
+          ))
+        ) : (
+          <p className='text-sm text-slate-500 text-center mt-4'>belum ada notifikasi</p>
+        )}
       </div>
     </div>
   )
