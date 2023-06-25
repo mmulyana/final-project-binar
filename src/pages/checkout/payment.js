@@ -14,7 +14,6 @@ import Ic_plane from 'public/icon/plane2.svg'
 import { useEffect, useState } from 'react'
 import { changeToRupiah } from '@/utils'
 import api from '@/services/api'
-import { headers } from 'next/dist/client/components/headers'
 import Cookies from 'js-cookie'
 
 function Payment() {
