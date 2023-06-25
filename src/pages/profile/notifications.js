@@ -15,7 +15,6 @@ function Notifications() {
   const { user } = useSelector(selectAuth)
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
-  console.log(data)
 
   async function getNotification() {
     try {
@@ -57,6 +56,7 @@ function Notifications() {
   }, [])
 
   const sortNotifications = useMemo(() => {
+    if(!data) return
     const tmp = [...data]
     return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   }, [data])
@@ -69,7 +69,7 @@ function Notifications() {
           {data && data.length > 0 ? (
             <>
               <div className='w-6 h-6 rounded-lg bg-[#4642FF] flex items-center justify-center text-white text-sm'>
-                {data.filter((data) => data.isMarked === false).length}
+                {data.filter((data) => data.is_read === false).length}
               </div>
             </>
           ) : null}
