@@ -1,14 +1,21 @@
 import { ProfileLayout } from '@/component/Layout'
+import Cookies from 'js-cookie'
+import { useEffect, useMemo } from 'react'
+
 import { selectAuth } from '@/redux/reducers/auth'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectNotif, setNotifications } from '@/redux/reducers/notifications'
+
+import CardNotifications from '@/component/Card/CardNotifications'
 import Button from '@/component/Button'
 import api from '@/services/api'
-import Cookies from 'js-cookie'
-import { useEffect } from 'react'
-import CardNotifications from '@/component/Card/CardNotifications'
+import axios from 'axios'
 
 function Notifications() {
   const { user } = useSelector(selectAuth)
+  const { data } = useSelector(selectNotif)
+  const dispatch = useDispatch()
+  console.log(data)
 
   async function getNotification() {
     try {
@@ -18,33 +25,69 @@ function Notifications() {
           Authorization: jwt,
         },
       })
-      console.log(data)
+      if (data.status) {
+        dispatch(setNotifications(data.data))
+      }
     } catch (err) {
       console.log(err)
     }
   }
 
+  async function handleNotif(id) {
+    try {
+      const jwt = Cookies.get('jwt')
+      let config = {
+        method: 'put',
+        maxBodyLength: Infinity,
+        url: `https://final-project-be-develop.up.railway.app/notifications/${id}`,
+        headers: {
+          Authorization: jwt,
+        },
+      }
+      const { data } = await axios.request(config)
+      console.log(data)
+      getNotification()
+    } catch (err) {}
+  }
+
   useEffect(() => {
-    if(!user) return
-    
+    if (!user) return
+
     getNotification()
   }, [])
+
+  const sortNotifications = useMemo(() => {
+    const tmp = [...data]
+    return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+  }, [data])
 
   return (
     <div className='max-w-[540px]'>
       <div className='flex items-center justify-between'>
         <div className='flex gap-3 items-center'>
           <h1 className='text-lg'>Notifikasi</h1>
-          <div className='w-6 h-6 rounded-lg bg-[#4642FF] flex items-center justify-center text-white text-sm'>
-            {dataNotif.filter((data) => data.isMarked === false).length}
-          </div>
+          {data && data.length > 0 ? (
+            <>
+              <div className='w-6 h-6 rounded-lg bg-[#4642FF] flex items-center justify-center text-white text-sm'>
+                {data.filter((data) => data.isMarked === false).length}
+              </div>
+            </>
+          ) : null}
         </div>
         <Button className='text-sm text-[#4642FF]'>Sudah dibaca</Button>
       </div>
       <div className='mt-4 flex flex-col border border-gray-200 rounded'>
-        {dataNotif.map((data, index) => (
-          <CardNotifications data={data} index={index} lenght={dataNotif.length}/>
-        ))}
+        {data && data.length > 0
+          ? sortNotifications.map((data, index) => (
+              <CardNotifications
+                key={index}
+                data={data}
+                index={index}
+                handleNotif={handleNotif}
+                lenght={dataNotif.length}
+              />
+            ))
+          : null}
       </div>
     </div>
   )

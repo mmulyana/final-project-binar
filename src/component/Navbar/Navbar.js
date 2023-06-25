@@ -227,7 +227,17 @@ export default function Navbar({ isDark = false }) {
           </MediaQuery>
 
           <MediaQuery maxWidth={786}>
-            <Link href='/' className='text-2xl font-semibold text-white'>
+            <Link
+              href='/'
+              className={[
+                'text-2xl font-semibold',
+                !isDark
+                  ? offset > 0
+                    ? 'text-slate-800'
+                    : 'text-white'
+                  : 'text-slate-800',
+              ].join(' ')}
+            >
               Tripp
             </Link>
 
