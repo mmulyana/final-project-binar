@@ -122,10 +122,12 @@ export default function Order() {
       })
 
       if (data.status) {
-        router.push(`/checkout/payment?id=${flight.id}`)
+        router.push(`/checkout/payment?tr=${data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${data.departure.city}&t=${data.data.total_price}&c=${flight.class}&or=${data.departure.iata_code}&ds=${data.arrival.iata_code}&tm=${data.transaction.created_at}`)
       }
     } catch (err) {
-      console.log(err)
+      if (err.response.data.status) {
+        router.push(`/checkout/payment?tr=${err.response.data.data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${flight.departure.city}&t=${err.response.data.data.total_price}&c=${flight.class}&or=${flight.departure.iata_code}&ds=${flight.arrival.iata_code}`)
+      }
     }
   }
 

@@ -13,7 +13,7 @@ function Notifications() {
   async function getNotification() {
     try {
       const jwt = Cookies.get('jwt')
-      const { data } = await api(`/notifications/${user.id}`, {
+      const { data } = await api(`/notifications?user_id=${user.id}`, {
         headers: {
           Authorization: jwt,
         },
@@ -25,6 +25,8 @@ function Notifications() {
   }
 
   useEffect(() => {
+    if(!user) return
+    
     getNotification()
   }, [])
 
@@ -41,7 +43,7 @@ function Notifications() {
       </div>
       <div className='mt-4 flex flex-col border border-gray-200 rounded'>
         {dataNotif.map((data, index) => (
-          <CardNotifications data={data} index={index} lenght={dataNotif.lenght}/>
+          <CardNotifications data={data} index={index} lenght={dataNotif.length}/>
         ))}
       </div>
     </div>
@@ -51,6 +53,8 @@ function Notifications() {
 Notifications.getLayout = (page) => {
   return <ProfileLayout location='notifications'>{page}</ProfileLayout>
 }
+
+Notifications.auth = { hasLoggedIn: true }
 
 export default Notifications
 

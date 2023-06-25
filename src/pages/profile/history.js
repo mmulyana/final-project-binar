@@ -67,6 +67,6 @@ History.getLayout = (page) => {
   return <ProfileLayout location='history'>{page}</ProfileLayout>
 }
 
-History.auth = { required: true }
+History.auth = { hasLoggedIn: true }
 
 export default History
