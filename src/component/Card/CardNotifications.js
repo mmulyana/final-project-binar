@@ -1,12 +1,13 @@
+import { formatTimestamp } from '@/utils'
 import React from 'react'
 
-export default function CardNotifications({ data, index, length }) {
+export default function CardNotifications({ data, index, length, handleNotif }) {
   return (
     <div
-      key={index}
+      onClick={() => handleNotif(data.id)}
       className={[
         'grid grid-cols-[1fr_8fr] gap-2 items-start py-3 px-4 relative overflow-hidden',
-        data.isMarked ? 'bg-white' : 'bg-blue-100 hover:bg-blue-200',
+        data.is_read ? 'bg-white' : 'bg-blue-100 hover:bg-blue-200',
         index === 0 ? 'rounded-t' : '',
         index === length - 1 ? 'rounded-b' : '',
       ].join(' ')}
@@ -14,7 +15,7 @@ export default function CardNotifications({ data, index, length }) {
       <div
         className={[
           'w-9 h-9 rounded-full flex items-center justify-center',
-          data.isMarked
+          data.is_read
             ? 'bg-slate-200 text-slate-600'
             : 'bg-blue-300 text-blue-500 ',
         ].join(' ')}
@@ -39,11 +40,11 @@ export default function CardNotifications({ data, index, length }) {
         <p className='capitalize text-sm text-slate-700'>{data.type}</p>
         <p className='mt-1 text-sm font-medium text-slate-700'>{data.title}</p>
         {data.message !== '' ? (
-          <p className='text-slate-500 text-sm font-normal'>{data.message}</p>
+          <p className='text-slate-500 text-sm font-normal'>{data.body}</p>
         ) : null}
-        <p className='mt-2 text-xs text-slate-500'>{data.date}</p>
+        <p className='mt-2 text-xs text-slate-500'>{formatTimestamp(data.created_at)}</p>
       </div>
-      {!data.isMarked && (
+      {!data.is_read && (
         <div className='absolute right-3 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-blue-500' />
       )}
     </div>

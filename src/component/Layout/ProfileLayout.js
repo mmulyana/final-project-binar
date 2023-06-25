@@ -1,11 +1,46 @@
-import { selectAuth } from '@/redux/reducers/auth'
-import { Navbar } from '../Navbar'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+
 import Avvvatars from 'avvvatars-react'
-import Link from 'next/link'
-import { useSelector } from 'react-redux'
+import { Navbar } from '../Navbar'
+import Button from '../Button'
+
+import { removeUser, selectAuth } from '@/redux/reducers/auth'
+import { logout } from '@/utils/authUtils'
 
 export default function ProfileLayout({ children, location }) {
   const { user } = useSelector(selectAuth)
+  const [profile, setProfile] = useState({
+    name: 'user',
+    email: 'example@gmail.com'
+  })
+
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(!user) return
+
+    setProfile({
+      name: user.name,
+      email: user.email
+    })
+
+  },[user])
+
+  function handleClickMenu(href) {
+    if(href !== '/logout') {
+      router.push(href)
+      return
+    }
+
+    logout()
+    dispatch(removeUser())
+    if(!user) {
+      router.push('/')
+    }
+  }
 
   return (
     <>
@@ -13,16 +48,16 @@ export default function ProfileLayout({ children, location }) {
       <div className='pt-[84px] pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] items-start justify-between gap-6 max-w-[1200px] mx-auto px-4 lg:px-0'>
         <div className='bg-white border border-gray-200 p-4 rounded mt-6'>
           <div className='flex items-center gap-2 pb-4 border-b border-gray-200'>
-            <Avvvatars size={50} value={user ? user.email : 'user'} />
+            <Avvvatars size={50} value={profile.email} />
             <div>
-              <p className='text-sm text-slate-800'>{user?.name}</p>
-              <p className='text-xs text-slate-500'>{user?.email}</p>
+              <p className='text-sm text-slate-800'>{profile.name}</p>
+              <p className='text-xs text-slate-500'>{profile.email}</p>
             </div>
           </div>
 
           <div className='mt-2'>
             {menus.map((menu, index) => (
-              <Link
+              <Button
                 key={index}
                 className={[
                   'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2',
@@ -30,11 +65,11 @@ export default function ProfileLayout({ children, location }) {
                     ? 'bg-gray-100 hover:bg-gray-200'
                     : 'hover:bg-gray-200',
                 ].join(' ')}
-                href={menu.name !== 'logout' ? menu.href : '/'}
+                onClick={() => handleClickMenu(menu.href)}
               >
                 <div>{menu.img}</div>
                 <h3 className='text-sm text-gray-500'>{menu.title}</h3>
-              </Link>
+              </Button>
             ))}
           </div>
         </div>
@@ -113,6 +148,7 @@ const menus = [
   },
   {
     name: 'logout',
+    href: '/logout',
     title: 'Keluar',
     img: (
       <svg

@@ -63,6 +63,7 @@ function History() {
   )
 }
 
+
 History.getLayout = (page) => {
   return <ProfileLayout location='history'>{page}</ProfileLayout>
 }

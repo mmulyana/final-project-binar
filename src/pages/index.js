@@ -8,6 +8,7 @@ import imgBanner from 'public/image/banner-high.jpg'
 import { useEffect, useReducer, useState } from 'react'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
 import api from '@/services/api'
+import Cookies from 'js-cookie'
 
 function Home() {
   const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
