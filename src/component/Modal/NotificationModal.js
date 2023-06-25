@@ -1,13 +1,11 @@
 import React, { forwardRef, useMemo } from 'react'
 import Button from '../Button'
-import { useSelector } from 'react-redux'
-import { selectNotif } from '@/redux/reducers/notifications'
 import CardNotifications from '../Card/CardNotifications'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 
 const NotificationModal = forwardRef((props, ref) => {
-  const { data } = useSelector(selectNotif)
+  const { data } = props
 
   async function handleNotif(id) {
     try {
@@ -26,7 +24,7 @@ const NotificationModal = forwardRef((props, ref) => {
   }
 
   const sortNotifications = useMemo(() => {
-    if(!data) return
+    if (!data) return
     const tmp = [...data]
     return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   }, [data])
@@ -43,7 +41,7 @@ const NotificationModal = forwardRef((props, ref) => {
             {sortNotifications.filter((data) => data.is_read === false).length}
           </div>
         </div>
-        <Button className='text-[#326BF1] text-xs'>Sudah dibaca</Button>
+        {/* <Button className='text-[#326BF1] text-xs'>Sudah dibaca</Button> */}
       </div>
       <div className='flex flex-col rounded'>
         {sortNotifications.map((data, index) => (
