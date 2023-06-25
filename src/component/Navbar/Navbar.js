@@ -251,7 +251,15 @@ export default function Navbar({ isDark = false }) {
               Tripp
             </Link>
 
-            <Button>
+            <Button
+              className={
+                !isDark
+                  ? offset > 0
+                    ? 'text-slate-800'
+                    : 'text-white hover:bg-white/20'
+                  : 'text-slate-800'
+              }
+            >
               <svg
                 width='24'
                 height='24'
@@ -261,7 +269,7 @@ export default function Navbar({ isDark = false }) {
               >
                 <path
                   d='M3 12H21M3 6H21M9 18H21'
-                  stroke='white'
+                  stroke='currentColor'
                   strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'

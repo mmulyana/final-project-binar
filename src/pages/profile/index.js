@@ -2,17 +2,19 @@ import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPhone from '@/component/Form/TextfieldPhone'
 import { ProfileLayout } from '@/component/Layout'
-import { removeUser, selectAuth, updateUser } from '@/redux/reducers/auth'
+import DeleteAccountModal from '@/component/Modal/DeleteAccountModal'
+import { selectAuth, updateUser } from '@/redux/reducers/auth'
 import api from '@/services/api'
-import { logout } from '@/utils/authUtils'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 function Profile() {
   const { user } = useSelector(selectAuth)
   const [isDisable, setDisable] = useState(true)
   const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(true)
   const [data, setData] = useState({
     email: '',
     name: '',
@@ -30,15 +32,8 @@ function Profile() {
     setData(user)
   }, [])
 
-  async function handleDeleteAccount() {
-    try {
-      const { data } = await api.delete(`users/${user.auth}`)
-
-      if (data.status) {
-        logout()
-        dispatch(removeUser())
-      }
-    } catch (err) {}
+  function handleToggle() {
+    setIsOpen(!isOpen)
   }
 
   async function handleUpdateProfile() {
@@ -48,7 +43,7 @@ function Profile() {
         phone_number: data.phone_number,
       }
       const jwt = Cookies.get('jwt')
-      
+
       const res = await api.put(`users/${user.id}`, body, {
         headers: {
           Authorization: jwt,
@@ -56,14 +51,19 @@ function Profile() {
       })
 
       if (res.data.status) {
-        dispatch(updateUser({
-          name: data.name,
-          phone_number: data.phone_number
-        }))
+        dispatch(
+          updateUser({
+            name: data.name,
+            phone_number: data.phone_number,
+          })
+        )
+        toast.success(res.data.message)
+        Cookies.set('profile', JSON.stringify(data))
         setDisable(true)
       }
     } catch (err) {
       console.log(err)
+      // toast.error(err.response.data.message)
     }
   }
 
@@ -96,7 +96,7 @@ function Profile() {
         </div>
         <div className='flex justify-between items-center mt-4'>
           <Button
-            onClick={handleDeleteAccount}
+            onClick={handleToggle}
             className='text-red-400 rounded text-sm capitalize'
           >
             hapus akun
@@ -128,6 +128,9 @@ function Profile() {
           </div>
         </div>
       </div>
+      {!!isOpen && (
+        <DeleteAccountModal isOpen id={data.id} toggleModal={handleToggle} />
+      )}
     </>
   )
 }

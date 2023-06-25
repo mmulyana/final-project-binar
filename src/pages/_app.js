@@ -6,7 +6,8 @@ import { wrapper } from '@/redux'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { selectAuth, setUser } from '@/redux/reducers/auth'
-import { getProfile } from '@/redux/actions/authActions'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 import Cookies from 'js-cookie'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,6 +28,7 @@ export default function App({ Component, ...pageProps }) {
           {getLayout(<Component {...pageProps} />)}
         </main>
       )}
+      <ToastContainer />
     </Provider>
   )
 }
