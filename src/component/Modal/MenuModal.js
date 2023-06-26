@@ -16,7 +16,7 @@ const MenuModal = forwardRef((props, ref) => {
   }
 
   return (
-    <div ref={ref} className='absolute top-9 right-0  rounded-lg bg-white p-4 '>
+    <div ref={ref} className='absolute top-9 right-0 rounded-lg bg-white p-4 shadow'>
       <div className='flex gap-2 items-center pb-2 border-b border-gray-200'>
         <div className='w-10'>
           <Avvvatars value={data.email} size={40} />

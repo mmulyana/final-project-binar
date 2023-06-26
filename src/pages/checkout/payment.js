@@ -11,12 +11,40 @@ import Ic_Ma from '/public/icon/mastercard-card.png'
 import Ic_Vs from '/public/icon/visa-card.webp'
 import Ic_Ticket from '/public/icon/ticket.svg'
 import Ic_plane from 'public/icon/plane2.svg'
+import { useEffect, useState } from 'react'
+import { changeToRupiah } from '@/utils'
+import api from '@/services/api'
+import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
 
 function Payment() {
   const router = useRouter()
+  const [query, setQuery] = useState(null)
 
-  function handlePay() {
-    router.push('/checkout/success')
+  useEffect(() => {
+    if (router.isReady) {
+      setQuery(router.query)
+    }
+  }, [router.isReady])
+
+  async function handlePay() {
+    try {
+      const body = {
+        "transaction_id": query.tr
+      }
+      const jwt = Cookies.get('jwt')
+      const { data } = await api.post(`/payments`, body, {
+        headers: {
+          Authorization: jwt
+        }
+      })
+
+      if(data.status) {
+        router.push(`/checkout/success?t=${query.t}&tm=${query.tm}&mt=credit card`)
+      }
+    } catch(err) {
+      toast.error(err.response.data.message)
+    }
   }
 
   return (
@@ -50,15 +78,44 @@ function Payment() {
         <div className='bg-white rounded py-4'>
           <div className='flex items-center gap-2 pb-6 relative px-4'>
             <Image src={Ic_Ticket} alt='ticket code' />
-            <p className='text-sm'>123456</p>
+            <p className='text-sm'>{query?.tr}</p>
             <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -left-[10px] bottom-0' />
-              <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -right-[10px] bottom-0' />
-              <div className='w-[90%] border border-dashed border-gray-200 absolute bottom-[10px] left-1/2 -translate-x-1/2' />
+            <div className='w-5 h-5 bg-[#F0F1F6] rounded-full absolute -right-[10px] bottom-0' />
+            <div className='w-[90%] border border-dashed border-gray-200 absolute bottom-[10px] left-1/2 -translate-x-1/2' />
           </div>
 
-          <div className='flex items-center gap-2 mt-3 px-4'>
-            <Image src={Ic_plane} alt='plane destination' />
-            <p className='text-sm'>Jakarta → Yogyakarta</p>
+          <div className='flex flex-col items-center gap-2 mt-3 px-4'>
+            <div className='flex items-center justify-center gap-4 pt-2 pb-3'>
+              <p className='text-left text-base text-slate-700'>
+                {query?.dc}{' '}
+                <span className='text-sm font-semibold text-slate-800'>
+                  ({query?.or})
+                </span>
+              </p>
+              <Image
+                src={Ic_plane}
+                width={22}
+                height={22}
+                alt={`plane destination to ${query?.dc}`}
+              />
+              <p className='text-right text-base text-slate-700'>
+                {query?.ac}{' '}
+                <span className='text-sm font-semibold text-slate-800'>
+                  ({query?.ds})
+                </span>
+              </p>
+            </div>
+
+            <div className='grid grid-cols-2 justify-between w-full'>
+              <div className='text-left'>
+                <p className='text-xs text-gray-400'>total pembayaran</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{changeToRupiah(query?.t)}</p>
+              </div>
+              <div className='text-right'>
+                <p className='text-xs text-gray-400'>class</p>
+                <p className='text-sm mt-1 font-medium text-gray-800'>{query?.c}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,9 +134,9 @@ function CreditCard() {
     <div className='flex w-full items-center justify-between cursor-pointer'>
       <p>Credit Card</p>
       <div className='flex gap-2 items-center'>
-        <Image src={Ic_Ae} width={24} className='h-fit object-cover' />
-        <Image src={Ic_Ma} width={24} className='h-fit object-cover' />
-        <Image src={Ic_Vs} width={24} className='h-fit object-cover' />
+        <Image src={Ic_Ae} width={24} className='h-fit object-cover' alt='logo credit card' />
+        <Image src={Ic_Ma} width={24} className='h-fit object-cover' alt='logo credit card' />
+        <Image src={Ic_Vs} width={24} className='h-fit object-cover' alt='logo credit card' />
       </div>
     </div>
   )

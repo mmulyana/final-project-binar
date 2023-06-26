@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useMemo } from 'react'
 import Button from '../Button'
 import Link from 'next/link'
 import {
@@ -9,6 +9,11 @@ import {
 } from '@/utils'
 
 export default function Ticket({ data, query }) {
+
+  const url = useMemo(() => {
+    return `/checkout/order?a=${query?.a}&k=${query?.k}&b=${query?.b}&id=${data.id}`
+  },[query])
+
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[600px_1fr] bg-white rounded-lg overflow-hidden'>
       <div>
@@ -60,8 +65,8 @@ export default function Ticket({ data, query }) {
           </div>
         </div>
       </div>
-      <div className='relative bg-gray-50 md:bg-white h-24 md:h-full'>
-        <hr className='absolute w-[calc(100%-60px)] border border-slate-300 border-dashed lg:rotate-90 top-[116px] -left-0 -translate-x-1/2' />
+      <div className='relative bg-gray-50 h-24 md:h-full'>
+        <hr className='absolute w-full border border-[#F0F1F6] border-dashed lg:rotate-90 top-[100px] -left-0 -translate-x-1/2' />
         <div className='h-9 w-full bg-white md:bg-teal-700 px-4 flex items-center justify-end text-sm text-slate-800 md:text-white'>
           <p className='text-xs'>{data.class}</p>
         </div>
@@ -75,7 +80,7 @@ export default function Ticket({ data, query }) {
           <div className='flex items-center justify-between gap-5 md:w-full'>
             <Button className='block text-sm'>Detail</Button>
             <Link
-              href={`/checkout/order?adult=${query?.adult}`}
+              href={url}
               className='px-6 py-1 bg-[#4642FF] text-white rounded text-sm uppercase text-center'
             >
               Pilih

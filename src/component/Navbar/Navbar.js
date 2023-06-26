@@ -3,11 +3,13 @@ import Link from 'next/link'
 import Button from '../Button'
 import LoginRegisterModal from '../Modal/LoginRegister'
 import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { selectAuth } from '@/redux/reducers/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectAuth, setUser } from '@/redux/reducers/auth'
 import Avvvatars from 'avvvatars-react'
 import NotificationModal from '../Modal/NotificationModal'
 import MenuModal from '../Modal/MenuModal'
+import Cookies from 'js-cookie'
+import { selectNotif } from '@/redux/reducers/notifications'
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
 const handleClickOutside = (event, ref, setOpen) => {
@@ -20,10 +22,22 @@ export default function Navbar({ isDark = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const [openNotify, setOpenNotify] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
-  const { user } = useSelector(selectAuth)
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
   const [offset, setOffset] = useState(0)
+  const dispatch = useDispatch()
+
+  const { user } = useSelector(selectAuth)
+  const { data } = useSelector(selectNotif)
+
+  useEffect(() => {
+    if (user) return
+
+    const profile = Cookies.get('profile')
+    if (profile) {
+      dispatch(setUser(JSON.parse(profile)))
+    }
+  }, [user])
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -189,7 +203,14 @@ export default function Navbar({ isDark = false }) {
                       />
                     </svg>
                   </Button>
-                  {!!openNotify && <NotificationModal ref={notificationRef} />}
+                  {!!data && (
+                    <div className='absolute -top-[5px] -right-[5px] h-4 w-4 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs'>
+                      <p>{data.filter((d) => d.is_read === false).length}</p>
+                    </div>
+                  )}
+                  {!!openNotify && (
+                    <NotificationModal data={data} ref={notificationRef} />
+                  )}
                 </div>
                 <div className='relative h-8 w-8'>
                   <Button onClick={() => setOpenMenu(!openMenu)}>
@@ -216,11 +237,29 @@ export default function Navbar({ isDark = false }) {
           </MediaQuery>
 
           <MediaQuery maxWidth={786}>
-            <Link href='/' className='text-2xl font-semibold text-white'>
+            <Link
+              href='/'
+              className={[
+                'text-2xl font-semibold',
+                !isDark
+                  ? offset > 0
+                    ? 'text-slate-800'
+                    : 'text-white'
+                  : 'text-slate-800',
+              ].join(' ')}
+            >
               Tripp
             </Link>
 
-            <Button>
+            <Button
+              className={
+                !isDark
+                  ? offset > 0
+                    ? 'text-slate-800'
+                    : 'text-white hover:bg-white/20'
+                  : 'text-slate-800'
+              }
+            >
               <svg
                 width='24'
                 height='24'
@@ -230,7 +269,7 @@ export default function Navbar({ isDark = false }) {
               >
                 <path
                   d='M3 12H21M3 6H21M9 18H21'
-                  stroke='white'
+                  stroke='currentColor'
                   strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'

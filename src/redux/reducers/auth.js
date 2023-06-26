@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { HYDRATE } from 'next-redux-wrapper'
 
 const initialState = {
   user: null,
@@ -15,17 +14,13 @@ const authSlicer = createSlice({
     removeUser: (state) => {
       state.user = null
     },
+    updateUser: (state, action) => {
+      state.user.name = action.payload.name
+      state.user.phone_number = action.payload.phone_number
+    },
   },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-        return {
-            ...state,
-            ...action.payload.auth
-        }
-    }
-  }
 })
 
-export const { setUser, removeUser } = authSlicer.actions
+export const { setUser, removeUser, updateUser } = authSlicer.actions
 export const selectAuth = (state) => state.auth
 export default authSlicer.reducer

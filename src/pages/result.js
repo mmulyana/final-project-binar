@@ -42,7 +42,6 @@ function Result() {
         passenger_cnt: parseInt(query.c),
       }
       const { data } = await api.post('/flights', body)
-      console.log(data.data)
       setFlights(data.data)
     } catch (err) {
       console.log(err)

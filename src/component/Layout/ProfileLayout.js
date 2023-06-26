@@ -1,36 +1,75 @@
-import { Navbar } from '../Navbar'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+
 import Avvvatars from 'avvvatars-react'
-import Link from 'next/link'
+import { Navbar } from '../Navbar'
+import Button from '../Button'
+
+import { removeUser, selectAuth } from '@/redux/reducers/auth'
+import { logout } from '@/utils/authUtils'
 
 export default function ProfileLayout({ children, location }) {
+  const { user } = useSelector(selectAuth)
+  const [profile, setProfile] = useState({
+    name: 'user',
+    email: 'example@gmail.com'
+  })
+
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(!user) return
+
+    setProfile({
+      name: user.name,
+      email: user.email
+    })
+
+  },[user])
+
+  function handleClickMenu(href) {
+    if(href !== '/logout') {
+      router.push(href)
+      return
+    }
+
+    logout()
+    dispatch(removeUser())
+    if(!user) {
+      router.push('/')
+    }
+  }
+
   return (
     <>
-      <Navbar isDark/>
+      <Navbar isDark />
       <div className='pt-[84px] pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] items-start justify-between gap-6 max-w-[1200px] mx-auto px-4 lg:px-0'>
         <div className='bg-white border border-gray-200 p-4 rounded mt-6'>
           <div className='flex items-center gap-2 pb-4 border-b border-gray-200'>
-            <Avvvatars size={50} value='Rengoku' />
+            <Avvvatars size={50} value={profile.email} />
             <div>
-              <p className='text-sm text-slate-800'>Rengoku</p>
-              <p className='text-xs text-slate-500'>Rengoku@hashira.com</p>
+              <p className='text-sm text-slate-800'>{profile.name}</p>
+              <p className='text-xs text-slate-500'>{profile.email}</p>
             </div>
           </div>
 
           <div className='mt-2'>
             {menus.map((menu, index) => (
-              <Link
+              <Button
                 key={index}
                 className={[
-                  'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2',
+                  'flex justify-start items-center gap-4 p-2 rounded-md cursor-pointer py-3 mb-2 w-full',
                   location === menu.name
                     ? 'bg-gray-100 hover:bg-gray-200'
                     : 'hover:bg-gray-200',
                 ].join(' ')}
-                href={menu.name !== 'logout' ? menu.href : '/'}
+                onClick={() => handleClickMenu(menu.href)}
               >
                 <div>{menu.img}</div>
                 <h3 className='text-sm text-gray-500'>{menu.title}</h3>
-              </Link>
+              </Button>
             ))}
           </div>
         </div>
@@ -64,6 +103,28 @@ const menus = [
     ),
   },
   {
+    name: 'notifications',
+    href: '/profile/notifications',
+    title: 'Notifikasi',
+    img: (
+      <svg
+        width='20'
+        height='20'
+        viewBox='0 0 24 24'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M9.35419 21C10.0593 21.6224 10.9856 22 12 22C13.0145 22 13.9407 21.6224 14.6458 21M18 8C18 6.4087 17.3679 4.88258 16.2427 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.8826 2.63214 7.75738 3.75736C6.63216 4.88258 6.00002 6.4087 6.00002 8C6.00002 11.0902 5.22049 13.206 4.34968 14.6054C3.61515 15.7859 3.24788 16.3761 3.26134 16.5408C3.27626 16.7231 3.31488 16.7926 3.46179 16.9016C3.59448 17 4.19261 17 5.38887 17H18.6112C19.8074 17 20.4056 17 20.5382 16.9016C20.6852 16.7926 20.7238 16.7231 20.7387 16.5408C20.7522 16.3761 20.3849 15.7859 19.6504 14.6054C18.7795 13.206 18 11.0902 18 8Z'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </svg>
+    ),
+  },
+  {
     name: 'history',
     href: '/profile/history',
     title: 'Pembelian',
@@ -87,6 +148,7 @@ const menus = [
   },
   {
     name: 'logout',
+    href: '/logout',
     title: 'Keluar',
     img: (
       <svg
