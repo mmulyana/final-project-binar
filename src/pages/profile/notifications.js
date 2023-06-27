@@ -16,22 +16,6 @@ function Notifications() {
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
 
-  const getNotification = useCallback(async () => {
-    try {
-      const jwt = Cookies.get('jwt')
-      const { data } = await api(`/notifications?user_id=${user.id}`, {
-        headers: {
-          Authorization: jwt,
-        },
-      })
-      if (data.status) {
-        dispatch(setNotifications(data.data))
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }, [dispatch, user.id])
-
   async function handleNotif(id) {
     try {
       const jwt = Cookies.get('jwt')
@@ -44,13 +28,27 @@ function Notifications() {
         },
       }
       const { data } = await axios.request(config)
-      console.log(data)
       getNotification()
     } catch (err) {}
   }
 
   useEffect(() => {
     if (!user) return
+    async function getNotification() {
+      try {
+        const jwt = Cookies.get('jwt')
+        const { data } = await api(`/notifications?user_id=${user.id}`, {
+          headers: {
+            Authorization: jwt,
+          },
+        })
+        if (data.status) {
+          dispatch(setNotifications(data.data))
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
     getNotification()
   }, [getNotification, user])

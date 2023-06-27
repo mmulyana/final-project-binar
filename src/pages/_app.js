@@ -17,17 +17,15 @@ export default function App({ Component, ...pageProps }) {
   const { store } = wrapper.useWrappedStore(pageProps)
   return (
     <Provider store={store}>
-      {Component.auth ? (
-        <Auth hasLoggedIn={Component.auth.hasLoggedIn}>
-          <main className={inter.className}>
+      <main className={inter.className}>
+        {Component.auth ? (
+          <Auth hasLoggedIn={Component.auth.hasLoggedIn}>
             {getLayout(<Component {...pageProps} />)}
-          </main>
-        </Auth>
-      ) : (
-        <main className={inter.className}>
-          {getLayout(<Component {...pageProps} />)}
-        </main>
-      )}
+          </Auth>
+        ) : (
+          getLayout(<Component {...pageProps} />)
+        )}
+      </main>
       <ToastContainer />
     </Provider>
   )

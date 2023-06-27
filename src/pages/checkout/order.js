@@ -35,6 +35,17 @@ export default function Order() {
   useEffect(() => {
     if (query === null) return
 
+    function addToSeates() {
+      let length = 0
+      param.forEach((p) => {
+        if ([p] in query) {
+          let tmp = parseInt(query[p], 10)
+          length += tmp
+        }
+      })
+      setLengthSeat(length)
+    }
+
     getFlightDetail(query.id)
 
     const adultForm = []
@@ -48,7 +59,7 @@ export default function Order() {
     addToSeates(['a', 'k', 'b'])
 
     return () => setForm(null)
-  }, [addToSeates, query])
+  }, [query])
 
   async function getFlightDetail(id) {
     try {
@@ -60,17 +71,6 @@ export default function Order() {
       console.log(err)
     }
   }
-
-  const addToSeates = useCallback((param) => {
-    let length = 0
-    param.forEach((p) => {
-      if ([p] in query) {
-        let tmp = parseInt(query[p], 10)
-        length += tmp
-      }
-    })
-    setLengthSeat(length)
-  }, [query])
 
   function addToForm(form, type, query) {
     if (type in query) {
