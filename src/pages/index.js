@@ -14,9 +14,10 @@ import { removeRedundantCities } from '@/utils'
 import { setUser } from '@/redux/reducers/auth'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
 
-function Home({ data }) {
-  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
+function Home() {
   const dispatch = useDispatch()
+  
+  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const [flightsData, setFlightsData] = useState([])
   const [favoriteData, setFavoriteData] = useState([])
 

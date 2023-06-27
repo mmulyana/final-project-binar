@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser, selectAuth, setUser } from '@/redux/reducers/auth'
 import { selectNotif, setNotifications } from '@/redux/reducers/notifications'

@@ -20,4 +20,7 @@
 - [⚡️ Next.js](https://nextjs.org)
 - [💅 Tailwind](https://tailwindcss.com)
 - [🍞 React Toastify](https://fkhadra.github.io/react-toastify)
-- [🌐 Axios](https://axios-http.com/)
+- [🌐 Axios](https://axios-http.com)
+- [🔄 Redux toolkit](https://redux-toolkit.js.org)
+
+
