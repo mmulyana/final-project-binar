@@ -3,6 +3,7 @@ import Textfield from '@/component/Form/Textfield'
 import api from '@/services/api'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -13,7 +14,9 @@ export default function ForgotPassword() {
     try {
       const body = { email }
       const { data } = await api.post('/auth/forgot-password', body)
-      if(data.status) {
+      console.log(data)
+      if(data.success) {
+        toast.success(data.message)
         setHasSend(true)
       }
     } catch(err) {

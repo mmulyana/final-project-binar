@@ -4,6 +4,7 @@ import TextfieldPassword from '@/component/Form/TextfieldPassword'
 import api from '@/services/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function ForgotPasswordEmail() {
   const router = useRouter()
@@ -33,7 +34,10 @@ export default function ForgotPasswordEmail() {
     e.preventDefault()
     try {
       const { data } = await api.patch(`/auth/reset-password?token=${token}`, form)
-      console.log(data)
+      if(data.status) {
+        toast.success(data.message)
+        router.push('/')
+      }
     } catch(err) {
       console.log(err)
     }
