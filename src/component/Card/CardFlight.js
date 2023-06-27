@@ -2,17 +2,18 @@ import React from "react";
 import Image from "next/image";
 import imgCard from "public/image/card.png";
 import { changeToRupiah, convertDateTicket } from "@/utils";
+import { imagesCities } from "@/utils/local";
 
 export default function CardFlight({ data }) {
   return (
     <div className="card-flight">
       <div className="card-flight__image">
         <Image
-          src={imgCard}
-          h={400}
-          w={400}
+          src={imagesCities[data.arrival_city]}
+          height={400}
+          width={400}
           className="w-full h-full object-cover rounded-b-lg"
-          alt={data.departure_city}
+          alt={data.arrival_city}
         />
       </div>
       <div className="card-flight__desc">
