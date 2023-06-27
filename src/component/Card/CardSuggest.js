@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function CardSuggest({ data }) {
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6'>
-      {data.slice(0, 3).map((suggest, index) => (
+      {data.map((suggest, index) => (
         <div
           key={index}
           className='rounded-lg h-[200px] relative bg-white hover:shadow-sm overflow-hidden'
