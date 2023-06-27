@@ -1,5 +1,6 @@
 import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
+import api from '@/services/api'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
@@ -9,7 +10,15 @@ export default function ForgotPassword() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    setHasSend(true)
+    try {
+      const body = { email }
+      const { data } = await api.post('/auth/forgot-password', body)
+      if(data.status) {
+        setHasSend(true)
+      }
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (
