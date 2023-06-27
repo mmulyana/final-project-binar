@@ -1,15 +1,15 @@
 import Button from '@/component/Button'
-import Textfield from '@/component/Form/Textfield'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
 import api from '@/services/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function ForgotPasswordEmail() {
   const router = useRouter()
   const [token, setToken] = useState(null)
   const [form, setForm] = useState({
-    password: '',
+    newPassword: '',
     confirmPassword: '',
   })
   const [email, setEmail] = useState('')
@@ -32,8 +32,11 @@ export default function ForgotPasswordEmail() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const { data } = await api.patch(`/auth/reset-password?token=${token}`)
-      console.log(data)
+      const { data } = await api.patch(`/auth/reset-password?token=${token}`, form)
+      if(data.status) {
+        toast.success(data.message)
+        router.push('/')
+      }
     } catch(err) {
       console.log(err)
     }
@@ -63,9 +66,9 @@ export default function ForgotPasswordEmail() {
 
         <form className='mt-3 w-full flex flex-col gap-7'>
           <TextfieldPassword
-            name='password'
+            name='newPassword'
             label='password'
-            value={form.password}
+            value={form.newPassword}
             onChange={handleChange}
             className='bg-white'
           />
