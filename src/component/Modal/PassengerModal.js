@@ -17,13 +17,12 @@ export default function SeatClassModal({
   const [kid, setKid] = useState(0)
   const [baby, setBaby] = useState(0)
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      toggleModal()
-    }
-  }
-
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        toggleModal()
+      }
+    }
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown)
     } else {
@@ -33,7 +32,7 @@ export default function SeatClassModal({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isOpen, toggleModal, handleKeyDown])
+  }, [isOpen, toggleModal])
 
   function handleClickSeat(id) {
     const newSeatesSelected = seates
@@ -66,8 +65,8 @@ export default function SeatClassModal({
         value: {
           adult,
           kid,
-          baby
-        }
+          baby,
+        },
       },
     })
 
@@ -80,7 +79,7 @@ export default function SeatClassModal({
         <div className='h-fit'>
           <div className='py-[14px] flex justify-end items-center border-b border-neutral-2 px-4'>
             <button onClick={toggleModal}>
-              <Image src={IconClose} h={16} w={16} alt='close modal button'/>
+              <Image src={IconClose} h={16} w={16} alt='close modal button' />
             </button>
           </div>
 

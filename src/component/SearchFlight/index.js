@@ -50,7 +50,7 @@ export default function SearchFlight({ state, dispatch }) {
         (acc, obj) => acc + obj,
         0
       )
-  }, [state?.data.passengers])
+  }, [state])
 
   useEffect(() => {
     dispatch({
@@ -60,7 +60,7 @@ export default function SearchFlight({ state, dispatch }) {
         value: new Date(),
       },
     })
-  }, [])
+  }, [dispatch])
 
   return (
     <>

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUser, selectAuth, setUser } from '@/redux/reducers/auth'
-import { selectNotif } from '@/redux/reducers/notifications'
+import { selectNotif, setNotifications } from '@/redux/reducers/notifications'
 
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -18,6 +18,7 @@ import Ic_Close from 'public/icon/close.svg'
 import Ic_Logout from 'public/icon/logout.svg'
 import { logout } from '@/utils/authUtils'
 import { useRouter } from 'next/router'
+import api from '@/services/api'
 
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
@@ -46,12 +47,32 @@ export default function Navbar({ isDark = false }) {
 
   useEffect(() => {
     if (user) return
-
     const profile = Cookies.get('profile')
     if (profile) {
       dispatch(setUser(JSON.parse(profile)))
     }
-  }, [user])
+  }, [user, dispatch])
+
+  useEffect(() => {
+    if(!user) return
+    async function getNotification() {
+      try {
+        const jwt = Cookies.get('jwt')
+        const { data } = await api(`/notifications?user_id=${user.id}`, {
+          headers: {
+            Authorization: jwt,
+          },
+        })
+        if (data.status) {
+          dispatch(setNotifications(data.data))
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    getNotification()
+  }, [dispatch, user])
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -288,7 +309,10 @@ export default function Navbar({ isDark = false }) {
 
                   {user !== null ? (
                     <div className='mt-12 mb-3 relative flex justify-between items-center'>
-                      <div className='flex gap-2 items-center pb-2 border-b border-gray-200' onClick={() => router.push('/profile')}>
+                      <div
+                        className='flex gap-2 items-center pb-2 border-b border-gray-200'
+                        onClick={() => router.push('/profile')}
+                      >
                         <div className='w-10'>
                           <Avvvatars value={user.email} size={40} />
                         </div>

@@ -40,13 +40,13 @@ const MenuModal = forwardRef((props, ref) => {
           className='py-2 px-4 hover:bg-gray-100 rounded text-sm text-slate-600'
           href='/profile'
         >
-          Profile
+          Pengaturan
         </Link>
         <Button
           onClick={handleLogout}
           className='py-2 px-4 hover:bg-gray-100 rounded text-sm text-slate-600 text-left'
         >
-          Logout
+          Keluar
         </Button>
       </div>
     </div>

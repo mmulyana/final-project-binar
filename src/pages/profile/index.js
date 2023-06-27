@@ -30,7 +30,7 @@ function Profile() {
   useEffect(() => {
     if (!user) return
     setData(user)
-  }, [])
+  }, [user])
 
   function handleToggle() {
     setIsOpen(!isOpen)

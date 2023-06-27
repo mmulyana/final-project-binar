@@ -1,6 +1,6 @@
 import { ProfileLayout } from '@/component/Layout'
 import Cookies from 'js-cookie'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { selectAuth } from '@/redux/reducers/auth'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +16,7 @@ function Notifications() {
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
 
-  async function getNotification() {
+  const getNotification = useCallback(async () => {
     try {
       const jwt = Cookies.get('jwt')
       const { data } = await api(`/notifications?user_id=${user.id}`, {
@@ -30,7 +30,7 @@ function Notifications() {
     } catch (err) {
       console.log(err)
     }
-  }
+  }, [dispatch, user.id])
 
   async function handleNotif(id) {
     try {
@@ -53,10 +53,10 @@ function Notifications() {
     if (!user) return
 
     getNotification()
-  }, [])
+  }, [getNotification, user])
 
   const sortNotifications = useMemo(() => {
-    if(!data) return
+    if (!data) return
     const tmp = [...data]
     return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
   }, [data])

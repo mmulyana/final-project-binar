@@ -16,7 +16,7 @@ export default function ForgotPasswordEmail() {
     if (router.isReady) {
       setEmail(router.query.email)
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query.email])
 
   function handleChange(e) {
     const { name, value } = e.target
