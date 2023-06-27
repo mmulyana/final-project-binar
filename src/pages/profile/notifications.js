@@ -51,7 +51,7 @@ function Notifications() {
     }
 
     getNotification()
-  }, [getNotification, user])
+  }, [user])
 
   const sortNotifications = useMemo(() => {
     if (!data) return
