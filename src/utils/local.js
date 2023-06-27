@@ -192,6 +192,14 @@ const seatesFlight = [
   },
 ]
 
+const imagesCities = {
+  Yogyakarta: '/image/yogyakarta.jpg',
+  Makassar: '/image/makassar.jpg',
+  Biak: '/image/Biak.jpg',
+  Kupang: '/image/Kupang.jpg',
+  Manado: '/image/Manado.jpg',
+}
+
 export {
   seatClassData,
   suggestions,
@@ -199,4 +207,5 @@ export {
   suggestDestination,
   filterTicketByPriceAndTime,
   seatesFlight,
+  imagesCities
 }
