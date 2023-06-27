@@ -9,7 +9,7 @@ export default function ForgotPasswordEmail() {
   const router = useRouter()
   const [token, setToken] = useState(null)
   const [form, setForm] = useState({
-    password: '',
+    newPassword: '',
     confirmPassword: '',
   })
   const [email, setEmail] = useState('')
@@ -32,7 +32,7 @@ export default function ForgotPasswordEmail() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const { data } = await api.patch(`/auth/reset-password?token=${token}`)
+      const { data } = await api.patch(`/auth/reset-password?token=${token}`, form)
       console.log(data)
     } catch(err) {
       console.log(err)
@@ -63,9 +63,9 @@ export default function ForgotPasswordEmail() {
 
         <form className='mt-3 w-full flex flex-col gap-7'>
           <TextfieldPassword
-            name='password'
+            name='newPassword'
             label='password'
-            value={form.password}
+            value={form.newPassword}
             onChange={handleChange}
             className='bg-white'
           />
