@@ -3,13 +3,12 @@ import Portal from '../Portal'
 
 export default function withModal(WrappedComponent) {
   function Modal({ isOpen, toggleModal, zIndex, ...props }) {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        toggleModal()
-      }
-    }
-
     useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape') {
+          toggleModal()
+        }
+      }
       if (isOpen) {
         document.addEventListener('keydown', handleKeyDown)
       } else {
@@ -19,7 +18,7 @@ export default function withModal(WrappedComponent) {
       return () => {
         document.removeEventListener('keydown', handleKeyDown)
       }
-    }, [isOpen, toggleModal, handleKeyDown])
+    }, [isOpen, toggleModal])
 
     if (isOpen) {
       return (

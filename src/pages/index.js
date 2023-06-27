@@ -1,22 +1,23 @@
-import React, { useEffect, useMemo, useReducer, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useMemo, useReducer, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import Image from 'next/image'
+import api from '@/services/api'
+import Cookies from 'js-cookie'
+
 import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
 import CardSuggest from '@/component/Card/CardSuggest'
-import { flights, suggestDestination } from '@/utils/local'
-import Image from 'next/image'
 import imgBanner from 'public/image/banner-high.jpg'
-import { useDispatch } from 'react-redux'
-import { getProfile } from '@/redux/actions/authActions'
-import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
-import Cookies from 'js-cookie'
-import api from '@/services/api'
+
 import { removeRedundantCities } from '@/utils'
+import { setUser } from '@/redux/reducers/auth'
+import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
 
 function Home() {
-  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const dispatch = useDispatch()
+  
+  const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const [flightsData, setFlightsData] = useState([])
   const [favoriteData, setFavoriteData] = useState([])
 
@@ -45,12 +46,12 @@ function Home() {
   useEffect(() => {
     fetchfavoriteData()
     fetchFlightsData()
-    
-    const id = Cookies.get('id')
-    if (id) {
-      dispatch(getProfile(id))
+
+    const p = Cookies.get('profile')
+    if (p) {
+      dispatch(setUser(JSON.parse(p)))
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <>
@@ -106,7 +107,7 @@ function Home() {
             Destinasi Lokal yang banyak diminati
           </h2>
           <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
-            {flightsData.map((flight, index) => (
+            {flightsData?.map((flight, index) => (
               <CardFlight data={flight} key={index} />
             ))}
           </div>
@@ -124,21 +125,21 @@ function Home() {
         </p>
 
         <div className='mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]'>
-          <img src='/image/Garuda.svg' alt='Garuda' />
+          <Image width={120} height={60} src='/image/Garuda.svg' alt='Garuda' className='w-auto h-auto'/>
 
-          <img src='/image/LionAir.svg' alt='LionAir' />
+          <Image width={120} height={60} src='/image/LionAir.svg' alt='LionAir' className='w-auto h-auto'/>
 
-          <img src='/image/BatikAir.svg' alt='BatikAir' />
+          <Image width={120} height={60} src='/image/BatikAir.svg' alt='BatikAir' className='w-auto h-auto'/>
 
-          <img src='/image/AirAsia.svg' alt='AirAsia' />
+          <Image width={120} height={60} src='/image/AirAsia.svg' alt='AirAsia' className='w-auto h-auto'/>
         </div>
 
         <div className='mt-8 md:mt-10 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[100px]'>
-          <img src='/image/Qatar.svg' alt='Qatar' />
+          <Image width={120} height={60} src='/image/Qatar.svg' alt='Qatar' className='w-auto h-auto'/>
 
-          <img src='/image/jal.svg' alt='Japan' />
+          <Image width={120} height={60} src='/image/jal.svg' alt='Japan' className='w-auto h-auto'/>
 
-          <img src='/image/Lufthansa.svg' alt='Lufthansa' />
+          <Image width={120} height={60} src='/image/Lufthansa.svg' alt='Lufthansa' className='w-auto h-auto'/>
         </div>
       </div>
     </>

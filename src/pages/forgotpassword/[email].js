@@ -1,11 +1,13 @@
 import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
+import api from '@/services/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 export default function ForgotPasswordEmail() {
   const router = useRouter()
+  const [token, setToken] = useState(null)
   const [form, setForm] = useState({
     password: '',
     confirmPassword: '',
@@ -14,9 +16,10 @@ export default function ForgotPasswordEmail() {
 
   useEffect(() => {
     if (router.isReady) {
+      setToken(router.query.token)
       setEmail(router.query.email)
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query])
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -28,6 +31,12 @@ export default function ForgotPasswordEmail() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    try {
+      const { data } = await api.patch(`/auth/reset-password?token=${token}`)
+      console.log(data)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (

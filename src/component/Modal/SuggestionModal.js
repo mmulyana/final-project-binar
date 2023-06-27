@@ -6,13 +6,13 @@ import { suggestions } from '@/utils/local'
 import airports from '@/utils/airports'
 
 export default function SuggestionModal({ dispatch, type, isOpen, data }) {
-  const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      dispatch({ type: 'hideSearch' })
-    }
-  }
-
+  
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        dispatch({ type: 'hideSearch' })
+      }
+    }
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown)
     } else {
@@ -22,7 +22,7 @@ export default function SuggestionModal({ dispatch, type, isOpen, data }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isOpen, handleKeyDown])
+  }, [isOpen, dispatch])
 
   const handleClick = (value, iata) => {
     dispatch({

@@ -15,7 +15,7 @@ function Success() {
     if(router.isReady) {
       setData(router.query)
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query])
   
   return (
     <div className='max-w-[400px] h-screen pb-4 mx-auto px-4 pt-10'>
