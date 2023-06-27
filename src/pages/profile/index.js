@@ -14,7 +14,7 @@ function Profile() {
   const { user } = useSelector(selectAuth)
   const [isDisable, setDisable] = useState(true)
   const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const [data, setData] = useState({
     email: '',
     name: '',
