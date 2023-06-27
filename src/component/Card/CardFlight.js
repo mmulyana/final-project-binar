@@ -12,7 +12,7 @@ export default function CardFlight({ data }) {
           h={400}
           w={400}
           className="w-full h-full object-cover rounded-b-lg"
-          alt={data.to}
+          alt={data.departure_city}
         />
       </div>
       <div className="card-flight__desc">

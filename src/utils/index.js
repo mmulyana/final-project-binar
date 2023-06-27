@@ -145,6 +145,28 @@ function getTimeByTimestamp(timestamp) {
   return `${hours}:${minutes}`
 }
 
+function removeRedundantCities(data) {
+  let cityCounts = {}
+  let filteredData = []
+
+  for (let i = 0; i < data.length; i++) {
+    let city = data[i].flight.arrival.city
+    if (!cityCounts.hasOwnProperty(city)) {
+      cityCounts[city] = 1
+      filteredData.push(data[i])
+    } else {
+      cityCounts[city]++
+    }
+  }
+
+  for (let i = 0; i < filteredData.length; i++) {
+    var city = filteredData[i].flight.arrival.city
+    filteredData[i].total_transaction = String(cityCounts[city])
+  }
+
+  return filteredData
+}
+
 export {
   sumDataNumbers,
   formatDate,
@@ -159,4 +181,5 @@ export {
   convertDateTicket,
   formatTimestamp,
   getTimeByTimestamp,
+  removeRedundantCities,
 }

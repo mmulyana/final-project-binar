@@ -192,6 +192,11 @@ const seatesFlight = [
   },
 ]
 
+const imagesCities = {
+  Makassar: '/image/makassar.jpg',
+  Yogyakarta: '/image/yogyakarta.jpg'
+}
+
 export {
   seatClassData,
   suggestions,
@@ -199,4 +204,5 @@ export {
   suggestDestination,
   filterTicketByPriceAndTime,
   seatesFlight,
+  imagesCities
 }
