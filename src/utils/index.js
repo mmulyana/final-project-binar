@@ -167,7 +167,40 @@ function removeRedundantCities(data) {
   return filteredData
 }
 
+function filterByDepartureTime(data, time) {
+  return data.filter((entry) => entry.departure_time === time)
+}
+
+function filterByDepartureBetweenTime(data, startTime, endTime) {
+  return data.filter((entry) => {
+    const departureTime = entry.departure_time
+    return departureTime >= startTime && departureTime <= endTime
+  })
+}
+
+function getAirlineActives(data) {
+  return data.reduce((result, entry) => {
+    if (entry.isActive === true) {
+      result.push(entry.value)
+    }
+    return result
+  }, [])
+}
+
+function filterByAirline(data, airlines) {
+  return data.filter((entry) => {
+    const airline = removeSpaces(entry.airline.toLowerCase())
+    return airlines.includes(airline)
+  })
+}
+
+function removeSpaces(str) {
+  return str.replace(/\s/g, '')
+}
+
 export {
+  filterByAirline,
+  getAirlineActives,
   sumDataNumbers,
   formatDate,
   changeToRupiah,
@@ -182,4 +215,6 @@ export {
   formatTimestamp,
   getTimeByTimestamp,
   removeRedundantCities,
+  filterByDepartureTime,
+  filterByDepartureBetweenTime,
 }
