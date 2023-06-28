@@ -1,5 +1,6 @@
 import api from '@/services/api'
 import { setUser } from '../reducers/auth'
+import Cookies from 'js-cookie'
 
 export const getProfile = (id) => async (dispatch, getState) => {
   try {
@@ -9,7 +10,12 @@ export const getProfile = (id) => async (dispatch, getState) => {
     }
 
     try {
-      const { data } = await api(`/users/${id}`)
+      const jwt = Cookies.get('jwt')
+      const { data } = await api(`/users/${id}`, {
+        headers: {
+          Authorization: jwt
+        }
+      })
 
       if (data.status) {
         dispatch(setUser(data.data))

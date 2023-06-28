@@ -12,7 +12,7 @@ export default function Ticket({ data, query }) {
 
   const url = useMemo(() => {
     return `/checkout/order?a=${query?.a}&k=${query?.k}&b=${query?.b}&id=${data.id}`
-  },[query])
+  },[query, data.id])
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[600px_1fr] bg-white rounded-lg overflow-hidden'>

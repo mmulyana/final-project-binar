@@ -5,13 +5,12 @@ import Button from '../Button'
 export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
   const [selected, setSelected] = useState(new Date())
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      toggleModal()
-    }
-  }
-
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        toggleModal()
+      }
+    }
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown)
     } else {
@@ -21,7 +20,7 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isOpen, toggleModal, handleKeyDown])
+  }, [isOpen, toggleModal])
 
   useEffect(() => {
     setSelected(new Date())

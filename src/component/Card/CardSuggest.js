@@ -1,3 +1,4 @@
+import { imagesCities } from '@/utils/local'
 import Image from 'next/image'
 
 export default function CardSuggest({ data }) {
@@ -6,18 +7,21 @@ export default function CardSuggest({ data }) {
       {data.map((suggest, index) => (
         <div
           key={index}
-          className='md:grid grid-cols-2 md:grid-cols-[160px_1fr] gap-6 rounded-lg h-[104px] items-center relative rounded-t-md rounded-b-md bg-white hover:shadow-sm flex'
+          className='rounded-lg h-[200px] relative bg-white hover:shadow-sm overflow-hidden'
         >
           <Image
-            src={suggest.img}
-            height={160}
-            width={160}
-            className='h-full rounded-l-md object-cover'
-            alt={suggest.nation}
+            src={imagesCities[suggest.flight.arrival.city]}
+            height={400}
+            width={400}
+            className='h-full w-full rounded-l-md object-cover'
+            alt={suggest.flight.arrival.city}
           />
-          <h5 className='text-base capitalize md:text-lg text-slate-600'>
-            {suggest.nation}
-          </h5>
+          <div className='absolute top-0 left-0 h-full w-full bg-black/20 p-4 flex flex-col justify-end'>
+            <h5 className='capitalize text-xl text-white'>
+              {suggest.flight.arrival.city}
+            </h5>
+            <p className='text-white/80 text-sm'>{suggest.total_transaction} transaksi berhasil</p>
+          </div>
         </div>
       ))}
     </div>

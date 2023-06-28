@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Button from '@/component/Button'
 import { useRouter } from 'next/router'
@@ -30,10 +30,21 @@ export default function Order() {
     if (router.isReady) {
       setQuery(router.query)
     }
-  }, [router.isReady])
+  }, [router.query, router.isReady])
 
   useEffect(() => {
     if (query === null) return
+
+    function addToSeates() {
+      let length = 0
+      param.forEach((p) => {
+        if ([p] in query) {
+          let tmp = parseInt(query[p], 10)
+          length += tmp
+        }
+      })
+      setLengthSeat(length)
+    }
 
     getFlightDetail(query.id)
 
@@ -59,17 +70,6 @@ export default function Order() {
     } catch (err) {
       console.log(err)
     }
-  }
-
-  function addToSeates(param) {
-    let length = 0
-    param.forEach((p) => {
-      if ([p] in query) {
-        let tmp = parseInt(query[p], 10)
-        length += tmp
-      }
-    })
-    setLengthSeat(length)
   }
 
   function addToForm(form, type, query) {
@@ -122,12 +122,16 @@ export default function Order() {
       })
 
       if (data.status) {
-        router.push(`/checkout/payment?tr=${data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${data.departure.city}&t=${data.data.total_price}&c=${flight.class}&or=${data.departure.iata_code}&ds=${data.arrival.iata_code}&tm=${data.transaction.created_at}`)
+        router.push(
+          `/checkout/payment?tr=${data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${data.departure.city}&t=${data.data.total_price}&c=${flight.class}&or=${data.departure.iata_code}&ds=${data.arrival.iata_code}&tm=${data.transaction.created_at}`
+        )
       }
     } catch (err) {
       console.log(err)
       if (err.response.data.status) {
-        router.push(`/checkout/payment?tr=${err.response.data.data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${flight.departure.city}&t=${err.response.data.data.total_price}&c=${flight.class}&or=${flight.departure.iata_code}&ds=${flight.arrival.iata_code}&tm=${err.response.data.data.transaction.created_at}`)
+        router.push(
+          `/checkout/payment?tr=${err.response.data.data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${flight.departure.city}&t=${err.response.data.data.total_price}&c=${flight.class}&or=${flight.departure.iata_code}&ds=${flight.arrival.iata_code}&tm=${err.response.data.data.transaction.created_at}`
+        )
       }
     }
   }
@@ -451,7 +455,9 @@ export default function Order() {
               <div className='mt-3'>
                 <div className='flex justify-between items-start flex-wrap'>
                   <div className='flex gap-3'>
-                    <img
+                    <Image
+                      width={40}
+                      alt='airline icon'
                       className='w-10 object-contain'
                       src={flight?.airline.icon_url}
                     />
