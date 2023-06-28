@@ -28,15 +28,15 @@ function Result() {
 
   useEffect(() => {
     if (router.isReady) {
-      setQuery(router.query)
+      setQuery(router.query);
     }
-  }, [router.isReady, router.query])
+  }, [router.isReady, router.query]);
 
   useEffect(() => {
-    if (query === null) return
-    getFlight(query)
-    return () => setFlights([])
-  }, [query])
+    if (query === null) return;
+    getFlight(query);
+    return () => setFlights([]);
+  }, [query]);
 
   async function getFlight(query) {
     try {
@@ -45,11 +45,11 @@ function Result() {
         destination_airport: query.ds,
         flight_date: query.dd,
         passenger_cnt: parseInt(query.c),
-      }
-      const { data } = await api.post('/flights', body)
-      setFlights(data.data)
+      };
+      const { data } = await api.post("/flights", body);
+      setFlights(data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -92,7 +92,7 @@ function Result() {
     return res
   }, [flights, filterAirline, filterByDepartureTime, filterByArrivalTime])
 
-  if (!query) return <></>
+  if (!query) return <></>;
 
   return (
     <>
@@ -191,12 +191,12 @@ function Result() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 Result.getLayout = (page) => {
-  return <SecondaryLayout>{page}</SecondaryLayout>
-}
+  return <SecondaryLayout>{page}</SecondaryLayout>;
+};
 
 export default Result
 
