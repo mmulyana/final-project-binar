@@ -1,19 +1,17 @@
 import withCollapsible from './withCollapsible'
 import { SelectWithCheckbox } from '../Select'
 
-function AirlineFilter({ data, setData, isActiveFilter, setIsActiveFilter}) {
-
+function AirlineFilter({ data, setData, isActiveFilter, setIsActiveFilter }) {
   function handleClick(id) {
-    const newData = data
-      .map((prev) => {
-        if (prev.id === id) {
-          return { ...prev, isActive: !prev.isActive }
-        }
-        return prev
-      })
+    const newData = data.map((prev) => {
+      if (prev.id === id) {
+        return { ...prev, isActive: !prev.isActive }
+      }
+      return prev
+    })
 
     setData(newData)
-    if(!isActiveFilter) {
+    if (!isActiveFilter) {
       setIsActiveFilter(true)
     }
   }

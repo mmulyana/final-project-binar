@@ -6,7 +6,7 @@ import Button from '../Button'
 
 export default function Destination({ query }) {
   return (
-    <div className='h-fit w-full bg-white mt-20 pb-8 sticky top-0 left-0 z-50 border-t border-gray-200 shadow md:shadow-none'>
+    <div className='h-fit w-full bg-white mt-20 pb-8 relative lg:sticky top-0 left-0 md:z-10 lg:z-50 border-t border-gray-200 shadow md:shadow-none'>
       <div className='max-w-[1200px] mx-auto md:px-0 flex flex-col md:flex-row w-full pt-5 items-start md:items-end justify-between px-4 lg:px-0 pb-4 md:pb-0'>
         <div className='flex gap-3 md:gap-6 items-start flex-col md:flex-row'>
           <Image h={50} w={50} src={Flight} alt='flight' />
@@ -65,7 +65,7 @@ export default function Destination({ query }) {
                   alt='calendar icon'
                 />
                 <p className='text-[#131316]/80 text-xs md:text-base'>
-                  {!!query && query?.dd.split('-')[2]}
+                  {!!query && `${query?.dd.split('-')[2]} `}
                   {query?.dr !== '0'
                     ? `${
                         getDiffBetweenMonth(query?.dd, query?.dr)

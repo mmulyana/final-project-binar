@@ -160,22 +160,25 @@ function removeRedundantCities(data) {
   }
 
   for (let i = 0; i < filteredData.length; i++) {
-    var city = filteredData[i].flight.arrival.city
+    let city = filteredData[i].flight.arrival.city
     filteredData[i].total_transaction = String(cityCounts[city])
   }
 
   return filteredData
 }
 
-function filterByDepartureTime(data, time) {
-  return data.filter((entry) => entry.departure_time === time)
-}
-
-function filterByDepartureBetweenTime(data, startTime, endTime) {
-  return data.filter((entry) => {
-    const departureTime = entry.departure_time
-    return departureTime >= startTime && departureTime <= endTime
-  })
+function filterByBetweenTime(data, startTime, endTime, type) {
+  if (type == 'd') {
+    return data.filter((entry) => {
+      const departureTime = entry.departure_time
+      return departureTime >= startTime && departureTime <= endTime
+    })
+  } else {
+    return data.filter((entry) => {
+      const departureTime = entry.arrival_time
+      return departureTime >= startTime && departureTime <= endTime
+    })
+  }
 }
 
 function getAirlineActives(data) {
@@ -215,6 +218,5 @@ export {
   formatTimestamp,
   getTimeByTimestamp,
   removeRedundantCities,
-  filterByDepartureTime,
-  filterByDepartureBetweenTime,
+  filterByBetweenTime,
 }

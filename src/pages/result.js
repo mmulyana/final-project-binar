@@ -1,28 +1,28 @@
-import TimeFilterCollapsible from '@/component/Collapsible/TimeFilterCollapsible'
+import { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
+import api from '@/services/api'
+
+import Button from '@/component/Button'
+import Destination from '@/component/Destination'
 import { SecondaryLayout } from '@/component/Layout'
 import { Ticket } from '@/component/Ticket'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/router'
-import { filterTicketByPriceAndTime } from '@/utils/local'
-import api from '@/services/api'
-import Destination from '@/component/Destination'
-import Button from '@/component/Button'
-import AirlineFilterCollapsible from '@/component/Collapsible/AirlineFilterCollapsible'
-import { filterByAirline, getAirlineActives } from '@/utils'
+import {
+  filterByAirline,
+  filterByBetweenTime,
+  getAirlineActives,
+} from '@/utils'
+import {
+  AirlineFilterCollapsible,
+  TimeFilterCollapsible,
+} from '@/component/Collapsible'
 
 function Result() {
   const router = useRouter()
   const [flights, setFlights] = useState([])
   const [query, setQuery] = useState(null)
-  const [filterTicketByPrice, setFilterTicketByPrice] = useState(
-    filterTicketByPriceAndTime
-  )
-  const [filterByDepartureTime, setFilterByDepartureTime] = useState(
-    dataFilterByDepartureTime
-  )
-  const [filterByArrivalTime, setFilterByArrivalTime] = useState(
-    dataFilterByDepartureTime
-  )
+  const [filterByDepartureTime, setFilterByDepartureTime] =
+    useState(dataFilterTime)
+  const [filterByArrivalTime, setFilterByArrivalTime] = useState(dataFilterTime)
   const [filterAirline, setFilterAirline] = useState(dataAirline)
   const [isActiveFilter, setIsActiveFilter] = useState(false)
 
@@ -61,8 +61,36 @@ function Result() {
       res = filterByAirline(tmp, activeAirlines)
     }
 
+    const activeDepartureTime = filterByDepartureTime.filter(
+      (time) => time.isActive == true
+    )
+    if (activeDepartureTime.length > 0) {
+      let data = res.length > 0 ? [...res] : [...tmp]
+      let tmpLocal = filterByBetweenTime(
+        data,
+        activeDepartureTime[0].fromTime,
+        activeDepartureTime[0].toTime,
+        'd'
+      )
+      res = [...tmpLocal]
+    }
+
+    const activeArrivalTime = filterByArrivalTime.filter(
+      (time) => time.isActive == true
+    )
+    if (activeArrivalTime.length > 0) {
+      let data = res.length > 0 ? [...res] : [...tmp]
+      let tmpLocal = filterByBetweenTime(
+        data,
+        activeArrivalTime[0].fromTime,
+        activeArrivalTime[0].toTime,
+        'a'
+      )
+      res = [...tmpLocal]
+    }
+
     return res
-  }, [flights, filterAirline])
+  }, [flights, filterAirline, filterByDepartureTime, filterByArrivalTime])
 
   if (!query) return <></>
 
@@ -76,20 +104,26 @@ function Result() {
             {!!isActiveFilter && (
               <Button
                 className='text-blue-800 text-sm font-medium'
-                onClick={() => setIsActiveFilter(false)}
+                onClick={() => {
+                  setFilterAirline(dataAirline)
+                  setFilterByDepartureTime(dataFilterTime)
+                  setFilterByArrivalTime(dataFilterTime)
+                  setIsActiveFilter(false)
+                }}
               >
                 Reset
               </Button>
             )}
           </div>
           <div className='bg-white mt-2 rounded h-fit px-4'>
-            {/* filter sidebar */}
             <TimeFilterCollapsible
               name='waktu'
               dataD={filterByDepartureTime}
               dataA={filterByArrivalTime}
               setDataD={setFilterByDepartureTime}
               setDataA={setFilterByArrivalTime}
+              isActiveFilter={isActiveFilter}
+              setIsActiveFilter={setIsActiveFilter}
             />
             <hr />
             <AirlineFilterCollapsible
@@ -166,7 +200,7 @@ Result.getLayout = (page) => {
 
 export default Result
 
-const dataFilterByDepartureTime = [
+const dataFilterTime = [
   {
     id: 1,
     isActive: false,

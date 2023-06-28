@@ -9,10 +9,9 @@ import {
 } from '@/utils'
 
 export default function Ticket({ data, query }) {
-
   const url = useMemo(() => {
     return `/checkout/order?a=${query?.a}&k=${query?.k}&b=${query?.b}&id=${data.id}`
-  },[query, data.id])
+  }, [query, data.id])
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-[600px_1fr] bg-white rounded-lg overflow-hidden'>
@@ -31,13 +30,14 @@ export default function Ticket({ data, query }) {
           <div className='text-right'>
             <p className='text-xs text-slate-400 font-light'>Keberangkatan</p>
             <p className='text-sm mt-1'>
-              {convertDateTicket('id-ID', data.flight_date)}, {data.departure_time}
+              {convertDateTicket('id-ID', data.flight_date)}
             </p>
           </div>
         </div>
         <div className='flex items-center justify-between mt-4 px-4 pb-6'>
           <div className='text-left'>
-            <p className='text-2xl font-medium mt-2 text-slate-800'>
+            <p className='text-sm text-slate-500'>{data.departure_time}</p>
+            <p className='text-2xl font-medium text-slate-800'>
               {data.departure_code}
             </p>
             <p className='text-sm text-slate-500'>{data.departure_city}</p>
@@ -59,6 +59,7 @@ export default function Ticket({ data, query }) {
             </div>
           </div>
           <div className='text-right'>
+            <p className='text-sm text-slate-500'>{data.arrival_time}</p>
             <p className='text-2xl font-medium mt-2 text-slate-800'>
               {data.arrival_code}
             </p>
