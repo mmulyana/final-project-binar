@@ -8,7 +8,7 @@ import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
 import SearchFlight from '@/component/SearchFlight'
 import CardSuggest from '@/component/Card/CardSuggest'
-import imgBanner from 'public/image/banner-high.jpg'
+import imgBanner from 'public/image/banner-high-2.jpg'
 
 import { removeRedundantCities } from '@/utils'
 import { setUser } from '@/redux/reducers/auth'
@@ -61,7 +61,7 @@ function Home() {
           alt='banner'
           width={1440}
           height={880}
-          className='w-full h-[300px] md:h-full object-cover object-left-bottom md:object-center'
+          className='w-full h-[300px] md:h-full object-cover object-left-bottom'
           priority
         />
         <div className='absolute bottom-[80%] md:bottom-0 translate-y-1/2 md:-translate-y-0 left-0 w-full -mb-80 md:-mb-14 px-4 md:px-0 z-20'>

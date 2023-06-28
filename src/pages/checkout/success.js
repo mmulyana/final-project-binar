@@ -5,8 +5,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-let timestamp = '2023-06-20T11:37:50.551Z'
-
 function Success() {
   const router = useRouter()
   const [data, setData] = useState(null)
@@ -18,7 +16,7 @@ function Success() {
   }, [router.isReady, router.query])
   
   return (
-    <div className='max-w-[400px] h-screen pb-4 mx-auto px-4 pt-10'>
+    <div className='max-w-[400px] mx-auto h-screen pb-4 px-4 pt-10'>
       <div className='w-full h-fit pb-8 bg-white rounded-lg mt-5 relative'>
         <div className='text-center flex flex-col gap-1 items-center justify-center relative h-28'>
           <div className='text-white h-14 w-14 rounded-full bg-emerald-500 flex items-center justify-center relative pt-[2px] -mt-12 border-[4px] border-white shadow'>
@@ -76,10 +74,6 @@ function Success() {
       </div>
     </div>
   )
-}
-
-Success.getLayout = (page) => {
-  return <CheckoutLayout index={3}>{page}</CheckoutLayout>
 }
 
 Success.auth = { hasLoggedIn: true }

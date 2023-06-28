@@ -107,7 +107,7 @@ export default function Navbar({ isDark = false }) {
 
   return (
     <>
-      <nav className='fixed top-0 left-0 z-50 w-full pt-4'>
+      <nav className='fixed top-0 left-0 z-50 w-full pt-4 h-[80px]'>
         <div
           className={[
             'absolute top-0 left-0 h-full w-full duration-75 ease-in',
@@ -118,7 +118,7 @@ export default function Navbar({ isDark = false }) {
               : 'bg-white',
           ].join(' ')}
         ></div>
-        <div className='container max-w-[1200px] px-4 lg:px-0 mx-auto flex items-center justify-between relative z-10 pb-4 border-b border-white/80'>
+        <div className='container max-w-[1200px] h-full px-4 lg:px-0 mx-auto flex items-center justify-between relative z-10 pb-4 border-b border-white/80'>
           <MediaQuery minWidth={786}>
             <div className='flex items-center gap-14'>
               <Link
@@ -279,10 +279,10 @@ export default function Navbar({ isDark = false }) {
             {!!isOpenMenu && (
               <>
                 <div
-                  className='fixed top-0 left-0 h-full w-full bg-black/60 z-40'
+                  className='fixed top-0 left-0 h-full w-full bg-black/60 z-[80]'
                   onClick={() => setIsOpenMenu(false)}
                 />
-                <div className='fixed top-0 left-0 h-fit w-full bg-white p-4 z-50'>
+                <div className='fixed top-0 left-0 h-fit w-full bg-white p-4 z-[80]'>
                   <div className='flex items-center justify-between pb-3 border-b border-gray-300'>
                     <Link
                       href='/'

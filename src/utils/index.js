@@ -160,14 +160,50 @@ function removeRedundantCities(data) {
   }
 
   for (let i = 0; i < filteredData.length; i++) {
-    var city = filteredData[i].flight.arrival.city
+    let city = filteredData[i].flight.arrival.city
     filteredData[i].total_transaction = String(cityCounts[city])
   }
 
   return filteredData
 }
 
+function filterByBetweenTime(data, startTime, endTime, type) {
+  if (type == 'd') {
+    return data.filter((entry) => {
+      const departureTime = entry.departure_time
+      return departureTime >= startTime && departureTime <= endTime
+    })
+  } else {
+    return data.filter((entry) => {
+      const departureTime = entry.arrival_time
+      return departureTime >= startTime && departureTime <= endTime
+    })
+  }
+}
+
+function getAirlineActives(data) {
+  return data.reduce((result, entry) => {
+    if (entry.isActive === true) {
+      result.push(entry.value)
+    }
+    return result
+  }, [])
+}
+
+function filterByAirline(data, airlines) {
+  return data.filter((entry) => {
+    const airline = removeSpaces(entry.airline.toLowerCase())
+    return airlines.includes(airline)
+  })
+}
+
+function removeSpaces(str) {
+  return str.replace(/\s/g, '')
+}
+
 export {
+  filterByAirline,
+  getAirlineActives,
   sumDataNumbers,
   formatDate,
   changeToRupiah,
@@ -182,4 +218,5 @@ export {
   formatTimestamp,
   getTimeByTimestamp,
   removeRedundantCities,
+  filterByBetweenTime,
 }
