@@ -40,7 +40,7 @@ function Payment() {
       })
 
       if(data.status) {
-        router.push(`/checkout/success?t=${query.t}&tm=${query.tm}&mt=credit card`)
+        router.push(`/checkout/success?id=${query.tr}&t=${query.t}&tm=${query.tm}&mt=credit card`)
       }
     } catch(err) {
       toast.error(err.response.data.message)

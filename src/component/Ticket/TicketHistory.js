@@ -7,14 +7,13 @@ import {
   formatTimestamp,
 } from '@/utils'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-export default function TicketHistory({ data, onClick, id }) {
+export default function TicketHistory({ data, id }) {
   const router = useRouter()
 
   function handlePayment() {
-    router.push(
-      `/checkout/payment?tr=${data.transaction_id}&us=${id}&ac=${data.arrival_city}&dc=${data.departure_city}&t=${data.total_bill}&c=${data.class}&or=${data.departure_code}&ds=${data.arrival_code}&tm=${data.transaction_date}`
-    )
+    router.push(`/checkout/payment?tr=${data.transaction_id}&us=${id}&ac=${data.arrival_city}&dc=${data.departure_city}&t=${data.total_bill}&c=${data.class}&or=${data.departure_code}&ds=${data.arrival_code}&tm=${data.transaction_date}`)
   }
 
   return (
@@ -76,12 +75,12 @@ export default function TicketHistory({ data, onClick, id }) {
 
       <div className='flex justify-end items-center bg-gray-50 px-4 py-2 border-t border-gray-200 mt-3'>
         {data.payment_status ? (
-          <Button
+          <Link
             className='block px-5 py-1 rounded hover:bg-blue-600 text-sm text-blue-600 hover:text-white'
-            onClick={handlePayment}
+            href={`/ticket/${data.transaction_id}`}
           >
             Cetak
-          </Button>
+          </Link>
         ) : (
           <Button
             className='block px-5 py-1 rounded hover:bg-gray-200 text-sm text-slate-600'

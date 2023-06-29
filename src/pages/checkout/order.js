@@ -120,7 +120,6 @@ export default function Order() {
           Authorization: jwt,
         },
       })
-      console.log(data)
 
       if (data.status) {
         router.push(
@@ -129,11 +128,8 @@ export default function Order() {
       }
     } catch (err) {
       console.log(err)
-      
     }
   }
-
-  console.log(flight)
 
   function handleChange(e, type, index) {
     const { value, name } = e.target
@@ -454,7 +450,7 @@ export default function Order() {
               <div className='mt-3'>
                 <div className='flex justify-between items-start flex-wrap'>
                   <div className='flex gap-3'>
-                    <img
+                    <Image
                       height={40}
                       width={40}
                       alt='airline icon'

@@ -10,11 +10,11 @@ function Success() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    if(router.isReady) {
+    if (router.isReady) {
       setData(router.query)
     }
   }, [router.isReady, router.query])
-  
+
   return (
     <div className='max-w-[400px] mx-auto h-screen pb-4 px-4 pt-10'>
       <div className='w-full h-fit pb-8 bg-white rounded-lg mt-5 relative'>
@@ -69,8 +69,18 @@ function Success() {
       </div>
 
       <div className='flex flex-col gap-3 mt-5'>
-        <Button className='py-3 rounded bg-gray-200 text-slate-800'>Cetak Tiket</Button>
-        <Link href='/' className='py-3 rounded bg-[#326BF1] text-white text-center'>Kembali ke beranda</Link>
+        <Link
+          href={`/ticket/${data?.id}`}
+          className='py-3 rounded bg-gray-200 text-slate-800 text-center text-sm'
+        >
+          Cetak Tiket
+        </Link>
+        <Link
+          href='/'
+          className='py-3 rounded bg-[#326BF1] text-white text-center text-sm'
+        >
+          Kembali ke beranda
+        </Link>
       </div>
     </div>
   )
