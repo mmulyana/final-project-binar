@@ -141,12 +141,20 @@ function Result() {
           </div>
         </div>
         <div className='h-fit'>
-          <div className='grid grid-cols-3 gap-2 md:gap-6'>
-            {/* time */}
-          </div>
+          <div className='grid grid-cols-3 gap-2 md:gap-6'>{/* time */}</div>
           <div>
             <div className='flex justify-between'>
-              <p className='text-sm text-slate-600'>terdapat <span className='text-slate-800 font-medium'>{flights.length > 0 ? flights.length : null}</span> penerbangan menuju <span className='text-slate-800 font-medium'>{getCityByIata(query.ds)}</span> untuk kamu</p>
+              <p className='text-sm text-slate-600'>
+                terdapat{' '}
+                <span className='text-slate-800 font-medium'>
+                  {flights.length > 0 ? flights.length : null}
+                </span>{' '}
+                penerbangan menuju{' '}
+                <span className='text-slate-800 font-medium'>
+                  {getCityByIata(query.ds)}
+                </span>{' '}
+                untuk kamu
+              </p>
               <SortingModal setData={setType} />
             </div>
             <div className='flex flex-col gap-6 mt-3'>
@@ -231,7 +239,7 @@ const dataAirline = [
 
 function SortingTicket({ type, data, query }) {
   if (!data) {
-    // return <>loading</>
+    return <p>loading</p>
   }
 
   switch (type) {
