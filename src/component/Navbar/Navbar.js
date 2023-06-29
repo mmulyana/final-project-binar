@@ -54,7 +54,7 @@ export default function Navbar({ isDark = false }) {
   }, [user, dispatch])
 
   useEffect(() => {
-    if(!user) return
+    if (!user) return
     async function getNotification() {
       try {
         const jwt = Cookies.get('jwt')
@@ -107,7 +107,12 @@ export default function Navbar({ isDark = false }) {
 
   return (
     <>
-      <nav className='fixed top-0 left-0 z-50 w-full pt-4 h-[80px]'>
+      <nav
+        className={[
+          'fixed top-0 left-0 w-full pt-4 h-[80px]',
+          openMenu ? 'z-[60]' : 'z-50',
+        ].join(' ')}
+      >
         <div
           className={[
             'absolute top-0 left-0 h-full w-full duration-75 ease-in',
