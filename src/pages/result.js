@@ -7,14 +7,18 @@ import Destination from '@/component/Destination'
 import { SecondaryLayout } from '@/component/Layout'
 import { Ticket } from '@/component/Ticket'
 import {
+  compareTime,
   filterByAirline,
   filterByBetweenTime,
   getAirlineActives,
+  getCityByIata,
 } from '@/utils'
 import {
   AirlineFilterCollapsible,
   TimeFilterCollapsible,
 } from '@/component/Collapsible'
+import SortingModal from '@/component/Modal/SortingModal'
+import { flights } from '@/utils/local'
 
 function Result() {
   const router = useRouter()
@@ -25,18 +29,19 @@ function Result() {
   const [filterByArrivalTime, setFilterByArrivalTime] = useState(dataFilterTime)
   const [filterAirline, setFilterAirline] = useState(dataAirline)
   const [isActiveFilter, setIsActiveFilter] = useState(false)
+  const [type, setType] = useState('')
 
   useEffect(() => {
     if (router.isReady) {
-      setQuery(router.query);
+      setQuery(router.query)
     }
-  }, [router.isReady, router.query]);
+  }, [router.isReady, router.query])
 
   useEffect(() => {
-    if (query === null) return;
-    getFlight(query);
-    return () => setFlights([]);
-  }, [query]);
+    if (query === null) return
+    getFlight(query)
+    return () => setFlights([])
+  }, [query])
 
   async function getFlight(query) {
     try {
@@ -45,11 +50,11 @@ function Result() {
         destination_airport: query.ds,
         flight_date: query.dd,
         passenger_cnt: parseInt(query.c),
-      };
-      const { data } = await api.post("/flights", body);
-      setFlights(data.data);
+      }
+      const { data } = await api.post('/flights', body)
+      setFlights(data.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -92,7 +97,7 @@ function Result() {
     return res
   }, [flights, filterAirline, filterByDepartureTime, filterByArrivalTime])
 
-  if (!query) return <></>;
+  if (!query) return <></>
 
   return (
     <>
@@ -136,53 +141,36 @@ function Result() {
           </div>
         </div>
         <div className='h-fit'>
-          <div className='grid grid-cols-3 gap-2 md:gap-6'>
-            {/* filter ticket 
-            {filterTicketByPrice.map((data, index) => (
-              <SelectFilter
-                data={data}
-                handleClick={handleFilterTicketByPrice}
-                key={index}
-              />
-            ))} */}
-          </div>
+          <div className='grid grid-cols-3 gap-2 md:gap-6'>{/* time */}</div>
           <div>
-            <div className='flex justify-end relative'>
-              <Button className='flex items-center gap-2 text-gray-700'>
-                <svg
-                  width='20'
-                  height='20'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M4 18L20 18M4 6L8 6M4 12L14 12'
-                    stroke='currentColor'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />
-                </svg>
-                <p className='text-gray-500 text-sm'>Urutkan</p>
-              </Button>
+            <div className='flex justify-between'>
+              <p className='text-sm text-slate-600'>
+                terdapat{' '}
+                <span className='text-slate-800 font-medium'>
+                  {flights.length > 0 ? flights.length : null}
+                </span>{' '}
+                penerbangan menuju{' '}
+                <span className='text-slate-800 font-medium'>
+                  {getCityByIata(query.ds)}
+                </span>{' '}
+                untuk kamu
+              </p>
+              <SortingModal setData={setType} />
             </div>
             <div className='flex flex-col gap-6 mt-3'>
               {/* ticket */}
               {flights ? (
                 flights.length > 0 && !isActiveFilter ? (
-                  flights.map((flight, index) => (
-                    <Ticket query={query} data={flight} key={index} />
-                  ))
+                  <SortingTicket type={type} query={query} data={flights} />
                 ) : flightsFiltered.length > 0 ? (
-                  flightsFiltered.map((flight, index) => (
-                    <Ticket query={query} data={flight} key={index} />
-                  ))
+                  <SortingTicket
+                    type={type}
+                    query={query}
+                    data={flightsFiltered}
+                  />
                 ) : (
                   <p>empty filter</p>
                 )
-              ) : isActiveFilter ? (
-                <p>empty</p>
               ) : (
                 <p>loading...</p>
               )}
@@ -191,12 +179,12 @@ function Result() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 Result.getLayout = (page) => {
-  return <SecondaryLayout>{page}</SecondaryLayout>;
-};
+  return <SecondaryLayout>{page}</SecondaryLayout>
+}
 
 export default Result
 
@@ -244,3 +232,55 @@ const dataAirline = [
     value: 'garuda',
   },
 ]
+
+function SortingTicket({ type, data, query }) {
+  if (!data) {
+    return <p>loading</p>
+  }
+
+  switch (type) {
+    case 'DSC':
+      return data
+        .sort((a, b) => b.price - a.price)
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'EARLIEST-D':
+      return data
+        .sort((a, b) => compareTime(a, b, 'd', true))
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'LATEST-D':
+      return data
+        .sort((a, b) => compareTime(a, b, 'd', false))
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'EARLIEST-A':
+      return data
+        .sort((a, b) => compareTime(a, b, 'a', true))
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'LATEST-A':
+      return data
+        .sort((a, b) => compareTime(a, b, 'a', false))
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'SHORTEST_DURATION':
+      return data
+        .sort((a, b) => a.flight_duration - b.flight_duration)
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+    case 'ASC':
+    default:
+      return data
+        .sort((a, b) => a.price - b.price)
+        .map((flight, index) => (
+          <Ticket query={query} data={flight} key={index} />
+        ))
+  }
+}

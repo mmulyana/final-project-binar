@@ -201,7 +201,57 @@ function removeSpaces(str) {
   return str.replace(/\s/g, '')
 }
 
+function compareTime(a, b, type, asc = true) {
+  let timeA
+  let timeB
+
+  if (type === 'd') {
+    timeA = a.departure_time
+    timeB = b.departure_time
+  } else {
+    timeA = a.arrival_time
+    timeB = b.arrival_time
+  }
+
+  let hourA = parseInt(timeA.split(':')[0])
+  let minuteA = parseInt(timeA.split(':')[1])
+
+  let hourB = parseInt(timeB.split(':')[0])
+  let minuteB = parseInt(timeB.split(':')[1])
+
+  if (asc) {
+    if (hourA < hourB) {
+      return -1
+    }
+    if (hourA > hourB) {
+      return 1
+    }
+    if (minuteA < minuteB) {
+      return -1
+    }
+    if (minuteA > minuteB) {
+      return 1
+    }
+    return 0
+  } else {
+    if (hourA > hourB) {
+      return -1
+    }
+    if (hourA < hourB) {
+      return 1
+    }
+    if (minuteA > minuteB) {
+      return -1
+    }
+    if (minuteA < minuteB) {
+      return 1
+    }
+    return 0
+  }
+}
+
 export {
+  compareTime,
   filterByAirline,
   getAirlineActives,
   sumDataNumbers,
