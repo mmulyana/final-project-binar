@@ -161,17 +161,13 @@ function Result() {
               {/* ticket */}
               {flights ? (
                 flights.length > 0 && !isActiveFilter ? (
-                  flights.map((flight, index) => (
-                    <SortingTicket type={type} query={query} data={flights} />
-                  ))
+                  <SortingTicket type={type} query={query} data={flights} />
                 ) : flightsFiltered.length > 0 ? (
-                  flightsFiltered.map((flight, index) => (
-                    <SortingTicket
-                      type={type}
-                      query={query}
-                      data={flightsFiltered}
-                    />
-                  ))
+                  <SortingTicket
+                    type={type}
+                    query={query}
+                    data={flightsFiltered}
+                  />
                 ) : (
                   <p>empty filter</p>
                 )
