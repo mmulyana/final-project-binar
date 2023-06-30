@@ -1,7 +1,5 @@
-import { convertDateTicket } from '@/utils'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import Barcode from 'react-barcode'
 import Label from '../Label'
 
 export default function TicketBoardingPass({ data, transaction }) {

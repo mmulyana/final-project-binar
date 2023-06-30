@@ -17,7 +17,7 @@ export default function Ticket() {
     if (router.isReady) {
       setQuery(router.query)
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query])
 
   useEffect(() => {
     if (!query) return
