@@ -4,11 +4,11 @@ import { useGoogleLogin } from '@react-oauth/google'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-export default function LoginGoogle() {
+export default function LoginGoogle({ isLogin, toggleModal }) {
   const dispatch = useDispatch()
 
   async function LoginGoogleAction(access_token) {
-    dispatch(LoginWithGoogle(access_token))
+    dispatch(LoginWithGoogle(access_token, toggleModal))
   }
 
   const handleLogin = useGoogleLogin({
@@ -19,10 +19,10 @@ export default function LoginGoogle() {
 
   return (
     <Button
-      className='flex items-center justify-center py-4 rounded-full bg-white border border-gray-500 text-gray-500 font-medium w-full mt-8 text-center'
+      className='py-3 rounded bg-gray-200 hover:bg-gray-300 text-slate-800 font-medium w-full text-sm'
       onClick={handleLogin}
     >
-      Masuk dengan google
+      {isLogin ? 'Masuk' : 'Daftar'} dengan google
     </Button>
   )
 }

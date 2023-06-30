@@ -1,12 +1,9 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import Button from '../../Button'
 import withModal from '../withModal'
-import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
-import api from '@/services/api'
-import Link from 'next/link'
-import LoginGoogle from './LoginGoogle'
 
 function LoginRegister({ toggleModal }) {
   const [isLogin, setIsLogin] = useState(true)
@@ -39,14 +36,14 @@ function LoginRegister({ toggleModal }) {
           {isLogin ? 'Masuk ke Tripp' : 'Buat akun baru'}
         </p>
       </div>
-      <div className='w-[400px] max-h-[300px] px-8 relative overflow-y-auto'>
+      <div className='w-[400px] max-h-[300px] pl-8 pr-6 relative overflow-y-auto'>
         {isLogin ? (
           <Login toggleModal={toggleModal} />
         ) : (
           <Register toggleModal={toggleModal} />
         )}
       </div>
-      <div className='mt-6 text-center'>
+      <div className='mt-6 text-center overflow-y-auto'>
         {isLogin ? (
           <p>
             Belum memiliki akun?{' '}
@@ -66,12 +63,6 @@ function LoginRegister({ toggleModal }) {
           </p>
         )}
       </div>
-
-      {!isLogin ? (
-        <div className='px-4 mt-12'>
-          <LoginGoogle />
-        </div>
-      ) : null}
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function TextfieldPassword({
   return (
     <div>
       <label
-        className='text-xs text-gray-400 mb-1 block font-medium capitalize'
+        className='text-xs text-gray-700 mb-1 block font-medium capitalize'
         htmlFor={props.id}
       >
         {label}

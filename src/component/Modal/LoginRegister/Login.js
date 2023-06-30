@@ -9,6 +9,7 @@ import { setUser } from '@/redux/reducers/auth'
 import { parseJwt } from '@/utils'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import LoginGoogle from './LoginGoogle'
 
 const initialValues = {
   email: '',
@@ -17,6 +18,7 @@ const initialValues = {
 
 export default function Login({ toggleModal }) {
   const [form, setForm] = useState(initialValues)
+  const [isEmail, setIsEmail] = useState(false)
   const dispatch = useDispatch()
 
   async function handleSubmit(e) {
@@ -53,40 +55,55 @@ export default function Login({ toggleModal }) {
     }))
   }
 
-  return (
-    <form onSubmit={handleSubmit} className='mt-6'>
-      <div className='flex flex-col gap-6'>
-        <Textfield
-          name='email'
-          id='email'
-          label='email'
-          value={form.email}
-          onChange={handleChange}
-          withLabel
-          placeholder='example@mail.com'
-        />
-        <TextfieldPassword
-          name='password'
-          id='password'
-          label='Password'
-          value={form.password}
-          onChange={handleChange}
-        />
-        <Link
-          href='/forgotpassword'
-          className='block ml-auto -mt-4 text-sm text-[#326BF1]'
-        >
-          Lupa password?
-        </Link>
-      </div>
+  if (isEmail) {
+    return (
+      <form onSubmit={handleSubmit} className='mt-6'>
+        <div className='flex flex-col gap-6'>
+          <Textfield
+            name='email'
+            id='email'
+            label='email'
+            value={form.email}
+            onChange={handleChange}
+            withLabel
+            placeholder='example@mail.com'
+            autoFocus
+          />
+          <TextfieldPassword
+            name='password'
+            id='password'
+            label='Password'
+            value={form.password}
+            onChange={handleChange}
+          />
+          <Link
+            href='/forgotpassword'
+            className='block ml-auto -mt-4 text-sm text-[#326BF1]'
+          >
+            Lupa password?
+          </Link>
+        </div>
 
-      <Button
-        onClick={handleSubmit}
-        type='submit'
-        className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50'
-      >
-        Masuk
-      </Button>
-    </form>
-  )
+        <Button
+          onClick={handleSubmit}
+          type='submit'
+          className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50'
+        >
+          Masuk
+        </Button>
+      </form>
+    )
+  } else {
+    return (
+      <div className='mt-6 flex flex-col gap-3'>
+        <Button
+          className='py-3 rounded bg-gray-200 hover:bg-gray-300 text-slate-800 font-medium w-full text-sm'
+          onClick={() => setIsEmail(true)}
+        >
+          Masuk dengan Email
+        </Button>
+        <LoginGoogle isLogin toggleModal={toggleModal}/>
+      </div>
+    )
+  }
 }
