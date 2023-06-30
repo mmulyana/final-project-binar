@@ -6,6 +6,7 @@ import api from '@/services/api'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import LoginGoogle from './LoginGoogle'
 
 const initialValues = {
   name: '',
@@ -19,6 +20,7 @@ export default function Register({ toggleModal }) {
   const router = useRouter()
   const [form, setForm] = useState(initialValues)
   const [hasFillEmail, setHasFillEmail] = useState(false)
+  const [isEmail, setIsEmail] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -28,7 +30,6 @@ export default function Register({ toggleModal }) {
       if (response.data.status) {
         toast.info('check your email')
         router.push(`/otp/${form.email}`)
-        localStorage.setItem('MUST_VERIFY', form.email)
       }
       toggleModal()
     } catch (err) {
@@ -44,82 +45,96 @@ export default function Register({ toggleModal }) {
     }))
   }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} className='mt-6'>
-        {!hasFillEmail ? (
-          <Textfield
-            name='email'
-            id='email'
-            label='email'
-            value={form.email}
-            onChange={handleChange}
-            withLabel
-            placeholder='example@mail.com'
-          />
-        ) : (
-          <div className='flex flex-col gap-6'>
+  if (isEmail) {
+    return (
+      <div>
+        <form onSubmit={handleSubmit} className='mt-6'>
+          {!hasFillEmail ? (
             <Textfield
               name='email'
               id='email'
               label='email'
               value={form.email}
-              withLabel
-              disabled
-            />
-            <Textfield
-              name='name'
-              id='name'
-              label='nama lengkap'
-              value={form.name}
               onChange={handleChange}
               withLabel
-              autoFocus
+              placeholder='example@mail.com'
             />
-            <TextfieldPhone
-              name='phone_number'
-              value={form.phone_number}
-              onChange={handleChange}
-              id='phoneNumber'
-            />
-            <TextfieldPassword
-              name='password'
-              id='password'
-              label='password'
-              value={form.password}
-              onChange={handleChange}
-            />
+          ) : (
+            <div className='flex flex-col gap-6'>
+              <Textfield
+                name='email'
+                id='email'
+                label='email'
+                value={form.email}
+                withLabel
+                disabled
+              />
+              <Textfield
+                name='name'
+                id='name'
+                label='nama lengkap'
+                value={form.name}
+                onChange={handleChange}
+                withLabel
+                autoFocus
+              />
+              <TextfieldPhone
+                name='phone_number'
+                value={form.phone_number}
+                onChange={handleChange}
+                id='phoneNumber'
+              />
+              <TextfieldPassword
+                name='password'
+                id='password'
+                label='password'
+                value={form.password}
+                onChange={handleChange}
+              />
 
-            <TextfieldPassword
-              name='confirmPassword'
-              id='confirmPassword'
-              label='confirm Password'
-              value={form.confirmPassword}
-              onChange={handleChange}
-            />
-          </div>
-        )}
-        {hasFillEmail ? (
-          <Button
-            onClick={handleSubmit}
-            type='submit'
-            className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50'
-          >
-            Daftar
-          </Button>
-        ) : (
-          <div
-            onClick={() => {
-              if (form.email !== '' && !hasFillEmail) {
-                setHasFillEmail(true)
-              }
-            }}
-            className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 flex items-center justify-center'
-          >
-            Selanjutnya
-          </div>
-        )}
-      </form>
-    </div>
-  )
+              <TextfieldPassword
+                name='confirmPassword'
+                id='confirmPassword'
+                label='confirm Password'
+                value={form.confirmPassword}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+          {hasFillEmail ? (
+            <Button
+              onClick={handleSubmit}
+              type='submit'
+              className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 cursor-pointer'
+            >
+              Daftar
+            </Button>
+          ) : (
+            <div
+              onClick={() => {
+                if (form.email !== '' && !hasFillEmail) {
+                  setHasFillEmail(true)
+                }
+              }}
+              className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 flex items-center justify-center cursor-pointer'
+            >
+              Selanjutnya
+            </div>
+          )}
+        </form>
+      </div>
+    )
+  } else {
+    return (
+      <div className='mt-6 flex flex-col gap-3'>
+        <Button
+          className='py-3 rounded bg-gray-200 hover:bg-gray-300 text-slate-800 font-medium w-full text-sm'
+          onClick={() => setIsEmail(true)}
+        >
+          Daftar dengan Email
+        </Button>
+        <LoginGoogle />
+      </div>
+    )
+  }
 }

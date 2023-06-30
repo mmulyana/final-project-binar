@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import Button from '../../Button'
 import withModal from '../withModal'
-import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
 
 function LoginRegister({ toggleModal }) {
   const [isLogin, setIsLogin] = useState(true)
+
   return (
     <div className='fixed w-fit left-1/2 top-6 -translate-x-1/2 h-fit z-[60] bg-white rounded-lg py-8'>
       <div>
@@ -35,14 +36,14 @@ function LoginRegister({ toggleModal }) {
           {isLogin ? 'Masuk ke Tripp' : 'Buat akun baru'}
         </p>
       </div>
-      <div className='w-[400px] max-h-[300px] px-8 relative overflow-y-auto'>
+      <div className='w-[400px] max-h-[300px] pl-8 pr-6 relative overflow-y-auto'>
         {isLogin ? (
           <Login toggleModal={toggleModal} />
         ) : (
           <Register toggleModal={toggleModal} />
         )}
       </div>
-      <div className='mt-6 text-center'>
+      <div className='mt-6 text-center overflow-y-auto'>
         {isLogin ? (
           <p>
             Belum memiliki akun?{' '}

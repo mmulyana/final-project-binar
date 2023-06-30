@@ -9,6 +9,7 @@ import { selectAuth, setUser } from '@/redux/reducers/auth'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import Cookies from 'js-cookie'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,18 +17,20 @@ export default function App({ Component, ...pageProps }) {
   const getLayout = Component.getLayout ?? ((pages) => pages)
   const { store } = wrapper.useWrappedStore(pageProps)
   return (
-    <Provider store={store}>
-      <main className={inter.className}>
-        {Component.auth ? (
-          <Auth hasLoggedIn={Component.auth.hasLoggedIn}>
-            {getLayout(<Component {...pageProps} />)}
-          </Auth>
-        ) : (
-          getLayout(<Component {...pageProps} />)
-        )}
-      </main>
-      <ToastContainer />
-    </Provider>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <main className={inter.className}>
+          {Component.auth ? (
+            <Auth hasLoggedIn={Component.auth.hasLoggedIn}>
+              {getLayout(<Component {...pageProps} />)}
+            </Auth>
+          ) : (
+            getLayout(<Component {...pageProps} />)
+          )}
+        </main>
+        <ToastContainer />
+      </Provider>
+    </GoogleOAuthProvider>
   )
 }
 

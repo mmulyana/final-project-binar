@@ -53,7 +53,7 @@ export default function Ticket({ data, query }) {
                 width={32}
                 className='absolute left-1/2 -top-1/2 -translate-y-1/2 -translate-x-1/2'
               />
-              <p className='absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs px-4 py-1 rounded-full bg-yellow-500 text-slate-800'>
+              <p className='absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs px-2 py-1 rounded-full bg-yellow-400 text-slate-800'>
                 {convertToHoursMinutes(data.flight_duration)}
               </p>
             </div>
@@ -68,6 +68,8 @@ export default function Ticket({ data, query }) {
         </div>
       </div>
       <div className='relative bg-gray-50 h-fit md:h-full'>
+        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute -top-[10px] -left-[10px]'/>
+        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute bottom-[calc(100%-10px)] lg:-bottom-[10px] left-[calc(100%-10px)] lg:-left-[10px]'/>
         <hr className='absolute w-full border border-[#F0F1F6] border-dashed lg:rotate-90 top-[100px] -left-0 -translate-x-1/2 hidden lg:block' />
         <div className='h-9 w-full bg-white lg:bg-teal-700 px-4 items-center justify-end text-sm text-slate-800 hidden lg:flex'>
           <p className='text-xs text-white'>{data.class}</p>
