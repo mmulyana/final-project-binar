@@ -53,14 +53,14 @@ export default function Ticket({ data, query }) {
                 width={32}
                 className='absolute left-1/2 -top-1/2 -translate-y-1/2 -translate-x-1/2'
               />
-              <p className='absolute top-6 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-gray-400'>
+              <p className='absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs px-4 py-1 rounded-full bg-yellow-500 text-slate-800'>
                 {convertToHoursMinutes(data.flight_duration)}
               </p>
             </div>
           </div>
           <div className='text-right'>
             <p className='text-sm text-slate-500'>{data.arrival_time}</p>
-            <p className='text-2xl font-medium mt-2 text-slate-800'>
+            <p className='text-2xl font-medium text-slate-800'>
               {data.arrival_code}
             </p>
             <p className='text-sm text-slate-500'>{data.arrival_city}</p>
