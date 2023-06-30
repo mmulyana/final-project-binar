@@ -39,7 +39,6 @@ export const LoginWithGoogle =
       }
 
       const { data } = await api.post('/auth/login-google', body)
-      console.log(data)
       if (data.status) {
         Cookies.set('jwt', data.data.token, { expires: 1 })
         const jwt = parseJwt(data.data.token)

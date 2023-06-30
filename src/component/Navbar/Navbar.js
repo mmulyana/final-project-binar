@@ -67,7 +67,7 @@ export default function Navbar({ isDark = false }) {
           dispatch(setNotifications(data.data))
         }
       } catch (err) {
-        console.log(err)
+        console.log(err.message)
       }
     }
 
