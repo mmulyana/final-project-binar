@@ -27,3 +27,16 @@ export const getProfile = (id) => async (dispatch, getState) => {
     return true
   } catch (error) {}
 }
+
+export const LoginWithGoogle = (access_token) => async (dispatch) => {
+  try {
+    let body = JSON.stringify({
+      access_token
+    })
+
+    const { data } = await api.post('/auth/login-google', body)
+    console.log(data)
+  } catch(err) {
+
+  }
+}

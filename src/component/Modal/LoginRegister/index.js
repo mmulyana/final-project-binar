@@ -6,6 +6,7 @@ import Login from './Login'
 import Register from './Register'
 import api from '@/services/api'
 import Link from 'next/link'
+import LoginGoogle from './LoginGoogle'
 
 function LoginRegister({ toggleModal }) {
   const [isLogin, setIsLogin] = useState(true)
@@ -68,12 +69,7 @@ function LoginRegister({ toggleModal }) {
 
       {!isLogin ? (
         <div className='px-4 mt-12'>
-          <Link
-            href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login-google`}
-            className='block py-4 rounded-full bg-white border border-gray-500 text-gray-500 font-medium w-full mt-8 text-center'
-          >
-            Masuk dengan google
-          </Link>
+          <LoginGoogle />
         </div>
       ) : null}
     </div>
