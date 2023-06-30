@@ -4,9 +4,12 @@ import withModal from '../withModal'
 import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
+import api from '@/services/api'
+import Link from 'next/link'
 
 function LoginRegister({ toggleModal }) {
   const [isLogin, setIsLogin] = useState(true)
+
   return (
     <div className='fixed w-fit left-1/2 top-6 -translate-x-1/2 h-fit z-[60] bg-white rounded-lg py-8'>
       <div>
@@ -62,6 +65,17 @@ function LoginRegister({ toggleModal }) {
           </p>
         )}
       </div>
+
+      {!isLogin ? (
+        <div className='px-4 mt-12'>
+          <Link
+            href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login-google`}
+            className='block py-4 rounded-full bg-white border border-gray-500 text-gray-500 font-medium w-full mt-8 text-center'
+          >
+            Masuk dengan google
+          </Link>
+        </div>
+      ) : null}
     </div>
   )
 }

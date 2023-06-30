@@ -18,15 +18,13 @@ import {
   TimeFilterCollapsible,
 } from '@/component/Collapsible'
 import SortingModal from '@/component/Modal/SortingModal'
-import { flights } from '@/utils/local'
 
 function Result() {
   const router = useRouter()
   const [flights, setFlights] = useState([])
   const [query, setQuery] = useState(null)
-  const [filterByDepartureTime, setFilterByDepartureTime] =
-    useState(dataFilterTime)
-  const [filterByArrivalTime, setFilterByArrivalTime] = useState(dataFilterTime)
+  const [filterByDTime, setFilterByDTime] = useState(dataFilterTime)
+  const [filterByATime, setFilterByATime] = useState(dataFilterTime)
   const [filterAirline, setFilterAirline] = useState(dataAirline)
   const [isActiveFilter, setIsActiveFilter] = useState(false)
   const [type, setType] = useState('')
@@ -66,7 +64,7 @@ function Result() {
       res = filterByAirline(tmp, activeAirlines)
     }
 
-    const activeDepartureTime = filterByDepartureTime.filter(
+    const activeDepartureTime = filterByDTime.filter(
       (time) => time.isActive == true
     )
     if (activeDepartureTime.length > 0) {
@@ -80,7 +78,7 @@ function Result() {
       res = [...tmpLocal]
     }
 
-    const activeArrivalTime = filterByArrivalTime.filter(
+    const activeArrivalTime = filterByATime.filter(
       (time) => time.isActive == true
     )
     if (activeArrivalTime.length > 0) {
@@ -95,7 +93,7 @@ function Result() {
     }
 
     return res
-  }, [flights, filterAirline, filterByDepartureTime, filterByArrivalTime])
+  }, [flights, filterAirline, filterByDTime, filterByATime])
 
   if (!query) return <></>
 
@@ -111,8 +109,8 @@ function Result() {
                 className='text-blue-800 text-sm font-medium'
                 onClick={() => {
                   setFilterAirline(dataAirline)
-                  setFilterByDepartureTime(dataFilterTime)
-                  setFilterByArrivalTime(dataFilterTime)
+                  setFilterByDTime(dataFilterTime)
+                  setFilterByATime(dataFilterTime)
                   setIsActiveFilter(false)
                 }}
               >
@@ -123,10 +121,10 @@ function Result() {
           <div className='bg-white mt-2 rounded h-fit px-4'>
             <TimeFilterCollapsible
               name='waktu'
-              dataD={filterByDepartureTime}
-              dataA={filterByArrivalTime}
-              setDataD={setFilterByDepartureTime}
-              setDataA={setFilterByArrivalTime}
+              dataD={filterByDTime}
+              dataA={filterByATime}
+              setDataD={setFilterByDTime}
+              setDataA={setFilterByATime}
               isActiveFilter={isActiveFilter}
               setIsActiveFilter={setIsActiveFilter}
             />
