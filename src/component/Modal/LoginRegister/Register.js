@@ -30,7 +30,6 @@ export default function Register({ toggleModal }) {
       if (response.data.status) {
         toast.info('check your email')
         router.push(`/otp/${form.email}`)
-        localStorage.setItem('MUST_VERIFY', form.email)
       }
       toggleModal()
     } catch (err) {

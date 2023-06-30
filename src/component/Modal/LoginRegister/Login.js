@@ -10,6 +10,7 @@ import { parseJwt } from '@/utils'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 import LoginGoogle from './LoginGoogle'
+import { useRouter } from 'next/router'
 
 const initialValues = {
   email: '',
@@ -20,6 +21,7 @@ export default function Login({ toggleModal }) {
   const [form, setForm] = useState(initialValues)
   const [isEmail, setIsEmail] = useState(false)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -43,7 +45,10 @@ export default function Login({ toggleModal }) {
         toast.success(`welcome back ${dataProfile.data.name}`)
       }
     } catch (err) {
-      toast.error(err.response.data.message)
+      if (err.response.status === 401) {
+        router.push(`/otp/${form.email}`)
+        toast.error(err.response.data.message)
+      }
     }
   }
 
@@ -102,7 +107,7 @@ export default function Login({ toggleModal }) {
         >
           Masuk dengan Email
         </Button>
-        <LoginGoogle isLogin toggleModal={toggleModal}/>
+        <LoginGoogle isLogin toggleModal={toggleModal} />
       </div>
     )
   }
