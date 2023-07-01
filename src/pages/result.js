@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import api from '@/services/api'
 
 import Button from '@/component/Button'
@@ -21,7 +22,7 @@ import SortingModal from '@/component/Modal/SortingModal'
 
 import Img_empty from 'public/image/empty-result.svg'
 import Img_loading from 'public/image/loading-result.svg'
-import Image from 'next/image'
+import { dataAirline, dataFilterTime } from '@/utils/local'
 
 function Result() {
   const router = useRouter()
@@ -177,7 +178,11 @@ function Result() {
                   />
                 ) : (
                   <div className='flex justify-center items-center flex-col'>
-                    <Image src={Img_empty} className='max-w-[320px] pr-5' />
+                    <Image
+                      src={Img_empty}
+                      className='max-w-[320px] pr-5'
+                      alt='empty ticket image'
+                    />
                     <p className='text-lg text-slate-800 font-medium -mt-3'>
                       Tiket yang kamu inginkan tidak ada😭
                     </p>
@@ -185,7 +190,11 @@ function Result() {
                 )
               ) : (
                 <div className='flex justify-center items-center flex-col pt-4'>
-                  <Image src={Img_loading} className='max-w-[320px]' />
+                  <Image
+                    src={Img_loading}
+                    className='max-w-[320px]'
+                    alt='loading image'
+                  />
                   <p className='text-lg text-slate-800 font-medium mt-2'>
                     Tunggu sebentar ya🫣
                   </p>
@@ -204,51 +213,6 @@ Result.getLayout = (page) => {
 }
 
 export default Result
-
-const dataFilterTime = [
-  {
-    id: 1,
-    isActive: false,
-    fromTime: '06:00',
-    toTime: '09:00',
-    title: 'Pagi',
-  },
-  {
-    id: 2,
-    isActive: false,
-    fromTime: '10:00',
-    toTime: '12:00',
-    title: 'Siang',
-  },
-  {
-    id: 3,
-    isActive: false,
-    fromTime: '13:00',
-    toTime: '20:00',
-    title: 'Sore - Malam',
-  },
-]
-
-const dataAirline = [
-  {
-    id: 1,
-    isActive: false,
-    title: 'citilink',
-    value: 'citilink',
-  },
-  {
-    id: 2,
-    isActive: false,
-    title: 'Batik air',
-    value: 'batikair',
-  },
-  {
-    id: 3,
-    isActive: false,
-    title: 'Garuda',
-    value: 'garuda',
-  },
-]
 
 function SortingTicket({ type, data, query }) {
   if (!data) {
