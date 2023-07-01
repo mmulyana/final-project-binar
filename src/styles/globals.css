@@ -156,7 +156,6 @@
   background-color: #fff;
   transition: all 0.3s ease-in-out;
   z-index: 80;
-  box-shadow: -8px 0 12px 0 rgba(0, 0, 0, 0.08);
 }
 
 .drawer.open {
