@@ -141,7 +141,7 @@ export default function Navbar({ isDark = false }) {
               </Link>
               <nav className='flex items-center gap-4'>
                 <Link
-                  href='/'
+                  href='/ticket/check'
                   className={[
                     'text-sm px-4 py-2 rounded',
                     !isDark
@@ -308,7 +308,7 @@ export default function Navbar({ isDark = false }) {
                     </Button>
                   </div>
                   <div className='flex flex-col gap-5 text-lg mt-4'>
-                    <Link href='/'>Cek pesanan</Link>
+                    <Link href='/ticket/check'>Cek pesanan</Link>
                     <Link href='/'>Bantuan</Link>
                   </div>
 

@@ -201,7 +201,66 @@ const imagesCities = {
   Surabaya: '/image/Surabaya.jpg',
 }
 
+const dataFilterTime = [
+  {
+    id: 1,
+    isActive: false,
+    fromTime: '06:00',
+    toTime: '09:00',
+    title: 'Pagi',
+  },
+  {
+    id: 2,
+    isActive: false,
+    fromTime: '10:00',
+    toTime: '12:00',
+    title: 'Siang',
+  },
+  {
+    id: 3,
+    isActive: false,
+    fromTime: '13:00',
+    toTime: '20:00',
+    title: 'Sore - Malam',
+  },
+]
+
+const dataAirline = [
+  {
+    id: 1,
+    isActive: false,
+    title: 'citilink',
+    value: 'citilink',
+  },
+  {
+    id: 2,
+    isActive: false,
+    title: 'Batik air',
+    value: 'batikair',
+  },
+  {
+    id: 3,
+    isActive: false,
+    title: 'Garuda',
+    value: 'garuda',
+  },
+  {
+    id: 4,
+    isActive: false,
+    title: 'Air asia',
+    value: 'airasia',
+  },
+  {
+    id: 3,
+    isActive: false,
+    title: 'Lion air',
+    value: 'lionair',
+  },
+]
+
 export {
+  dataFilterTime,
+  dataAirline,
   seatClassData,
   suggestions,
   flights,

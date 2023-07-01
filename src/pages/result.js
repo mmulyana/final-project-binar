@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import api from '@/services/api'
 
 import Button from '@/component/Button'
@@ -19,9 +20,13 @@ import {
 } from '@/component/Collapsible'
 import SortingModal from '@/component/Modal/SortingModal'
 
+import Img_empty from 'public/image/empty-result.svg'
+import Img_loading from 'public/image/loading-result.svg'
+import { dataAirline, dataFilterTime } from '@/utils/local'
+
 function Result() {
   const router = useRouter()
-  const [flights, setFlights] = useState([])
+  const [flights, setFlights] = useState(null)
   const [query, setQuery] = useState(null)
   const [filterByDTime, setFilterByDTime] = useState(dataFilterTime)
   const [filterByATime, setFilterByATime] = useState(dataFilterTime)
@@ -57,6 +62,7 @@ function Result() {
   }
 
   const flightsFiltered = useMemo(() => {
+    if (!flights) return
     let tmp = [...flights]
     let res = []
     const activeAirlines = getAirlineActives(filterAirline)
@@ -144,11 +150,15 @@ function Result() {
             <div className='flex justify-between'>
               <p className='text-sm text-slate-600'>
                 terdapat{' '}
-                <span className='text-slate-800 font-medium'>
-                  {flights.length > 0 ? flights.length : null}
+                <span className='text-slate-800 font-semibold'>
+                  {flights
+                    ? flights.length > 0
+                      ? flights.length
+                      : null
+                    : null}
                 </span>{' '}
                 penerbangan menuju{' '}
-                <span className='text-slate-800 font-medium'>
+                <span className='text-slate-800 font-semibold'>
                   {getCityByIata(query.ds)}
                 </span>{' '}
                 untuk kamu
@@ -167,10 +177,28 @@ function Result() {
                     data={flightsFiltered}
                   />
                 ) : (
-                  <p>empty filter</p>
+                  <div className='flex justify-center items-center flex-col'>
+                    <Image
+                      src={Img_empty}
+                      className='max-w-[320px] pr-5'
+                      alt='empty ticket image'
+                    />
+                    <p className='text-lg text-slate-800 font-medium -mt-3'>
+                      Tiket yang kamu inginkan tidak ada😭
+                    </p>
+                  </div>
                 )
               ) : (
-                <p>loading...</p>
+                <div className='flex justify-center items-center flex-col pt-4'>
+                  <Image
+                    src={Img_loading}
+                    className='max-w-[320px]'
+                    alt='loading image'
+                  />
+                  <p className='text-lg text-slate-800 font-medium mt-2'>
+                    Tunggu sebentar ya🫣
+                  </p>
+                </div>
               )}
             </div>
           </div>
@@ -185,51 +213,6 @@ Result.getLayout = (page) => {
 }
 
 export default Result
-
-const dataFilterTime = [
-  {
-    id: 1,
-    isActive: false,
-    fromTime: '06:00',
-    toTime: '09:00',
-    title: 'Pagi',
-  },
-  {
-    id: 2,
-    isActive: false,
-    fromTime: '10:00',
-    toTime: '12:00',
-    title: 'Siang',
-  },
-  {
-    id: 3,
-    isActive: false,
-    fromTime: '13:00',
-    toTime: '20:00',
-    title: 'Sore - Malam',
-  },
-]
-
-const dataAirline = [
-  {
-    id: 1,
-    isActive: false,
-    title: 'citilink',
-    value: 'citilink',
-  },
-  {
-    id: 2,
-    isActive: false,
-    title: 'Batik air',
-    value: 'batikair',
-  },
-  {
-    id: 3,
-    isActive: false,
-    title: 'Garuda',
-    value: 'garuda',
-  },
-]
 
 function SortingTicket({ type, data, query }) {
   if (!data) {
