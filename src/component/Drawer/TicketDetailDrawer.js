@@ -3,6 +3,7 @@ import withDrawer from './withDrawer'
 import Button from '../Button'
 import api from '@/services/api'
 import { convertDateTicket, convertToHoursMinutes } from '@/utils'
+import Image from 'next/image'
 
 function TicketDetail({ onClose, ...props }) {
   const [data, setData] = useState(null)
@@ -12,6 +13,7 @@ function TicketDetail({ onClose, ...props }) {
       try {
         const { data } = await api(`/flights/${id}`)
         setData(data.data)
+        console.log(data)
       } catch (error) {
         console.log(error)
       }
@@ -45,7 +47,19 @@ function TicketDetail({ onClose, ...props }) {
         </Button>
       </div>
       <div className='pt-4'>
-        <div className='relative h-fit'>
+        <div className='flex gap-4 items-start'>
+          <Image
+            src={data?.airline.icon_url}
+            height={80}
+            width={80}
+            alt={data?.airline.name}
+          />
+          <div>
+            <p className='text-slate-800'>{data?.airline.name} <span className='text-slate-600'>{data?.airline.iata_code}</span></p>
+            <p className='text-xs text-slate-400'>{data?.airplane.model}</p>
+          </div>
+        </div>
+        <div className='relative h-fit mt-6'>
           <div className='grid grid-cols-[1fr_2fr]'>
             <div className='relative'>
               <p className='text-lg text-slate-800'>{data?.departure_time}</p>
@@ -61,6 +75,9 @@ function TicketDetail({ onClose, ...props }) {
               </p>
               <p className='text-sm text-slate-400 mt-1'>
                 {data?.departure.name}
+              </p>
+              <p className='text-sm text-slate-400 mt-1'>
+                {data?.departure_terminal_name}
               </p>
             </div>
           </div>
@@ -91,6 +108,9 @@ function TicketDetail({ onClose, ...props }) {
               </p>
               <p className='text-sm text-slate-400 mt-1'>
                 {data?.arrival.name}
+              </p>
+              <p className='text-sm text-slate-400 mt-1'>
+                {data?.arrival_terminal_name}
               </p>
             </div>
           </div>
