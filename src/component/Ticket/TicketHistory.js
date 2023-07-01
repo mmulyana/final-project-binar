@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export default function TicketHistory({ data, id }) {
+export default function TicketHistory({ data }) {
   const router = useRouter()
 
   function handlePayment() {
@@ -17,7 +17,7 @@ export default function TicketHistory({ data, id }) {
   }
 
   return (
-    <div className='bg-white rounded-lg overflow-hidden'>
+    <div className='bg-white rounded-lg overflow-hidden w-full'>
       <div className='py-2 w-full px-4 flex items-center justify-between text-sm relative border-b border-gray-200 bg-gray-50'>
         <p className='text-slate-600'>No. pesanan {data.transaction_id}</p>
         <Label
