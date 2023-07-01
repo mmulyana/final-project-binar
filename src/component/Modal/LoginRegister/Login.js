@@ -68,9 +68,9 @@ export default function Login({ toggleModal }) {
             name='email'
             id='email'
             label='email'
+            withLabel
             value={form.email}
             onChange={handleChange}
-            withLabel
             placeholder='example@mail.com'
             autoFocus
           />

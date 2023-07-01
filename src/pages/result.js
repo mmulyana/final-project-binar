@@ -223,6 +223,7 @@ function Result() {
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           id={id}
+          query={query}
         />
       )}
     </>
