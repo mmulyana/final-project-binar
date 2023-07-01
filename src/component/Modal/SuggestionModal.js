@@ -47,7 +47,7 @@ export default function SuggestionModal({ dispatch, type, isOpen, data }) {
 
   if (isOpen) {
     return (
-      <div className='absolute w-full z-50 top-24 bg-white pb-4 rounded border'>
+      <div className='absolute w-full z-50 top-24 bg-white pb-4 rounded-2xl border'>
         <div className='flex items-center justify-end px-4 py-3 mb-2 border-b border-gray-300'>
           <Button onClick={() => dispatch({ type: 'hideSearch' })}>
             <Image src={Ic_Close} h={24} w={24} alt='close modal button' />

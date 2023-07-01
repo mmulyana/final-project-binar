@@ -19,9 +19,13 @@ import {
 } from '@/component/Collapsible'
 import SortingModal from '@/component/Modal/SortingModal'
 
+import Img_empty from 'public/image/empty-result.svg'
+import Img_loading from 'public/image/loading-result.svg'
+import Image from 'next/image'
+
 function Result() {
   const router = useRouter()
-  const [flights, setFlights] = useState([])
+  const [flights, setFlights] = useState(null)
   const [query, setQuery] = useState(null)
   const [filterByDTime, setFilterByDTime] = useState(dataFilterTime)
   const [filterByATime, setFilterByATime] = useState(dataFilterTime)
@@ -57,6 +61,7 @@ function Result() {
   }
 
   const flightsFiltered = useMemo(() => {
+    if (!flights) return
     let tmp = [...flights]
     let res = []
     const activeAirlines = getAirlineActives(filterAirline)
@@ -144,11 +149,15 @@ function Result() {
             <div className='flex justify-between'>
               <p className='text-sm text-slate-600'>
                 terdapat{' '}
-                <span className='text-slate-800 font-medium'>
-                  {flights.length > 0 ? flights.length : null}
+                <span className='text-slate-800 font-semibold'>
+                  {flights
+                    ? flights.length > 0
+                      ? flights.length
+                      : null
+                    : null}
                 </span>{' '}
                 penerbangan menuju{' '}
-                <span className='text-slate-800 font-medium'>
+                <span className='text-slate-800 font-semibold'>
                   {getCityByIata(query.ds)}
                 </span>{' '}
                 untuk kamu
@@ -167,10 +176,20 @@ function Result() {
                     data={flightsFiltered}
                   />
                 ) : (
-                  <p>empty filter</p>
+                  <div className='flex justify-center items-center flex-col'>
+                    <Image src={Img_empty} className='max-w-[320px] pr-5' />
+                    <p className='text-lg text-slate-800 font-medium -mt-3'>
+                      Tiket yang kamu inginkan tidak ada😭
+                    </p>
+                  </div>
                 )
               ) : (
-                <p>loading...</p>
+                <div className='flex justify-center items-center flex-col pt-4'>
+                  <Image src={Img_loading} className='max-w-[320px]' />
+                  <p className='text-lg text-slate-800 font-medium mt-2'>
+                    Tunggu sebentar ya🫣
+                  </p>
+                </div>
               )}
             </div>
           </div>

@@ -55,6 +55,7 @@ function History() {
             key={index}
             handleClick={handleClick}
             id={user.id}
+            withPrint
           />
         ))}
       </div>
