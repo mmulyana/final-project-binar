@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import withDrawer from './withDrawer'
 import Button from '../Button'
+import api from '@/services/api'
 
 function TicketHistory({ onClose, ...props }) {
+  
   return (
     <div className='px-4'>
       <div className='flex items-center justify-start gap-4 py-3 '>
@@ -24,7 +26,7 @@ function TicketHistory({ onClose, ...props }) {
           </svg>
         </Button>
       </div>
-
+      
     </div>
   )
 }

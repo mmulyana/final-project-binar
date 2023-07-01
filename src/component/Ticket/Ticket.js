@@ -8,7 +8,7 @@ import {
   convertToHoursMinutes,
 } from '@/utils'
 
-export default function Ticket({ data, query }) {
+export default function Ticket({ data, query, handleDetail }) {
   const url = useMemo(() => {
     return `/checkout/order?a=${query?.a}&k=${query?.k}&b=${query?.b}&id=${data.id}`
   }, [query, data.id])
@@ -68,8 +68,8 @@ export default function Ticket({ data, query }) {
         </div>
       </div>
       <div className='relative bg-gray-50 h-fit md:h-full'>
-        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute -top-[10px] -left-[10px]'/>
-        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute bottom-[calc(100%-10px)] lg:-bottom-[10px] left-[calc(100%-10px)] lg:-left-[10px]'/>
+        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute -top-[10px] -left-[10px]' />
+        <div className='w-5 h-5 rounded-full bg-[#F0F1F6] absolute bottom-[calc(100%-10px)] lg:-bottom-[10px] left-[calc(100%-10px)] lg:-left-[10px]' />
         <hr className='absolute w-full border border-[#F0F1F6] border-dashed lg:rotate-90 top-[100px] -left-0 -translate-x-1/2 hidden lg:block' />
         <div className='h-9 w-full bg-white lg:bg-teal-700 px-4 items-center justify-end text-sm text-slate-800 hidden lg:flex'>
           <p className='text-xs text-white'>{data.class}</p>
@@ -82,7 +82,12 @@ export default function Ticket({ data, query }) {
             </p>
           </div>
           <div className='flex items-center justify-between gap-5 md:w-full'>
-            <Button className='block text-sm'>Detail</Button>
+            <Button
+              onClick={() => handleDetail(data.id)}
+              className='block text-sm'
+            >
+              Detail
+            </Button>
             <Link
               href={url}
               className='px-6 py-1 bg-[#4642FF] text-white rounded text-sm uppercase text-center'
