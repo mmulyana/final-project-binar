@@ -17,7 +17,10 @@ export default function TicketHistory({ data, withPrint, id }) {
   return (
     <div className='bg-white rounded-lg overflow-hidden w-full'>
       <div className='py-2 w-full px-4 flex items-end justify-between relative bg-gray-50 border-b border-gray-200'>
-        <p className='text-slate-400 text-xs'>No. Pesanan <span className='text-slate-900'>{data.transaction_id}</span></p>
+        <p className='text-slate-400 text-xs'>
+          No. Pesanan{' '}
+          <span className='text-slate-900'>{data.transaction_id}</span>
+        </p>
         <Label
           text={data.payment_status ? 'lunas' : changeToRupiah(data.total_bill)}
           state={data.payment_status ? 'success' : 'failed'}

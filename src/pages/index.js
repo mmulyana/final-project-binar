@@ -13,7 +13,6 @@ import imgBanner from 'public/image/banner-high-2.jpg'
 import { removeRedundantCities } from '@/utils'
 import { setUser } from '@/redux/reducers/auth'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
-import AddPessangerModal from '@/component/Modal/AddPassengerModa'
 
 function Home() {
   const dispatch = useDispatch()
