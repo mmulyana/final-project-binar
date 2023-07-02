@@ -32,7 +32,7 @@ function Home() {
 
   const fetchFlightsData = async () => {
     try {
-      const response = await api('/flights/data?start=1&length=8')
+      const response = await api('/flights/data?start=27100&length=8')
       setFlightsData(response.data.data)
     } catch (error) {
       console.error(error)
@@ -106,7 +106,7 @@ function Home() {
           <h2 className='text-2xl text-[#0E0C25]'>
             Destinasi Lokal yang banyak diminati
           </h2>
-          <div className='mt-10 grid grid-cols-1 md:grid-cols-4 gap-6'>
+          <div className='mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6'>
             {flightsData?.map((flight, index) => (
               <CardFlight data={flight} key={index} />
             ))}
@@ -142,6 +142,7 @@ function Home() {
           <Image width={120} height={60} src='/image/Lufthansa.svg' alt='Lufthansa' className='w-auto h-auto'/>
         </div>
       </div>
+
     </>
   )
 }

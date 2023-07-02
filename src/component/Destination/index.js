@@ -16,7 +16,7 @@ export default function Destination({ query }) {
               Silakan pilih keberangkatan penerbangan.
             </p>
             <div className='flex flex-row my-2 flex-wrap items-center gap-2'>
-              <p className='text-base md:text-2xl text-medium text-[#131316]'>
+              <p className='text-lg md:text-2xl text-medium text-[#131316]'>
                 {getCityByIata(query?.or)}
               </p>{' '}
               <div className='text-[#326BF1]'>
@@ -54,7 +54,7 @@ export default function Destination({ query }) {
                   </svg>
                 )}
               </div>
-              <p className='text-base md:text-2xl text-medium text-[#131316]'>
+              <p className='text-lg md:text-2xl text-medium text-[#131316]'>
                 {getCityByIata(query?.ds)}
               </p>{' '}
               <div className='flex gap-2 items-center ml-4'>
@@ -64,7 +64,7 @@ export default function Destination({ query }) {
                   width='18'
                   alt='calendar icon'
                 />
-                <p className='text-[#131316]/80 text-xs md:text-base'>
+                <p className='text-[#131316]/80 text-sm lg:text-base'>
                   {!!query && `${query?.dd.split('-')[2]} `}
                   {query?.dr !== '0'
                     ? `${
@@ -93,9 +93,9 @@ export default function Destination({ query }) {
           </div>
         </div>
 
-        <Button className='px-4 py-2 text-base rounded bg-[#EFF0F3] hover:bg-[#fbfbfb] text-[#326BF1] hover:text-[#3b76ff]'>
+        {/* <Button className='px-4 py-2 text-base rounded bg-[#EFF0F3] hover:bg-[#fbfbfb] text-[#326BF1] hover:text-[#3b76ff]'>
           Ganti Pencarian
-        </Button>
+        </Button> */}
       </div>
     </div>
   )

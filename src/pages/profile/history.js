@@ -8,9 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 function History() {
-  const [isOpen, setIsOpen] = useState(false)
   const [transactions, setTransactions] = useState([])
-  const [detail, setDetail] = useState(null)
   const { user } = useSelector(selectAuth)
 
   async function getTransaction(id) {
@@ -28,19 +26,6 @@ function History() {
     } catch (err) {}
   }
 
-  function handleClick(id) {
-    const transaction = transactions.filter(
-      (transaction) => transaction.id === id
-    )
-    setDetail(transaction[0])
-    setIsOpen(true)
-  }
-
-  function handleClose() {
-    setDetail(null)
-    setIsOpen(false)
-  }
-
   useEffect(() => {
     if (!user) return
     getTransaction(user?.id)
@@ -53,13 +38,11 @@ function History() {
           <TicketHistory
             data={transaction}
             key={index}
-            handleClick={handleClick}
-            id={user.id}
+            id={user?.id}
             withPrint
           />
         ))}
       </div>
-      <TicketHistoryDrawer isOpen={isOpen} onClose={handleClose} />
     </>
   )
 }

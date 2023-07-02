@@ -20,6 +20,7 @@ const withDrawer = (WrappedComponent) => {
 
     return (
       <>
+        <div className='fixed top-0 left-0 w-screen h-full bg-black/40 z-50' />
         <div
           className={['relative drawer', isOpen ? 'open' : ''].join(' ')}
           ref={drawerRef}

@@ -83,7 +83,7 @@
   }
 
   .card-flight__image {
-    @apply w-full h-full -translate-y-0 absolute duration-75 ease-in;
+    @apply w-full h-full -translate-y-0 absolute duration-75 ease-in bottom-0;
   }
 
   .card-flight__layer {
@@ -116,6 +116,14 @@
 
   .card-flight:hover {
     @apply text-[#131316];
+  }
+
+  .card-airline {
+    @apply absolute left-4 top-4 z-20 bg-white/40 px-3 py-1 pt-2 rounded flex items-center justify-center;
+  }
+
+  .card-flight:hover .card-airline {
+    @apply bg-amber-400;
   }
 
   .card-flight:hover .card-flight__desc-layer {
@@ -156,7 +164,6 @@
   background-color: #fff;
   transition: all 0.3s ease-in-out;
   z-index: 80;
-  box-shadow: -8px 0 12px 0 rgba(0, 0, 0, 0.08);
 }
 
 .drawer.open {

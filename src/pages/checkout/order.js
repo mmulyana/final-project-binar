@@ -180,14 +180,11 @@ export default function Order() {
         <form onSubmit={handleSubmit}>
           <div className='bg-white rounded border border-[#DFDEE2] pt-6 p-8 pb-10'>
             <p>Data Diri Pemesan</p>
-            <label className='text-sm mt-4 mb-2 block'>Nama</label>
-            <Textfield value={user?.name} disabled />
-
-            <label className='text-sm mt-4 mb-2 block'>Nomor Telepon</label>
-            <TextfieldPhone value={user?.phone_number} disabled />
-
-            <label className='text-sm mt-4 mb-2 block'>Email</label>
-            <Textfield value={user?.email} disabled />
+            <div className='flex flex-col gap-3 mt-4'>
+              <Textfield label='nama' withLabel value={user?.name} disabled />
+              <TextfieldPhone value={user?.phone_number} disabled />
+              <Textfield label='email' withLabel value={user?.email} disabled />
+            </div>
           </div>
 
           <div className='mt-8'>

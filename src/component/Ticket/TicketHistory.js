@@ -5,7 +5,7 @@ import { changeToRupiah, convertToHoursMinutes, formatTimestamp } from '@/utils'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export default function TicketHistory({ data, withPrint }) {
+export default function TicketHistory({ data, withPrint, id }) {
   const router = useRouter()
 
   function handlePayment() {
@@ -16,21 +16,28 @@ export default function TicketHistory({ data, withPrint }) {
 
   return (
     <div className='bg-white rounded-lg overflow-hidden w-full'>
-      <div className='py-2 w-full px-4 flex items-center justify-between text-sm relative border-b border-gray-200 bg-gray-50'>
-        <p className='text-slate-600'>No. pesanan {data.transaction_id}</p>
+      <div className='py-2 w-full px-4 flex items-end justify-between relative bg-gray-50 border-b border-gray-200'>
+        <p className='text-slate-400 text-xs'>
+          No. Pesanan{' '}
+          <span className='text-slate-900'>{data.transaction_id}</span>
+        </p>
         <Label
           text={data.payment_status ? 'lunas' : changeToRupiah(data.total_bill)}
           state={data.payment_status ? 'success' : 'failed'}
         />
       </div>
-      <div className={['grid grid-cols-[1fr_2fr]', withPrint ? '' : 'pb-4'].join(' ')}>
+      <div
+        className={['grid grid-cols-[1fr_2fr]', withPrint ? '' : 'pb-4'].join(
+          ' '
+        )}
+      >
         <div className='flex flex-col gap-4 pt-4 pl-4'>
           <div className='text-xs text-left'>
             <p className='text-slate-400 font-light'>Maskapai</p>
             <p className='text-slate-800 text-sm'>{data.airline}</p>
           </div>
           <div>
-            <p className='text-slate-400 font-light text-xs'>pembelian</p>
+            <p className='text-slate-400 font-light text-xs'>Pembelian</p>
             <p className='text-slate-800 text-sm'>
               {formatTimestamp(data.transaction_date)}
             </p>
@@ -47,8 +54,8 @@ export default function TicketHistory({ data, withPrint }) {
 
           <div className='grow relative h-10'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90px] lg:w-[200px] border border-dashed border-slate-300'>
-              <div className='w-2 h-2 rounded-full border border-slate-500 -top-1/2 -translate-y-1/2 bg-white absolute -left-1'></div>
-              <div className='w-2 h-2 rounded-full border border-slate-600 -top-1/2 -translate-y-1/2 bg-slate-600 absolute -right-1'></div>
+              <div className='w-2 h-2 rounded-full bg-blue-600 -top-1/2 -translate-y-1/2 absolute -left-1'></div>
+              <div className='w-2 h-2 rounded-full bg-blue-200 -top-1/2 -translate-y-1/2 absolute -right-1'></div>
               <Image
                 src='/icon/plane-ticket.svg'
                 alt='duration in plane'
@@ -72,17 +79,17 @@ export default function TicketHistory({ data, withPrint }) {
       </div>
 
       {!withPrint ? null : (
-        <div className='flex justify-end items-center bg-gray-50 px-4 py-2 border-t border-gray-200 mt-3'>
+        <div className='flex justify-end items-center px-4 pb-3 -mt-3'>
           {data.payment_status ? (
             <Link
-              className='block px-5 py-1 rounded hover:bg-blue-600 text-sm text-blue-600 hover:text-white'
+              className='block px-5 py-1 rounded bg-gray-100/70 hover:bg-blue-600 text-sm text-blue-600 hover:text-white'
               href={`/ticket/${data.transaction_id}`}
             >
               Cetak
             </Link>
           ) : (
             <Button
-              className='block px-5 py-1 rounded hover:bg-gray-200 text-sm text-slate-600'
+              className='block px-5 py-1 rounded bg-gray-100/70 hover:bg-gray-200 text-sm text-red-600'
               onClick={handlePayment}
             >
               Bayar

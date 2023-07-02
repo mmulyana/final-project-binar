@@ -100,7 +100,7 @@ export default function SearchFlight({ state, dispatch }) {
         </div>
 
         {/* below */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8 px-6 py-6 relative'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 py-6 relative'>
           {/* destination */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 relative'>
             <div>
@@ -208,7 +208,7 @@ export default function SearchFlight({ state, dispatch }) {
             />
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-[1fr_128px] gap-8 items-end'>
+          <div className='grid grid-cols-1 lg:grid-cols-[1fr_128px] gap-8 items-end'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <div>
                 <p className='text-sm font-medium mb-3'>Berangkat</p>
