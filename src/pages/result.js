@@ -46,6 +46,9 @@ function Result() {
   useEffect(() => {
     if (query === null) return
     getFlight(query)
+    if(query.iow === 'false') {
+      getFlightReverse(query)
+    }
     return () => setFlights([])
   }, [query])
 
@@ -59,6 +62,20 @@ function Result() {
       }
       const { data } = await api.post('/flights', body)
       setFlights(data.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  async function getFlightReverse(query) {
+    try {
+      const body = {
+        origin_airport: query.ds,
+        destination_airport: query.or,
+        flight_date: query.dr,
+        passenger_cnt: parseInt(query.c),
+      }
+      const { data } = await api.post('/flights', body)
+      setFlights(prev => [...prev, ...data.data])
     } catch (err) {
       console.log(err)
     }

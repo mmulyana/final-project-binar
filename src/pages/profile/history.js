@@ -38,7 +38,7 @@ function History() {
           <TicketHistory
             data={transaction}
             key={index}
-            id={user.id}
+            id={user?.id}
             withPrint
           />
         ))}

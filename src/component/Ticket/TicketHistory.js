@@ -51,8 +51,8 @@ export default function TicketHistory({ data, withPrint, id }) {
 
           <div className='grow relative h-10'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90px] lg:w-[200px] border border-dashed border-slate-300'>
-              <div className='w-2 h-2 rounded-full border border-slate-500 -top-1/2 -translate-y-1/2 bg-white absolute -left-1'></div>
-              <div className='w-2 h-2 rounded-full border border-slate-600 -top-1/2 -translate-y-1/2 bg-slate-600 absolute -right-1'></div>
+              <div className='w-2 h-2 rounded-full bg-blue-600 -top-1/2 -translate-y-1/2 absolute -left-1'></div>
+              <div className='w-2 h-2 rounded-full bg-blue-200 -top-1/2 -translate-y-1/2 absolute -right-1'></div>
               <Image
                 src='/icon/plane-ticket.svg'
                 alt='duration in plane'

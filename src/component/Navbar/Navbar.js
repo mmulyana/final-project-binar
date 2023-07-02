@@ -307,7 +307,7 @@ export default function Navbar({ isDark = false }) {
                       />
                     </Button>
                   </div>
-                  <div className='flex flex-col gap-5 text-lg mt-4'>
+                  <div className='flex flex-col gap-5 mt-4'>
                     <Link href='/ticket/check'>Cek pesanan</Link>
                     <Link href='/'>Bantuan</Link>
                   </div>
@@ -315,7 +315,7 @@ export default function Navbar({ isDark = false }) {
                   {user !== null ? (
                     <div className='mt-12 mb-3 relative flex justify-between items-center'>
                       <div
-                        className='flex gap-2 items-center pb-2 border-b border-gray-200'
+                        className='flex gap-2 items-center pb-2'
                         onClick={() => router.push('/profile')}
                       >
                         <div className='w-10'>
