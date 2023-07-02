@@ -10,7 +10,6 @@ export default function SeatClassModal({
   toggleModal,
   dispatch,
   isOpen,
-  state,
 }) {
   const [seates, setSeates] = useState(seatClassData)
   const [adult, setAdult] = useState(1)

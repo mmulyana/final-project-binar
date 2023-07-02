@@ -199,6 +199,11 @@ const imagesCities = {
   Kupang: '/image/Kupang.jpg',
   Manado: '/image/Manado.jpg',
   Surabaya: '/image/Surabaya.jpg',
+  ambon: '/image/ambon.jpg',
+  jakarta: '/image/jakarta.jpg',
+  labuanbajo: '/image/labuanbajo.jpg',
+  palembang: '/image/palembang.jpg',
+  gorontalo: '/image/gorontalo.jpg',
 }
 
 const dataFilterTime = [
