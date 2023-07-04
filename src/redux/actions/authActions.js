@@ -56,7 +56,11 @@ export const LoginWithGoogle =
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response.data.message)
+        if (error.response.status === 500) {
+          toast.info('thank you for sign up, please log in again')
+        } else {
+          toast.error(error.response.data.message)
+        }
         return
       }
       toast.error(error.message)
