@@ -22,7 +22,7 @@ function Ewallet() {
 
 const wallets = [
   {
-    img: '/icon/danalogo.png',
+    img: '/icon/dana.png',
     name: 'dana',
   },
   {
