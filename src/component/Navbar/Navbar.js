@@ -154,7 +154,7 @@ export default function Navbar({ isDark = false }) {
                   Cek Pesanan
                 </Link>
                 <Link
-                  href='/'
+                  href='/help'
                   className={[
                     'text-sm px-4 py-2 rounded',
                     !isDark
@@ -309,7 +309,7 @@ export default function Navbar({ isDark = false }) {
                   </div>
                   <div className='flex flex-col gap-5 mt-4'>
                     <Link href='/ticket/check'>Cek pesanan</Link>
-                    <Link href='/'>Bantuan</Link>
+                    <Link href='/help'>Bantuan</Link>
                   </div>
 
                   {user !== null ? (

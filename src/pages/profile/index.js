@@ -94,13 +94,13 @@ function Profile() {
           />
           <Textfield label='Email' value={data.email} withLabel disabled />
         </div>
-        <div className='flex justify-between items-center mt-4'>
-          <Button
+        <div className='flex justify-end items-center mt-4'>
+          {/* <Button
             onClick={handleToggle}
             className='text-red-400 rounded text-sm capitalize'
           >
             hapus akun
-          </Button>
+          </Button> */}
           <div className='flex items-center gap-4'>
             {isDisable ? (
               <Button
@@ -128,9 +128,9 @@ function Profile() {
           </div>
         </div>
       </div>
-      {!!isOpen && (
+      {/* {!!isOpen && (
         <DeleteAccountModal isOpen id={data.id} toggleModal={handleToggle} />
-      )}
+      )} */}
     </>
   )
 }
