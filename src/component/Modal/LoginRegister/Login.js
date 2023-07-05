@@ -1,16 +1,20 @@
-import { useDispatch } from 'react-redux'
-import React, { useState } from 'react'
-import Button from '@/component/Button'
-import Textfield from '@/component/Form/Textfield'
-import TextfieldPassword from '@/component/Form/TextfieldPassword'
-import Cookies from 'js-cookie'
-import api from '@/services/api'
 import { setUser } from '@/redux/reducers/auth'
-import { parseJwt } from '@/utils'
-import Link from 'next/link'
-import { toast } from 'react-toastify'
-import LoginGoogle from './LoginGoogle'
+import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import Cookies from 'js-cookie'
+import Link from 'next/link'
+import axios from 'axios'
+
+import TextfieldPassword from '@/component/Form/TextfieldPassword'
+import Textfield from '@/component/Form/Textfield'
+import Button from '@/component/Button'
+import LoginGoogle from './LoginGoogle'
+import { parseJwt } from '@/utils'
+import api from '@/services/api'
+
+import { loginSchema } from '@/utils/schema'
 
 const initialValues = {
   email: '',
@@ -20,12 +24,16 @@ const initialValues = {
 export default function Login({ toggleModal }) {
   const [form, setForm] = useState(initialValues)
   const [isEmail, setIsEmail] = useState(false)
+  const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
   const router = useRouter()
 
   async function handleSubmit(e) {
     e.preventDefault()
     try {
+      await loginSchema.validate(form, { abortEarly: false })
+      setErrors({})
+
       const { data } = await api.post('auth/login', form)
       if (data.status) {
         Cookies.set('jwt', data.data.token, { expires: 1 })
@@ -44,11 +52,22 @@ export default function Login({ toggleModal }) {
 
         toast.success(`welcome back ${dataProfile.data.name}`)
       }
-    } catch (err) {
-      if (err.response.status === 401) {
-        router.push(`/otp/${form.email}`)
-        toast.error(err.response.data.message)
+    } catch (error) {
+      const errorMessages = {}
+      error?.inner?.forEach((error) => {
+        errorMessages[error.path] = error.message
+      })
+      setErrors(errorMessages)
+
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(err.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
       }
+      toast.error(error.message)
     }
   }
 
@@ -73,6 +92,7 @@ export default function Login({ toggleModal }) {
             onChange={handleChange}
             placeholder='example@mail.com'
             autoFocus
+            error={errors.email ? errors.email : null}
           />
           <TextfieldPassword
             name='password'
@@ -80,6 +100,8 @@ export default function Login({ toggleModal }) {
             label='Password'
             value={form.password}
             onChange={handleChange}
+            error={errors.password ? errors.password : null}
+
           />
           <Link
             href='/forgotpassword'

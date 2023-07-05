@@ -15,6 +15,8 @@ import Textfield from '@/component/Form/Textfield'
 import Ic_plane from 'public/icon/plane2.svg'
 import api from '@/services/api'
 import Cookies from 'js-cookie'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export default function Order() {
   const router = useRouter()
@@ -126,8 +128,16 @@ export default function Order() {
           `/checkout/payment?tr=${data.data.transaction.id}&us=${user.id}&ac=${flight.arrival.city}&dc=${flight.departure.city}&t=${data.data.total_price}&c=${flight.class}&or=${flight.departure.iata_code}&ds=${flight.arrival.iata_code}&tm=${data.data.transaction.created_at}`
         )
       }
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(err.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -447,13 +457,15 @@ export default function Order() {
               <div className='mt-3'>
                 <div className='flex justify-between items-start flex-wrap'>
                   <div className='flex gap-3'>
-                    <Image
-                      height={40}
-                      width={40}
-                      alt='airline icon'
-                      className='w-10 object-contain'
-                      src={flight?.airline.icon_url}
-                    />
+                    {flight?.airline.icon_url ? (
+                      <Image
+                        height={40}
+                        width={40}
+                        alt='airline icon'
+                        className='w-auto object-contain'
+                        src={flight?.airline.icon_url}
+                      />
+                    ) : null}
                     <p className='text-slate-900'>{flight?.airline.name}</p>
                   </div>
                   <div className='text-right'>
