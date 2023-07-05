@@ -3,24 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeUser, selectAuth, setUser } from '@/redux/reducers/auth'
 import { selectNotif, setNotifications } from '@/redux/reducers/notifications'
 
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import Button from '../Button'
+import api from '@/services/api'
 import Cookies from 'js-cookie'
+import Button from '../Button'
+import Image from 'next/image'
+import Link from 'next/link'
 
+import NotificationModal from '../Modal/NotificationModal'
 import LoginRegisterModal from '../Modal/LoginRegister'
+import LocaleModal from '../Modal/LocaleModal'
 import MenuModal from '../Modal/MenuModal'
 import Avvvatars from 'avvvatars-react'
-import NotificationModal from '../Modal/NotificationModal'
 
-import Ic_Close from 'public/icon/close.svg'
-import Ic_Logout from 'public/icon/logout.svg'
+import { useTranslation } from 'react-i18next'
 import { logout } from '@/utils/authUtils'
 import { useRouter } from 'next/router'
-import api from '@/services/api'
-import i18n from '../../../i18n'
-import { useTranslation } from 'react-i18next'
+
+import Ic_Logout from 'public/icon/logout.svg'
+import Ic_Close from 'public/icon/close.svg'
+import img_ID from 'public/icon/id.png'
+import img_EN from 'public/icon/en.png'
 
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
@@ -34,11 +37,13 @@ export default function Navbar({ isDark = false }) {
   const { t } = useTranslation()
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
+  const LocaleRef = useRef(null)
   const router = useRouter()
 
   const [isOpen, setIsOpen] = useState(false)
   const [openNotify, setOpenNotify] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
+  const [openLocale, setOpenLocale] = useState(false)
   const [offset, setOffset] = useState(0)
   const [locale, setLocale] = useState(null)
   // untuk menu di mobile
@@ -103,17 +108,41 @@ export default function Navbar({ isDark = false }) {
   }, [menuRef, setOpenNotify])
 
   useEffect(() => {
-    const onScroll = () => setOffset(window.pageYOffset)
-    window.removeEventListener('scroll', onScroll)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const handleClick = (event) => {
+      handleClickOutside(event, LocaleRef, setOpenLocale)
+    }
+
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [LocaleRef, setOpenLocale])
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      handleClickOutside(event, menuRef, setOpenMenu)
+    }
+
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [menuRef, setOpenNotify])
 
   useEffect(() => {
     if (router.isReady) {
       setLocale(router.locale)
     }
   }, [router.isReady])
+
+  useEffect(() => {
+    const onScroll = () => setOffset(window.pageYOffset)
+    window.removeEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <>
@@ -178,8 +207,13 @@ export default function Navbar({ isDark = false }) {
                 </Link>
               </nav>
             </div>
+
             {user !== null ? (
               <div className='flex gap-4 items-center'>
+                <div className='h-8 w-8 rounded relative flex items-center justify-center'>
+                  <Image src={locale === 'en' ? img_EN : img_ID} alt='change language' onClick={() => setOpenLocale(true)} className='cursor-pointer'/>
+                  {!!openLocale && <LocaleModal setIsOpen={setOpenLocale} ref={LocaleRef}/>}
+                </div>
                 <div
                   className={[
                     'relative h-8 w-8 flex items-center justify-center rounded-full',
@@ -249,6 +283,7 @@ export default function Navbar({ isDark = false }) {
             )}
           </MediaQuery>
 
+          {/* mobile */}
           <MediaQuery maxWidth={786}>
             <Link
               href='/'
