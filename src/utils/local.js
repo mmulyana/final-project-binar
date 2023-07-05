@@ -193,12 +193,12 @@ const seatesFlight = [
 ]
 
 const imagesCities = {
-  Yogyakarta: '/image/yogyakarta.jpg',
-  Makassar: '/image/makassar.jpg',
-  Biak: '/image/Biak.jpg',
-  Kupang: '/image/Kupang.jpg',
-  Manado: '/image/Manado.jpg',
-  Surabaya: '/image/Surabaya.jpg',
+  yogyakarta: '/image/yogyakarta.jpg',
+  makassar: '/image/makassar.jpg',
+  biak: '/image/Biak.jpg',
+  kupang: '/image/Kupang.jpg',
+  manado: '/image/Manado.jpg',
+  surabaya: '/image/Surabaya.jpg',
   ambon: '/image/ambon.jpg',
   jakarta: '/image/jakarta.jpg',
   labuanbajo: '/image/labuanbajo.jpg',
