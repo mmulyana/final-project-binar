@@ -3,7 +3,6 @@ import { SecondaryLayout } from '@/component/Layout'
 import React, { useState } from 'react'
 
 export default function Help() {
-  const [search, setSearch] = useState('')
   return (
     <div className='pt-20'>
       <section className='w-full py-12 mt-4 max-w-[1000px] px-4 mx-auto rounded-lg text-center'>

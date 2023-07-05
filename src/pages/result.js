@@ -67,6 +67,7 @@ function Result() {
     }
   }
   async function getFlightReverse(query) {
+    if(query.dr === query.dd) return
     try {
       const body = {
         origin_airport: query.ds,
