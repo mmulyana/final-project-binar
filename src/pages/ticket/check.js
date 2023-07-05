@@ -7,8 +7,10 @@ import img from 'public/image/check-img.svg'
 import axios from 'axios'
 import api from '@/services/api'
 import { TicketHistory } from '@/component/Ticket'
+import { useTranslation } from 'react-i18next'
 
 export default function CheckPage() {
+  const { t } = useTranslation()
   const [id, setId] = useState('')
   const [transaction, setTransaction] = useState(null)
 
@@ -33,7 +35,7 @@ export default function CheckPage() {
             className='bg-white text-sm'
             name='id'
             id='id'
-            label='No. Pesanan'
+            label={t('checkPageNo')}
             value={id}
             onChange={(e) => setId(e.target.value)}
             placeholder='123xxx'
@@ -44,7 +46,7 @@ export default function CheckPage() {
             onClick={handleCheck}
             className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 select-none'
           >
-            Cek
+            {t('checkPageBtn')}
           </Button>
         </div>
         <div className='flex items-start justify-center w-full px-4'>

@@ -1,0 +1,43 @@
+{
+    "navItemSupport": "Bantuan",
+    "navItemCheck": "Cek Pesanan",
+    "navBtn": "Masuk/Daftar",
+
+    "footerTitleCompany": "Perusahaan",
+    "footerBlog": "Blog",
+    "footerCareer": "Karir",
+    "footerAbout": "Tentang Kami",
+    "footerPartner": "Partner",
+
+    "footerTitleSupport": "Dukungan",
+    "footerSupportCenter": "Pusat bantuan",
+    "footerPolicy": "Kebijakan Privasi",
+
+    "footerContact": "Hubungi Kami",
+
+
+    "checkPageNo": "No. Pesanan",
+    "checkPageBtn": "Cek",
+
+    "faqTitle": "Pusat bantuan",
+    "faqSubtitle": "Temukan jawaban untuk permasalahan anda",
+    "faqSectionTitle": "Paling sering ditanyakan",
+
+    "searchFlight_type-1": "Sekali jalan",
+    "searchFlight_type-2": "Pulang-pergi",
+    "searchFlight_origin": "Terbang dari",
+    "searchFlight_destination": "Pergi ke",
+    "searchFlight_departure": "Berangkat",
+    "searchFlight_return": "Kembali",
+    "searchFlight_btn": "Cari Tiket",
+    "searchFlight_passenger": "Penumpang",
+    "searchFlight_passengerTitle": "Penumpang",
+    "searchFlight_passengerAtitle": "Dewasa",
+    "searchFlight_passengerAbody": "(12 tahun+)",
+    "searchFlight_passengerKtitle": "Anak",
+    "searchFlight_passengerKbody": "(2-11 tahun)",
+    "searchFlight_passengerBtitle": "Bayi",
+    "searchFlight_passengerBbody": "(dibawah 2 tahun)",
+    "searchFlight_classTitle": "Kelas Penerbangan"
+    
+}

@@ -1,0 +1,42 @@
+{
+    "navItemSupport": "Support",
+    "navItemCheck": "Check Order",
+    "navBtn": "register/login",
+
+    "footerTitleCompany": "Company",
+    "footerBlog": "Blog",
+    "footerCareer": "Career",
+    "footerAbout": "About Us",
+    "footerPartner": "Partner",
+
+    "footerTitleSupport": "Support",
+    "footerSupportCenter": "Help Center",
+    "footerPolicy": "privacy policy",
+
+    "footerContact": "Contact Us",
+
+
+    "checkPageNo": "No. Order",
+    "checkPageBtn": "Check",
+
+    "faqTitle": "Help Center",
+    "faqSubtitle": "Find answers to your problems.",
+    "faqSectionTitle": "Frequently Asked Questions",
+    
+    "searchFlight_type-1": "One Way",
+    "searchFlight_type-2": "Roundtrip",
+    "searchFlight_origin": "From",
+    "searchFlight_destination": "To",
+    "searchFlight_departure": "Departure",
+    "searchFlight_return": "Return",
+    "searchFlight_btn": "Search",
+    "searchFlight_passenger": "Passenger",
+    "searchFlight_passengerTitle": "Passenger",
+    "searchFlight_passengerAtitle": "Adult",
+    "searchFlight_passengerAbody": "(12 year)",
+    "searchFlight_passengerKtitle": "Child",
+    "searchFlight_passengerKbody": "(2-11 year)",
+    "searchFlight_passengerBtitle": "Baby",
+    "searchFlight_passengerBbody": "(< 2 year)",
+    "searchFlight_classTitle": "Class"
+}

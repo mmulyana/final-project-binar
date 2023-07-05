@@ -19,6 +19,8 @@ import Ic_Logout from 'public/icon/logout.svg'
 import { logout } from '@/utils/authUtils'
 import { useRouter } from 'next/router'
 import api from '@/services/api'
+import i18n from '../../../i18n'
+import { useTranslation } from 'react-i18next'
 
 const MediaQuery = dynamic(() => import('react-responsive'), { ssr: false })
 
@@ -29,6 +31,7 @@ const handleClickOutside = (event, ref, setOpen) => {
 }
 
 export default function Navbar({ isDark = false }) {
+  const { t } = useTranslation()
   const notificationRef = useRef(null)
   const menuRef = useRef(null)
   const router = useRouter()
@@ -37,6 +40,7 @@ export default function Navbar({ isDark = false }) {
   const [openNotify, setOpenNotify] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const [offset, setOffset] = useState(0)
+  const [locale, setLocale] = useState(null)
   // untuk menu di mobile
   const [isOpenMenu, setIsOpenMenu] = useState(false)
 
@@ -105,6 +109,12 @@ export default function Navbar({ isDark = false }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    if (router.isReady) {
+      setLocale(router.locale)
+    }
+  }, [router.isReady])
+
   return (
     <>
       <nav
@@ -143,7 +153,7 @@ export default function Navbar({ isDark = false }) {
                 <Link
                   href='/ticket/check'
                   className={[
-                    'text-sm px-4 py-2 rounded',
+                    'text-sm px-4 py-2 rounded capitalize',
                     !isDark
                       ? offset > 0
                         ? 'text-slate-800'
@@ -151,12 +161,12 @@ export default function Navbar({ isDark = false }) {
                       : 'text-slate-800',
                   ].join(' ')}
                 >
-                  Cek Pesanan
+                  {t('navItemCheck')}
                 </Link>
                 <Link
                   href='/help'
                   className={[
-                    'text-sm px-4 py-2 rounded',
+                    'text-sm px-4 py-2 rounded capitalize',
                     !isDark
                       ? offset > 0
                         ? 'text-slate-800'
@@ -164,7 +174,7 @@ export default function Navbar({ isDark = false }) {
                       : 'text-slate-800',
                   ].join(' ')}
                 >
-                  Bantuan
+                  {t('navItemSupport')}
                 </Link>
               </nav>
             </div>
@@ -234,7 +244,7 @@ export default function Navbar({ isDark = false }) {
                     : 'bg-[#326BF1] text-white',
                 ].join(' ')}
               >
-                Masuk/Daftar
+                {t('navBtn')}
               </Button>
             )}
           </MediaQuery>
