@@ -13,9 +13,9 @@ export default function Help() {
           Temukan jawaban untuk permasalahan anda
         </p>
       </section>
-      <section className='max-w-[900px] mx-auto px-4 grid grid-cols-[1fr_2fr]'>
+      <section className='max-w-[900px] mx-auto px-4 grid grid-cols-1 md:grid-cols-[1fr_2fr]'>
         <p className='text-lg text-slate-800'>Paling sering ditanyakan</p>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 mt-2 md:mt-0'>
           {Faqs.map((faq, index) => (
             <FaqCollapsible
               key={index}
