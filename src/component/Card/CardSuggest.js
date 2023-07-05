@@ -10,7 +10,7 @@ export default function CardSuggest({ data }) {
           className='rounded-lg h-[200px] relative bg-white hover:shadow-sm overflow-hidden'
         >
           <Image
-            src={imagesCities[suggest.flight.arrival.city]}
+            src={imagesCities[suggest.flight.arrival.city.toLowerCase()]}
             height={400}
             width={400}
             className='h-full w-full rounded-l-md object-cover'
