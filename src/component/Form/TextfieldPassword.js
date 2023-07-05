@@ -20,9 +20,10 @@ export default function TextfieldPassword({
       </label>
       <div
         className={[
-          'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center',
+          'relative h-12 w-full rounded bg-[#F4F4F4] px-4 flex items-center border',
           props.disabled ? 'text-gray-400' : '',
-          props.className ?? ''
+          props.className ?? '',
+          props.error ? 'border-red-500' : '',
         ].join(' ')}
       >
         <input
@@ -46,6 +47,9 @@ export default function TextfieldPassword({
             <Image src='/icon/eye.svg' height={24} width={24} alt='password' />
           )}
         </div>
+        <span className='absolute -bottom-5 left-0 text-xs text-red-500'>
+          {props.error}
+        </span>
       </div>
     </div>
   )

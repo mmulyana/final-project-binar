@@ -10,8 +10,9 @@ export default function TextfieldPhone({ name, value, onChange, ...props }) {
       </label>
       <div
         className={[
-          'relative h-12 w-full rounded bg-[#F4F4F4] pl-[88px] pr-4 flex items-center',
+          'relative h-12 w-full rounded bg-[#F4F4F4] pl-[88px] pr-4 flex items-center border',
           props.disabled ? 'text-gray-400' : '',
+          props.error ? 'border-red-500' : '',
         ].join(' ')}
       >
         <div className='absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2'>
@@ -24,8 +25,12 @@ export default function TextfieldPhone({ name, value, onChange, ...props }) {
           value={value}
           className='bg-transparent outline-none w-full'
           onChange={onChange}
+          placeholder='81234567899'
           {...props}
         />
+        <span className='absolute -bottom-5 left-0 text-xs text-red-500'>
+          {props.error}
+        </span>
       </div>
     </div>
   )

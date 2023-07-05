@@ -7,6 +7,8 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import LoginGoogle from './LoginGoogle'
+import { emailSchema, registerSchema } from '@/utils/schema'
+import axios from 'axios'
 
 const initialValues = {
   name: '',
@@ -19,6 +21,7 @@ const initialValues = {
 export default function Register({ toggleModal }) {
   const router = useRouter()
   const [form, setForm] = useState(initialValues)
+  const [errors, setErrors] = useState({})
   const [hasFillEmail, setHasFillEmail] = useState(false)
   const [isEmail, setIsEmail] = useState(false)
 
@@ -26,14 +29,30 @@ export default function Register({ toggleModal }) {
     e.preventDefault()
 
     try {
+      await registerSchema.validate(form, { abortEarly: false })
+      setErrors({})
       const response = await api.post(`/auth/register`, form)
       if (response.data.status) {
         toast.info('check your email')
         router.push(`/otp/${form.email}`)
       }
       toggleModal()
-    } catch (err) {
-      toast.error(err.response.data.message)
+    } catch (error) {
+      const errorMessages = {}
+      error?.inner?.forEach((error) => {
+        errorMessages[error.path] = error.message
+      })
+      setErrors(errorMessages)
+
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(err.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -45,11 +64,25 @@ export default function Register({ toggleModal }) {
     }))
   }
 
+  async function handleEmail() {
+    try {
+      await emailSchema.validate(form, { abortEarly: false })
+      setErrors({})
+      setHasFillEmail(true)
+    } catch (error) {
+      const errorMessages = {}
+      error?.inner?.forEach((error) => {
+        errorMessages[error.path] = error.message
+      })
+      setErrors(errorMessages)
+    }
+  }
+
   if (isEmail) {
     return (
       <div>
-        <form onSubmit={handleSubmit} className='mt-6'>
-          {!hasFillEmail ? (
+        {!hasFillEmail ? (
+          <>
             <Textfield
               name='email'
               id='email'
@@ -58,8 +91,18 @@ export default function Register({ toggleModal }) {
               onChange={handleChange}
               withLabel
               placeholder='example@mail.com'
+              error={errors.email ? errors.email : null}
             />
-          ) : (
+
+            <Button
+              onClick={handleEmail}
+              className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 flex items-center justify-center cursor-pointer'
+            >
+              Selanjutnya
+            </Button>
+          </>
+        ) : (
+          <form onSubmit={handleSubmit} className='mt-6'>
             <div className='flex flex-col gap-6'>
               <Textfield
                 name='email'
@@ -77,12 +120,14 @@ export default function Register({ toggleModal }) {
                 onChange={handleChange}
                 withLabel
                 autoFocus
+                error={errors.name ? errors.name : null}
               />
               <TextfieldPhone
                 name='phone_number'
                 value={form.phone_number}
                 onChange={handleChange}
                 id='phoneNumber'
+                error={errors.phone_number ? errors.phone_number : null}
               />
               <TextfieldPassword
                 name='password'
@@ -90,6 +135,7 @@ export default function Register({ toggleModal }) {
                 label='password'
                 value={form.password}
                 onChange={handleChange}
+                error={errors.password ? errors.password : null}
               />
 
               <TextfieldPassword
@@ -98,10 +144,9 @@ export default function Register({ toggleModal }) {
                 label='confirm Password'
                 value={form.confirmPassword}
                 onChange={handleChange}
+                error={errors.confirmPassword ? errors.confirmPassword : null}
               />
             </div>
-          )}
-          {hasFillEmail ? (
             <Button
               onClick={handleSubmit}
               type='submit'
@@ -109,19 +154,8 @@ export default function Register({ toggleModal }) {
             >
               Daftar
             </Button>
-          ) : (
-            <div
-              onClick={() => {
-                if (form.email !== '' && !hasFillEmail) {
-                  setHasFillEmail(true)
-                }
-              }}
-              className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 flex items-center justify-center cursor-pointer'
-            >
-              Selanjutnya
-            </div>
-          )}
-        </form>
+          </form>
+        )}
       </div>
     )
   } else {
