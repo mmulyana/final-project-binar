@@ -112,7 +112,7 @@ function Profile() {
                 onClick={() => setDisable(false)}
                 className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
               >
-                Edit profile
+                {t('profile_btn_update')}
               </Button>
             ) : (
               <>
@@ -120,13 +120,13 @@ function Profile() {
                   onClick={handleCancel}
                   className='text-slate-600 py-2 px-4 rounded text-sm'
                 >
-                  batal
+                  {t('profile_btn_cancel')}
                 </Button>
                 <Button
                   onClick={handleUpdateProfile}
                   className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
                 >
-                  Update
+                  {t('profile_btn_send')}
                 </Button>
               </>
             )}

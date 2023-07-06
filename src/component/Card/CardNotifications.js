@@ -13,7 +13,9 @@ export default function CardNotifications({
       onClick={() => handleNotif(data.id)}
       className={[
         'grid grid-cols-[1fr_8fr] gap-2 items-start py-3 px-4 relative overflow-hidden cursor-pointer ',
-        data.is_read ? 'bg-white hover:bg-gray-200' : 'bg-blue-100 hover:bg-blue-200',
+        data.is_read
+          ? 'bg-white hover:bg-gray-200'
+          : 'bg-blue-100 hover:bg-blue-200',
         index === 0 ? 'rounded-t' : '',
         index === length - 1 ? 'rounded-b' : '',
       ].join(' ')}
@@ -43,7 +45,6 @@ export default function CardNotifications({
         </svg>
       </div>
       <div>
-        <p className='capitalize text-sm text-slate-700'>{data.id}</p>
         <p className='mt-1 text-sm font-medium text-slate-700'>{data.title}</p>
         {data.message !== '' ? (
           <p className='text-slate-500 text-sm font-normal'>{data.body}</p>

@@ -163,5 +163,9 @@
   "forgot_emaii_send_again": "Kirim lagi",
 
   "reset_title": "Atur password baru",
-  "notif_empty": "belum ada notifikasi"
+  "notif_empty": "belum ada notifikasi",
+
+  "profile_btn_update": "Ubah profile",
+  "profile_btn_send": "Perbarui",
+  "profile_btn_cancel": "Batal"
 }

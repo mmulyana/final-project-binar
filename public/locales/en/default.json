@@ -163,6 +163,10 @@
   "forgot_emaii_send_again": "Send again",
 
   "reset_title": "Set a new password",
-  "notif_empty": "theres no notifications"
+  "notif_empty": "theres no notifications",
+
+  "profile_btn_update": "Update Profile",
+  "profile_btn_send": "Update",
+  "profile_btn_cancel": "Cancel"
 
 }
