@@ -1,12 +1,14 @@
 import Image from 'next/image'
 import React from 'react'
 import Img_ID from 'public/image/indonesia.svg'
+import { useTranslation } from 'react-i18next'
 
 export default function TextfieldPhone({ name, value, onChange, ...props }) {
+  const {t} = useTranslation()
   return (
     <div>
       <label className='text-xs text-gray-700 mb-1 block font-medium capitalize'>
-        No. handphone
+        {t('i_phone')}
       </label>
       <div
         className={[

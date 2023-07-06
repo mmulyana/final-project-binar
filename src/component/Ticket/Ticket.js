@@ -7,8 +7,12 @@ import {
   convertDateTicket,
   convertToHoursMinutes,
 } from '@/utils'
+import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 export default function Ticket({ data, query, handleDetail }) {
+  const router = useRouter()
+  const {t} = useTranslation()
   const url = useMemo(() => {
     return `/checkout/order?a=${query?.a}&k=${query?.k}&b=${query?.b}&id=${data.id}`
   }, [query, data.id])
@@ -22,15 +26,15 @@ export default function Ticket({ data, query, handleDetail }) {
             <p className='text-slate-800'>{data.airline}</p>
           </div>
           <div className='mt-3'>
-            <p className='text-xs text-slate-400 font-light'>Kelas</p>
+            <p className='text-xs text-slate-400 font-light'>{t('ticket_class')}</p>
             <p className='text-sm lowercase first-letter:uppercase'>
               {data.class}
             </p>
           </div>
           <div className='mt-3'>
-            <p className='text-xs text-slate-400 font-light'>Tanggal</p>
+            <p className='text-xs text-slate-400 font-light'>{t('ticket_date')}</p>
             <p className='text-sm'>
-              {convertDateTicket('ID-id', data.flight_date)}
+              {convertDateTicket(router.locale === 'id' ?'ID-id' :'EN-en', data.flight_date)}
             </p>
           </div>
         </div>
@@ -73,7 +77,7 @@ export default function Ticket({ data, query, handleDetail }) {
           <div className='text-right'>
             <p className='text-lg font-medium'>
               {changeToRupiah(data.price)}
-              <span className='text-xs text-slate-400 font-normal'>/org</span>
+              <span className='text-xs text-slate-400 font-normal'>/{t('ticket_price_person')}</span>
             </p>
             <div className='flex gap-2 items-center justify-start lg:justify-end mt-1'>
               <svg
@@ -105,7 +109,7 @@ export default function Ticket({ data, query, handleDetail }) {
               href={url}
               className='px-6 pt-[6px] py-1 bg-[#4642FF] hover:bg-[#3a37f0] text-white rounded text-sm uppercase text-center'
             >
-              Pilih
+              {t('ticket_btn')}
             </Link>
           </div>
         </div>

@@ -3,8 +3,10 @@ import Image from 'next/image'
 import Flight from 'public/image/flight.svg'
 import Ic_Calendar from 'public/icon/calendar.svg'
 import Button from '../Button'
+import { useTranslation } from 'react-i18next'
 
 export default function Destination({ query }) {
+  const {t} = useTranslation()
   return (
     <div className='h-fit w-full bg-white mt-20 pb-8 relative lg:sticky top-0 left-0 md:z-10 lg:z-50 border-t border-gray-200 shadow md:shadow-none'>
       <div className='max-w-[1200px] mx-auto md:px-0 flex flex-col md:flex-row w-full pt-5 items-start md:items-end justify-between px-4 lg:px-0 pb-4 md:pb-0'>
@@ -13,7 +15,7 @@ export default function Destination({ query }) {
 
           <div>
             <p className='text-[#131316]/60 text-sm md:text-base'>
-              Silakan pilih keberangkatan penerbangan.
+              {t('result_destination_top')}
             </p>
             <div className='flex flex-row my-2 flex-wrap items-center gap-2'>
               <p className='text-lg md:text-2xl text-medium text-[#131316]'>
@@ -80,7 +82,7 @@ export default function Destination({ query }) {
               <div className='flex gap-2 items-center'>
                 <div className='bg-[#CACBCF] rounded-full w-1 h-1'></div>
                 <p className='text-[#131316]/80 text-sm md:text-base'>
-                  {query?.c} Penumpang
+                  {t('result_destination_top_passenger', {count: query?.c})}
                 </p>
               </div>
               <div className='flex gap-2 items-center'>

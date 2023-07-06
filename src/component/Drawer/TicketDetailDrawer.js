@@ -5,9 +5,11 @@ import api from '@/services/api'
 import { convertDateTicket, convertToHoursMinutes } from '@/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 
-function TicketDetail({ onClose, ...props }) {
+function TicketDetail({ onClose, locale, ...props }) {
   const [data, setData] = useState(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     async function getFlight(id) {
@@ -81,7 +83,7 @@ function TicketDetail({ onClose, ...props }) {
                     {data?.departure_time}
                   </p>
                   <p className='text-xs text-slate-400'>
-                    {convertDateTicket('ID-id', data.flight_date)}
+                    {convertDateTicket(locale === 'id' ? 'ID-id' : 'EN-en', data.flight_date)}
                   </p>
                 </div>
                 <div className='relative'>
@@ -109,7 +111,7 @@ function TicketDetail({ onClose, ...props }) {
                 <div className='relative'>
                   <p className='text-lg text-slate-800'>{data?.arrival_time}</p>
                   <p className='text-xs text-slate-400'>
-                    {convertDateTicket('ID-id', data.flight_date)}
+                    {convertDateTicket(locale === 'id' ? 'ID-id' : 'EN-en', data.flight_date)}
                   </p>
                 </div>
 
@@ -143,11 +145,11 @@ function TicketDetail({ onClose, ...props }) {
             </div>
           </div>
           <div className='mt-4 grid grid-cols-[1fr_2fr] items-center text-sm'>
-            <p className='text-slate-500'>No. Penerbangan</p>
+            <p className='text-slate-500'>{t('drawer_no')}</p>
             <p className='text-slate-800'>{data?.flight_number}</p>
           </div>
           <div className='mt-4 grid grid-cols-[1fr_2fr] items-center text-sm'>
-            <p className='text-slate-500'>Kelas</p>
+            <p className='text-slate-500'>{t('drawer_class')}</p>
             <p className='text-slate-800 lowercase first-letter:uppercase'>
               {data?.class}
             </p>
@@ -172,11 +174,11 @@ function TicketDetail({ onClose, ...props }) {
             </div>
             <div className='text-sm'>
               <p className='text-slate-500'>
-                Bagasi{' '}
+                {t('drawer_beggage')}{' '}
                 <span className='text-slate-800'>{data?.free_baggage} kg</span>
               </p>
               <p className='text-slate-500 mt-2'>
-                Bagasi kabin{' '}
+                {t('drawer_beggage_c')}{' '}
                 <span className='text-slate-800'>{data?.cabin_baggage} kg</span>
               </p>
             </div>
@@ -185,9 +187,9 @@ function TicketDetail({ onClose, ...props }) {
       ) : null}
       <Link
         href={url}
-        className='absolute bottom-12 w-[calc(100%-2rem)] md:w-fit translate-x-1/2 lg:translate-x-0 right-1/2 lg:right-4 px-8 py-4 lg:py-2 pt-[18px] lg:pt-[10px] bg-[#4642FF] hover:bg-[#3a37f0] text-white rounded text-sm uppercase text-center'
+        className='absolute bottom-12 md:bottom-4 w-[calc(100%-2rem)] md:w-fit translate-x-1/2 lg:translate-x-0 right-1/2 lg:right-4 px-8 py-4 lg:py-2 pt-[18px] lg:pt-[10px] bg-[#4642FF] hover:bg-[#3a37f0] text-white rounded text-sm uppercase text-center'
       >
-        Pilih
+        {t('ticket_btn')}
       </Link>
     </div>
   )

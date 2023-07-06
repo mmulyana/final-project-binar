@@ -17,6 +17,8 @@ import api from '@/services/api'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 export default function Order() {
   const router = useRouter()
@@ -27,6 +29,7 @@ export default function Order() {
   const [lengthSeat, setLengthSeat] = useState(0)
   const [seatesRemaining, setSeatesRemaining] = useState(0)
   const [flight, setFlight] = useState(null)
+  const {t} = useTranslation()
 
   useEffect(() => {
     if (router.isReady) {
@@ -183,23 +186,24 @@ export default function Order() {
   return (
     <div className='pt-8'>
       <div className='px-4 lg:px-0'>
-        <p className='text-xl text-gray-800'>Detail Pemesanan</p>
+        <p className='text-xl text-gray-800'>{t('order_detail_title')}</p>
       </div>
 
       <div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr] gap-4 justify-between items-start px-4 lg:px-0'>
         <form onSubmit={handleSubmit}>
           <div className='bg-white rounded border border-[#DFDEE2] pt-6 p-8 pb-10'>
-            <p>Data Diri Pemesan</p>
+            <p>{t('order_detail_personal_title')}</p>
             <div className='flex flex-col gap-3 mt-4'>
-              <Textfield label='nama' withLabel value={user?.name} disabled />
+              <Textfield label={t('i_name')} withLabel value={user?.name} disabled />
               <TextfieldPhone value={user?.phone_number} disabled />
               <Textfield label='email' withLabel value={user?.email} disabled />
             </div>
           </div>
 
           <div className='mt-8'>
-            <p className='text-lg mb-4'>Detail Penumpang</p>
+            <p className='text-lg mb-4'>{t('order_detail_p_title')}</p>
 
+            {/* adult */}
             <div className='mb-10'>
               {form?.a.length > 0
                 ? form.a.map((field, index) => (
@@ -207,13 +211,13 @@ export default function Order() {
                       key={index}
                       className='mt-8 bg-white rounded border border-[#DFDEE2] pt-6 pb-8 px-8'
                     >
-                      <p className='mb-4'>Penumpang dewasa {index + 1}</p>
+                      <p className='mb-4'>{`${t('order_detail_adult')} ${index + 1}`}</p>
                       <div className='flex flex-col gap-4'>
                         <Textfield
                           value={field.name}
                           name='name'
                           withLabel
-                          label='Nama lengkap'
+                          label={t('i_fullname')}
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
 
@@ -221,7 +225,7 @@ export default function Order() {
                           value={field.date_of_birth}
                           name='date_of_birth'
                           withLabel
-                          label='Tanggal lahir'
+                          label={t('i_date')}
                           type='date'
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
@@ -230,7 +234,7 @@ export default function Order() {
                           value={field.nationality}
                           name='nationality'
                           withLabel
-                          label='Kewarganegaraan'
+                          label={t('i_citizen')}
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
 
@@ -238,7 +242,7 @@ export default function Order() {
                           value={field.ktp}
                           name='ktp'
                           withLabel
-                          label='KTP'
+                          label={t('i_identity')}
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
 
@@ -246,7 +250,7 @@ export default function Order() {
                           value={field.passport}
                           name='passport'
                           withLabel
-                          label='Passport'
+                          label={t('i_passport')}
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
 
@@ -254,7 +258,7 @@ export default function Order() {
                           value={field.issuing_country}
                           name='issuing_country'
                           withLabel
-                          label='negara penerbit'
+                          label={t('i_issuingCountry')}
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
 
@@ -262,7 +266,7 @@ export default function Order() {
                           value={field.expiration_date}
                           name='expiration_date'
                           withLabel
-                          label='Berlaku sampai'
+                          label={t('i_passport_due')}
                           type='date'
                           onChange={(e) => handleChange(e, 'a', index)}
                         />
@@ -271,6 +275,8 @@ export default function Order() {
                   ))
                 : null}
             </div>
+
+            {/* kid */}
             <div className='mb-10'>
               {form?.k?.length > 0
                 ? form.k.map((field, index) => (
@@ -278,13 +284,13 @@ export default function Order() {
                       key={index}
                       className='mt-8 bg-white rounded border border-[#DFDEE2] pt-6 pb-8 px-8'
                     >
-                      <p className='mb-4'>Penumpang Anak {index + 1}</p>
+                      <p className='mb-4'>{`${t('order_detail_kid')} ${index + 1}`}</p>
                       <div className='flex flex-col gap-4'>
                         <Textfield
                           value={field.name}
                           name='name'
                           withLabel
-                          label='Nama lengkap'
+                          label={t('i_fullname')}
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
 
@@ -292,7 +298,7 @@ export default function Order() {
                           value={field.date_of_birth}
                           name='date_of_birth'
                           withLabel
-                          label='Tanggal lahir'
+                          label={t('i_date')}
                           type='date'
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
@@ -301,7 +307,7 @@ export default function Order() {
                           value={field.nationality}
                           name='nationality'
                           withLabel
-                          label='Kewarganegaraan'
+                          label={t('i_citizen')}
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
 
@@ -309,7 +315,7 @@ export default function Order() {
                           value={field.ktp}
                           name='ktp'
                           withLabel
-                          label='KTP'
+                          label={t('i_identity')}
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
 
@@ -317,7 +323,7 @@ export default function Order() {
                           value={field.passport}
                           name='passport'
                           withLabel
-                          label='Passport'
+                          label={t('i_passport')}
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
 
@@ -325,7 +331,7 @@ export default function Order() {
                           value={field.issuing_country}
                           name='issuing_country'
                           withLabel
-                          label='negara penerbit'
+                          label={t('i_issuingCountry')}
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
 
@@ -333,7 +339,7 @@ export default function Order() {
                           value={field.expiration_date}
                           name='expiration_date'
                           withLabel
-                          label='Berlaku sampai'
+                          label={t('i_passport_due')}
                           type='date'
                           onChange={(e) => handleChange(e, 'k', index)}
                         />
@@ -342,7 +348,7 @@ export default function Order() {
                   ))
                 : null}
             </div>
-
+            {/* baby */}
             <div>
               {form?.b?.length > 0
                 ? form.b.map((field, index) => (
@@ -350,13 +356,13 @@ export default function Order() {
                       key={index}
                       className='mt-8 bg-white rounded border border-[#DFDEE2] pt-6 pb-8 px-8'
                     >
-                      <p className='mb-4'>Penumpang Bayi {index + 1}</p>
+                      <p className='mb-4'>{`${t('order_detail_baby')} ${index + 1}`}</p>
                       <div className='flex flex-col gap-4'>
                         <Textfield
                           value={field.name}
                           name='name'
                           withLabel
-                          label='Nama lengkap'
+                          label={t('i_fullname')}
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
 
@@ -364,7 +370,7 @@ export default function Order() {
                           value={field.date_of_birth}
                           name='date_of_birth'
                           withLabel
-                          label='Tanggal lahir'
+                          label={t('i_date')}
                           type='date'
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
@@ -373,7 +379,7 @@ export default function Order() {
                           value={field.nationality}
                           name='nationality'
                           withLabel
-                          label='Kewarganegaraan'
+                          label={t('i_citizen')}
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
 
@@ -381,7 +387,7 @@ export default function Order() {
                           value={field.ktp}
                           name='ktp'
                           withLabel
-                          label='KTP'
+                          label={t('i_identity')}
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
 
@@ -389,7 +395,7 @@ export default function Order() {
                           value={field.passport}
                           name='passport'
                           withLabel
-                          label='Passport'
+                          label={t('i_passport')}
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
 
@@ -397,7 +403,7 @@ export default function Order() {
                           value={field.issuing_country}
                           name='issuing_country'
                           withLabel
-                          label='negara penerbit'
+                          label={t('i_issuingCountry')}
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
 
@@ -405,7 +411,7 @@ export default function Order() {
                           value={field.expiration_date}
                           name='expiration_date'
                           withLabel
-                          label='Berlaku sampai'
+                          label={t('i_passport_due')}
                           type='date'
                           onChange={(e) => handleChange(e, 'b', index)}
                         />
@@ -417,7 +423,7 @@ export default function Order() {
           </div>
 
           <div className='mt-4 bg-white rounded border border-[#DFDEE2] p-4'>
-            <p className='mb-6 text-center'>Pilih kursi</p>
+            <p className='mb-6 text-center'>{t('order_seat')}</p>
             <SelectSeat data={seates} handleSelect={handleSelect} />
           </div>
 
@@ -469,7 +475,7 @@ export default function Order() {
                     <p className='text-slate-900'>{flight?.airline.name}</p>
                   </div>
                   <div className='text-right'>
-                    <p className='text-xs text-gray-400'>pesawat</p>
+                    <p className='text-xs text-gray-400'>{t('order_card_airplane')}</p>
                     <p className='text-sm text-gray-700'>
                       {flight?.airplane.model}
                     </p>
@@ -477,9 +483,12 @@ export default function Order() {
                 </div>
 
                 <div>
-                  <p className='text-xs text-slate-400'>Berangkat </p>
+                  <p className='text-xs text-slate-400'>{t('order_card_date')} </p>
                   <p className='text-sm text-slate-800'>
-                    {convertDateTicket('id-ID', flight?.flight_date)}
+                    {convertDateTicket(
+                      router.locale === 'id' ? 'id-ID' : 'EN-en',
+                      flight?.flight_date
+                    )}
                   </p>
                 </div>
               </div>
@@ -490,9 +499,9 @@ export default function Order() {
             </div>
             <div className='px-4 pt-4'>
               <div className='pb-4'>
-                <p className='text-sm text-slate-800'>Rincian harga</p>
+                <p className='text-sm text-slate-800'>{t('order_card_price')}</p>
                 <div className='mt-2 flex items-center justify-between text-xs'>
-                  <p className='text-slate-400'>Dewasa</p>
+                  <p className='text-slate-400'>{t('order_card_adult')}</p>
                   <p className='text-right'>
                     {changeToRupiah(flight?.price)}
                     <span className='text-gray-500'>x{query?.a}</span>
@@ -502,7 +511,7 @@ export default function Order() {
                 {form?.k?.length > 0 ? (
                   <>
                     <div className='mt-2 flex items-center justify-between text-xs'>
-                      <p className='text-slate-400'>Anak-anak</p>
+                      <p className='text-slate-400'>{t('order_card_kid')}</p>
                       <p className='text-right'>
                         {changeToRupiah(flight?.price)}
                         <span className='text-gray-500'>x{query?.k}</span>
@@ -514,7 +523,7 @@ export default function Order() {
                 {form?.b?.length > 0 ? (
                   <>
                     <div className='mt-2 flex items-center justify-between text-xs'>
-                      <p className='text-slate-400'>Bayi</p>
+                      <p className='text-slate-400'>{t('order_card_baby')}</p>
                       <p className='text-right'>
                         {changeToRupiah(flight?.price)}
                         <span className='text-gray-500'>x{query?.b}</span>

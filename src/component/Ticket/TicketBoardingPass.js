@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import Label from '../Label'
+import { useTranslation } from 'react-i18next'
 
 export default function TicketBoardingPass({ data, transaction }) {
   const [isOpen, setIsOpen] = useState(false)
+  const {t} = useTranslation()
   return (
     <div>
       <div
@@ -12,7 +14,7 @@ export default function TicketBoardingPass({ data, transaction }) {
       >
         <div className='absolute left-0 top-1/2 -translate-y-1/2 h-2/3 w-1 bg-blue-600' />
         <div>
-          <p className='text-xs text-slate-400'>Nama</p>
+          <p className='text-xs text-slate-400'>{t('boarding_name')}</p>
           <p className='text-sm text-slate-800'>{data.name}</p>
         </div>
         <Image height={40} width={40} alt='qr code' src={data.qr_image} />
@@ -20,7 +22,7 @@ export default function TicketBoardingPass({ data, transaction }) {
       {!!isOpen && (
         <div className='w-full h-fit bg-white rounded-lg shadow-inner shadow-gray-100 p-4 flex justify-between items-center'>
           <div>
-            <p className='text-xs text-slate-400 mb-1'>Kode Tiket</p>
+            <p className='text-xs text-slate-400 mb-1'>{t('boarding_ticket')}</p>
             <p className='text-sm text-slate-800'>{data.ticket_code}</p>
           </div>
           
