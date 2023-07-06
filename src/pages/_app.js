@@ -12,15 +12,18 @@ import { wrapper } from '@/redux'
 import { Inter } from 'next/font/google'
 import Cookies from 'js-cookie'
 import i18n from '../../i18n'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function App({ Component, ...pageProps }) {
   const router = useRouter()
 
-  if(router.locale) {
-    i18n.changeLanguage(router.locale)
-  }
+  useEffect(() => {
+    if (router.locale) {
+      i18n.changeLanguage(router.locale)
+    }
+  }, [])
 
   const getLayout = Component.getLayout ?? ((pages) => pages)
   const { store } = wrapper.useWrappedStore(pageProps)
