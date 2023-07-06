@@ -91,6 +91,7 @@
   "i_email": "Email",
   "i_fullname": "Nama lengkap",
   "i_date": "Tanggal Lahir",
+  "i_confirm_password": "Konfirmasi password",
   "i_citizen": "Kewarganegaraan",
   "i_identity": "KTP",
   "i_passport": "Passpor",
@@ -127,6 +128,22 @@
   "history_card_order":"Pembelian",
   "history_card_btn_print": "Cetak",
   "history_card_btn_pay": "Bayar",
-  "history_card_state": "Lunas"
+  "history_card_state": "Lunas",
+
+  "login_title": "Masuk Ke Tripp",
+  "login_sign_email": "Masuk dengan Email",
+  "login_sign_google": "Masuk dengan Google",
+  "login_to_register": "Belum memiliki akun? ",
+  "login_to_register_message": "Daftar",
+  "login_btn":"Masuk",
+  "btn_forgot_password":"Lupa password?",
+  
+  "register_title": "Buak akun baru",
+  "register_sign_email": "Daftar dengan Email",
+  "register_sign_google": "Daftar dengan Google",
+  "register_to_login": "Sudah memiliki akun? ",
+  "register_btn": "Daftar",
+  "register_btn_email": "Selanjutnya",
+  "register_to_login_message": "Buat akun"
 
 }

@@ -209,13 +209,23 @@ export default function Navbar({ isDark = false }) {
             </div>
 
             <div className='flex gap-4 items-center'>
-              <div className='h-8 w-8 rounded relative flex items-center justify-center'>
+              <div
+                className={[
+                  'h-7 w-fit gap-1 rounded relative flex items-center justify-center px-2',
+                  !isDark
+                    ? offset > 0
+                      ? 'bg-gray-100/90'
+                      : 'bg-white/20'
+                    : 'bg-gray-100/90',
+                ].join(' ')}
+              >
                 <Image
                   src={locale === 'en' ? img_EN : img_ID}
                   alt='change language'
                   onClick={() => setOpenLocale(true)}
                   className='cursor-pointer'
                 />
+                <p className='uppercase text-xs'>{router.locale}</p>
                 {!!openLocale && (
                   <LocaleModal setIsOpen={setOpenLocale} ref={LocaleRef} />
                 )}

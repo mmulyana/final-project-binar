@@ -91,6 +91,7 @@
   "i_email": "Email",
   "i_fullname": "fullname",
   "i_date": "birtdate",
+  "i_confirm_password": "Confirm password",
   "i_citizen": "citizenship",
   "i_identity": "Identity card",
   "i_passport": "Passport",
@@ -127,5 +128,22 @@
   "history_card_order":"Purchase Date",
   "history_card_btn_print": "Print",
   "history_card_btn_pay": "Pay",
-  "history_card_state": "Paid off"
+  "history_card_state": "Paid off",
+
+  "login_title": "Login",
+  "login_sign_email": "login with Email",
+  "login_sign_google": "login with Google",
+  "login_to_register": "Dont have an account? ",
+  "login_to_register_message": "Register",
+  "login_btn":"Login",
+  "btn_forgot_password":"Forgot password?",
+  
+  "register_title": "Create account",
+  "register_sign_email": "Register with Email",
+  "register_sign_google": "Register with Google",
+  "register_to_login": "Have an account? ",
+  "register_btn": "Register",
+  "register_btn_email": "Continue",
+  "register_to_login_message": "Login"
+
 }

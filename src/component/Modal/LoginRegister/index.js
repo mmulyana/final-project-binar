@@ -4,9 +4,11 @@ import Button from '../../Button'
 import withModal from '../withModal'
 import Login from './Login'
 import Register from './Register'
+import { useTranslation } from 'react-i18next'
 
 function LoginRegister({ toggleModal }) {
   const [isLogin, setIsLogin] = useState(true)
+  const { t } = useTranslation()
 
   return (
     <div className='fixed w-fit left-1/2 top-6 -translate-x-1/2 h-fit z-[60] bg-white rounded-lg py-8'>
@@ -33,7 +35,7 @@ function LoginRegister({ toggleModal }) {
         </div>
 
         <p className='text-center mt-4 text-xl font-medium capitalize text-[#131316]'>
-          {isLogin ? 'Masuk ke Tripp' : 'Buat akun baru'}
+          {isLogin ? t('login_title') : t('register_title')}
         </p>
       </div>
       <div className='w-[400px] max-h-[300px] pl-8 pr-6 relative overflow-y-auto'>
@@ -46,19 +48,19 @@ function LoginRegister({ toggleModal }) {
       <div className='mt-6 text-center overflow-y-auto'>
         {isLogin ? (
           <p>
-            Belum memiliki akun?{' '}
+            {t('login_to_register')}
             <Button
               onClick={() => setIsLogin(false)}
               className='text-[#4642FF]'
             >
-              Daftar
+              {t('login_to_register_message')}
             </Button>
           </p>
         ) : (
           <p>
-            Sudah memiliki akun?{' '}
+            {t('register_to_login')}
             <Button onClick={() => setIsLogin(true)} className='text-[#4642FF]'>
-              Masuk
+              {t('register_to_login_message')}
             </Button>
           </p>
         )}
