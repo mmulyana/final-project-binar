@@ -3,9 +3,11 @@ import Image from 'next/image'
 import { changeToRupiah, convertDateTicket } from '@/utils'
 import { imagesCities } from '@/utils/local'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 
 export default function CardFlight({ data }) {
   const router = useRouter()
+  const { t } = useTranslation()
 
   function handleClick() {
     router.push(`/checkout/order?a=1&k=0&b=0&id=${data.id}`)
@@ -55,10 +57,13 @@ export default function CardFlight({ data }) {
         </div>
         <div className='card-flight__desc-below'>
           <p className='text-xs font-light z-40'>
-            {convertDateTicket('ID-id', data.flight_date)}
+            {convertDateTicket(
+              router.locale === 'id' ? 'ID-id' : 'EN-en',
+              data.flight_date
+            )}
           </p>
           <div>
-            <p className='opacity-80 text-xs'>mulai dari</p>
+            <p className='opacity-80 text-xs'>{t('card_flight_startFrom')}</p>
             <p className='text-medium'>{changeToRupiah(data.price)}</p>
           </div>
         </div>

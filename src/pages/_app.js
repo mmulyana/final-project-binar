@@ -1,19 +1,27 @@
-import { Inter } from 'next/font/google'
-
 import '@/styles/globals.css'
 import 'react-day-picker/dist/style.css'
-import { wrapper } from '@/redux'
-import { Provider, useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
-import { selectAuth, setUser } from '@/redux/reducers/auth'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
-import Cookies from 'js-cookie'
+
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import { selectAuth, setUser } from '@/redux/reducers/auth'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { ToastContainer } from 'react-toastify'
+import { useRouter } from 'next/router'
+import { wrapper } from '@/redux'
+
+import { Inter } from 'next/font/google'
+import Cookies from 'js-cookie'
+import i18n from '../../i18n'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function App({ Component, ...pageProps }) {
+  const router = useRouter()
+
+  if(router.locale) {
+    i18n.changeLanguage(router.locale)
+  }
+
   const getLayout = Component.getLayout ?? ((pages) => pages)
   const { store } = wrapper.useWrappedStore(pageProps)
   return (

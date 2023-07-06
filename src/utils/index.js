@@ -127,9 +127,9 @@ function convertDateTicket(type, dateString) {
   return date.toLocaleDateString(type, options)
 }
 
-function formatTimestamp(timestamp) {
+function formatTimestamp(type, timestamp) {
   let date = new Date(timestamp)
-  let formattedDate = date.toLocaleString('id-ID', {
+  let formattedDate = date.toLocaleString(type, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',

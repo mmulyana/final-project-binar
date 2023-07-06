@@ -16,10 +16,12 @@ import { changeToRupiah } from '@/utils'
 import api from '@/services/api'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 function Payment() {
   const router = useRouter()
   const [query, setQuery] = useState(null)
+  const {t} = useTranslation()
 
   useEffect(() => {
     if (router.isReady) {
@@ -50,7 +52,7 @@ function Payment() {
   return (
     <div className='pt-8'>
       <div className='px-4 lg:px-0'>
-        <p className='text-xl text-gray-800'>Pembayaran</p>
+        <p className='text-xl text-gray-800'>{t('payment_title')}</p>
       </div>
       <div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr] gap-4 justify-between items-start px-4 lg:px-0'>
         <div className='flex flex-col gap-3'>
@@ -72,7 +74,7 @@ function Payment() {
             onClick={handlePay}
             className='mt-8 flex items-center justify-center bg-[#4642FF] text-white text-sm rounded font-medium py-4 w-52 ml-auto'
           >
-            Bayar
+            {t('payment_btn')}
           </Button>
         </div>
         <div className='bg-white rounded py-4'>
@@ -108,11 +110,11 @@ function Payment() {
 
             <div className='grid grid-cols-2 justify-between w-full'>
               <div className='text-left'>
-                <p className='text-xs text-gray-400'>total pembayaran</p>
+                <p className='text-xs text-gray-400'>{t('payment_total')}</p>
                 <p className='text-sm mt-1 font-medium text-gray-800'>{changeToRupiah(query?.t)}</p>
               </div>
               <div className='text-right'>
-                <p className='text-xs text-gray-400'>class</p>
+                <p className='text-xs text-gray-400'>{t('payment_class')}</p>
                 <p className='text-sm mt-1 font-medium text-gray-800'>{query?.c}</p>
               </div>
             </div>

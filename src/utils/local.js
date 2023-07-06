@@ -104,19 +104,19 @@ const filterTicketByPriceAndTime = [
     id: 0,
     name: 'Termurah',
     price: 809000,
-    isActive: true
+    isActive: true,
   },
   {
     id: 1,
     name: 'Tercepat',
     price: 1209000,
-    isActive: false
+    isActive: false,
   },
   {
     id: 2,
     name: 'Terbaik',
     price: 1009000,
-    isActive: false
+    isActive: false,
   },
 ]
 
@@ -212,21 +212,30 @@ const dataFilterTime = [
     isActive: false,
     fromTime: '06:00',
     toTime: '09:00',
-    title: 'Pagi',
+    title: {
+      id: 'Pagi',
+      en: 'Morning',
+    },
   },
   {
     id: 2,
     isActive: false,
     fromTime: '10:00',
     toTime: '12:00',
-    title: 'Siang',
+    title: {
+      id: 'Siang',
+      en: 'Afternoon',
+    },
   },
   {
     id: 3,
     isActive: false,
     fromTime: '13:00',
     toTime: '20:00',
-    title: 'Sore - Malam',
+    title: {
+      id: 'Sore - Malam',
+      en: 'Afternoon - Evening'
+    },
   },
 ]
 
@@ -272,5 +281,5 @@ export {
   suggestDestination,
   filterTicketByPriceAndTime,
   seatesFlight,
-  imagesCities
+  imagesCities,
 }

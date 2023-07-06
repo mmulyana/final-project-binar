@@ -7,10 +7,12 @@ import Ic_Ae from '/public/icon/ae-card.png'
 import Ic_Ma from '/public/icon/mastercard-card.png'
 import Ic_Vs from '/public/icon/visa-card.webp'
 import Ic_Cr from '/public/icon/credit-card.svg'
+import { useTranslation } from 'react-i18next'
 
 const initCard = { cardNumber: '', cardHolderName: '', cvv: '', expiry: '' }
 
 function CreditCard({ handleSubmit }) {
+  const {t} = useTranslation()
   const [card, setCard] = useState(initCard)
   const [img, setImg] = useState(Ic_Cr)
 
@@ -49,11 +51,12 @@ function CreditCard({ handleSubmit }) {
         name='cardNumber'
         img={img}
         type='number'
+        label={t('i_card_title')}
       />
       
       <Textfield
         withLabel
-        label='Nama pemegang kartu'
+        label={t('i_card_holder')}
         onChange={handleChange}
         value={card.cardHolderName}
         name='cardHolderName'
@@ -62,7 +65,7 @@ function CreditCard({ handleSubmit }) {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <Textfield
           withLabel
-          label='expiry'
+          label={t('i_card_expiry')}
           type='date'
           name='expiry'
           value={card.expiry}

@@ -13,31 +13,30 @@ export default function ProfileLayout({ children, location }) {
   const { user } = useSelector(selectAuth)
   const [profile, setProfile] = useState({
     name: 'user',
-    email: 'example@gmail.com'
+    email: 'example@gmail.com',
   })
 
   const router = useRouter()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if(!user) return
+    if (!user) return
 
     setProfile({
       name: user.name,
-      email: user.email
+      email: user.email,
     })
-
-  },[user])
+  }, [user])
 
   function handleClickMenu(href) {
-    if(href !== '/logout') {
+    if (href !== '/logout') {
       router.push(href)
       return
     }
 
     logout()
     dispatch(removeUser())
-    if(!user) {
+    if (!user) {
       router.push('/')
     }
   }
@@ -68,7 +67,9 @@ export default function ProfileLayout({ children, location }) {
                 onClick={() => handleClickMenu(menu.href)}
               >
                 <div>{menu.img}</div>
-                <h3 className='text-sm text-gray-500'>{menu.title}</h3>
+                <h3 className='text-sm text-gray-500'>
+                  {router.locale === 'id' ? menu.name.id : menu.name.en}
+                </h3>
               </Button>
             ))}
           </div>
@@ -81,7 +82,10 @@ export default function ProfileLayout({ children, location }) {
 
 const menus = [
   {
-    name: 'profile',
+    name: {
+      id: 'Ubah Profile',
+      en: 'Profile',
+    },
     href: '/profile',
     title: 'Ubah Profile',
     img: (
@@ -103,7 +107,10 @@ const menus = [
     ),
   },
   {
-    name: 'notifications',
+    name: {
+      id: 'Notifikasi',
+      en: 'Notification',
+    },
     href: '/profile/notifications',
     title: 'Notifikasi',
     img: (
@@ -125,7 +132,10 @@ const menus = [
     ),
   },
   {
-    name: 'history',
+    name: {
+      id: 'Pembelian',
+      en: 'History',
+    },
     href: '/profile/history',
     title: 'Pembelian',
     img: (
@@ -147,7 +157,10 @@ const menus = [
     ),
   },
   {
-    name: 'logout',
+    name: {
+      id: 'Keluar',
+      en: 'Logout',
+    },
     href: '/logout',
     title: 'Keluar',
     img: (

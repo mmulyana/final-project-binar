@@ -13,10 +13,12 @@ import DateModal from '../Modal/DateModal'
 import PassengerModal from '../Modal/PassengerModal'
 import { useRouter } from 'next/router'
 import { convertToDateString } from '@/utils'
+import { useTranslation } from 'react-i18next'
 
 export default function SearchFlight({ state, dispatch }) {
   const [searchType, setSearchType] = useState('')
   const router = useRouter()
+  const { t } = useTranslation()
 
   function handleToggle(payload) {
     dispatch({ type: 'toggle', payload })
@@ -31,13 +33,16 @@ export default function SearchFlight({ state, dispatch }) {
       origin: state.data.origin,
       destination: state.data.destination,
       dateD: convertToDateString(state.data.departureDate),
-      dateR: state.data.returnDate !== '' ? convertToDateString(state.data.returnDate) : 0,
+      dateR:
+        state.data.returnDate !== ''
+          ? convertToDateString(state.data.returnDate)
+          : 0,
       a: state.data.passengers.adult,
       k: state.data.passengers.kid,
       b: state.data.passengers.baby,
       cnt: sumPassenger,
       iow: state.data.isOneWay,
-      l: state.data.seatClass
+      l: state.data.seatClass,
     }
 
     const url = `/result?or=${query.origin}&ds=${query.destination}&dd=${query.dateD}&dr=${query.dateR}&a=${query.a}&k=${query.k}&b=${query.b}&c=${query.cnt}&iow=${query.iow}&l=${query.l}`
@@ -69,8 +74,8 @@ export default function SearchFlight({ state, dispatch }) {
         <div className='w-full h-fit pt-5 flex items-center md:items-center justify-between flex-col md:flex-row px-6 border-b border-gray-200'>
           <Switch
             dispatch={dispatch}
-            leftText='Sekali jalan'
-            rightText='Pulang-pergi'
+            leftText={t('searchFlight_type-1')}
+            rightText={t('searchFlight_type-2')}
             value={state.data.isOneWay}
           />
 
@@ -81,7 +86,10 @@ export default function SearchFlight({ state, dispatch }) {
             >
               <Image src={Ic_Passenger} h={24} w={24} alt='passenger' />
               <p className='font-semibold text-slate-800'>
-                {sumPassenger} <span className='font-normal'>Penumpang,</span>{' '}
+                {sumPassenger}{' '}
+                <span className='font-normal'>
+                  {t('searchFlight_passenger')},
+                </span>{' '}
                 {state.data.seatClass}
               </p>
             </div>
@@ -104,7 +112,7 @@ export default function SearchFlight({ state, dispatch }) {
           {/* destination */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 relative'>
             <div>
-              <p className='text-sm font-medium mb-3'>Terbang dari</p>
+              <p className='text-sm font-medium mb-3'>{t('searchFlight_origin')}</p>
               <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
                 <Image src={Ic_Plane_Takeoff} h={24} w={24} alt='from' />
                 {state.isOpen.searchDeparture ? (
@@ -156,7 +164,7 @@ export default function SearchFlight({ state, dispatch }) {
               <Image src={Ic_Switch} h={24} w={24} alt='switch button' />
             </Button>
             <div className='mt-5 md:mt-0'>
-              <p className='text-sm font-medium mb-3'>Pergi ke</p>
+              <p className='text-sm font-medium mb-3'>{t('searchFlight_destination')}</p>
               <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
                 <Image src={Ic_Plane_Land} h={24} w={24} alt='destination' />
                 {state.isOpen.searchReturn ? (
@@ -211,7 +219,7 @@ export default function SearchFlight({ state, dispatch }) {
           <div className='grid grid-cols-1 lg:grid-cols-[1fr_128px] gap-8 items-end'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <div>
-                <p className='text-sm font-medium mb-3'>Berangkat</p>
+                <p className='text-sm font-medium mb-3'>{t('searchFlight_departure')}</p>
                 <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
                   <Button
                     className='text-slate-900'
@@ -236,7 +244,7 @@ export default function SearchFlight({ state, dispatch }) {
                 </div>
               </div>
               <div>
-                <p className='text-sm font-medium mb-3'>Kembali</p>
+                <p className='text-sm font-medium mb-3'>{t('searchFlight_return')}</p>
                 <div className='relative h-14 bg-[#e9e9e9] rounded flex items-center px-6 gap-4'>
                   {!state.data.isOneWay ? (
                     <Button
@@ -249,7 +257,7 @@ export default function SearchFlight({ state, dispatch }) {
                             month: 'long',
                             year: 'numeric',
                           })
-                        : 'Pilih Tanggal'}
+                        : t('searchFlight_selectDate')}
                     </Button>
                   ) : null}
 
@@ -276,7 +284,7 @@ export default function SearchFlight({ state, dispatch }) {
               onClick={handleSearch}
               className='h-14 rounded bg-[#4642FF] text-white font-medium shadow shadow-[#4642FF]/20 text-sm flex items-center justify-center gap-2'
             >
-              Cari Tiket
+              {t('searchFlight_btn')}
               <Image
                 src='/icon/search-md-white.svg'
                 as='image'

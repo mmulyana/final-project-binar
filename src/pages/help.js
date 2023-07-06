@@ -1,20 +1,22 @@
 import FaqCollapsible from '@/component/Collapsible/FaqCollapsible'
 import { SecondaryLayout } from '@/component/Layout'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function Help() {
+  const { t } = useTranslation()
   return (
     <div className='pt-20'>
       <section className='w-full py-12 mt-4 max-w-[1000px] px-4 mx-auto rounded-lg text-center'>
         <p className='text-blue-700 text-xs font-semibold'>FAQ</p>
-        <h1 className='text-2xl mt-2 text-slate-800'>Pusat bantuan</h1>
+        <h1 className='text-2xl mt-2 text-slate-800'>{t('faqTitle')}</h1>
         <p className='text-sm mt-1 text-slate-500'>
-          Temukan jawaban untuk permasalahan anda
+          {t('faqSubtitle')}
         </p>
       </section>
-      <section className='max-w-[900px] mx-auto px-4 grid grid-cols-1 md:grid-cols-[1fr_2fr]'>
-        <p className='text-lg text-slate-800'>Paling sering ditanyakan</p>
-        <div className='flex flex-col gap-2 mt-2 md:mt-0'>
+      <section className='max-w-[900px] mx-auto px-4 grid grid-cols-[1fr_2fr]'>
+        <p className='text-lg text-slate-800'>{t('faqSectionTitle')}</p>
+        <div className='flex flex-col gap-2'>
           {Faqs.map((faq, index) => (
             <FaqCollapsible
               key={index}

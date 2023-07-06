@@ -1,13 +1,20 @@
 import Image from 'next/image'
 
-export default function TextfieldCredit({ name, value, img, onChange, ...props }) {
+export default function TextfieldCredit({
+  name,
+  value,
+  img,
+  label,
+  onChange,
+  ...props
+}) {
   return (
     <div>
       <label
         htmlFor='credit'
         className='text-xs text-gray-700 mb-2 block font-medium capitalize'
       >
-        No kartu
+        {label}
       </label>
       <div
         className={[
@@ -15,7 +22,7 @@ export default function TextfieldCredit({ name, value, img, onChange, ...props }
           props.disabled ? 'text-gray-400' : '',
         ].join(' ')}
       >
-        <Image src={img} height={24} width={24} alt='credit card logo'/>
+        <Image src={img} height={24} width={24} alt='credit card logo' />
         <input
           name={name}
           value={value}

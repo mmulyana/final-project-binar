@@ -24,6 +24,7 @@ import Img_empty from 'public/image/empty-result.svg'
 import Img_loading from 'public/image/loading-result.svg'
 import { dataAirline, dataFilterTime } from '@/utils/local'
 import TicketDetailDrawer from '@/component/Drawer/TicketDetailDrawer'
+import { useTranslation } from 'react-i18next'
 
 function Result() {
   const router = useRouter()
@@ -36,6 +37,7 @@ function Result() {
   const [type, setType] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [id, setId] = useState('')
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (router.isReady) {
@@ -152,17 +154,18 @@ function Result() {
           </div>
           <div className='bg-white mt-2 rounded h-fit px-4'>
             <TimeFilterCollapsible
-              name='waktu'
+              name={t('result_filter_time')}
               dataD={filterByDTime}
               dataA={filterByATime}
               setDataD={setFilterByDTime}
               setDataA={setFilterByATime}
               isActiveFilter={isActiveFilter}
               setIsActiveFilter={setIsActiveFilter}
+              locale={router.locale}
             />
             <hr />
             <AirlineFilterCollapsible
-              name='Maskapai'
+              name={t('result_filter_airline')}
               data={filterAirline}
               setData={setFilterAirline}
               isActiveFilter={isActiveFilter}
@@ -175,7 +178,7 @@ function Result() {
           <div>
             <div className='flex justify-between'>
               <p className='text-sm text-slate-600'>
-                terdapat{' '}
+                {t('result_ticket_title_1')}
                 <span className='text-slate-800 font-semibold'>
                   {flights
                     ? flights.length > 0
@@ -183,13 +186,13 @@ function Result() {
                       : null
                     : null}
                 </span>{' '}
-                penerbangan menuju{' '}
+                {t('result_ticket_title_2')}
                 <span className='text-slate-800 font-semibold'>
                   {getCityByIata(query.ds)}
                 </span>{' '}
-                untuk kamu
+                {t('result_ticket_title_3')}
               </p>
-              <SortingModal setData={setType} />
+              <SortingModal setData={setType} locale={router.locale} />
             </div>
             <div className='flex flex-col gap-6 mt-3'>
               {/* ticket */}
@@ -242,6 +245,7 @@ function Result() {
           onClose={() => setIsOpen(false)}
           id={id}
           query={query}
+          locale={router.locale}
         />
       )}
     </>

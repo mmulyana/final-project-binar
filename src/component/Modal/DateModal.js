@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import Button from '../Button'
+import { useTranslation } from 'react-i18next'
 
 export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
   const [selected, setSelected] = useState(new Date())
+  const { t } = useTranslation()
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -23,7 +25,11 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
   }, [isOpen, toggleModal])
 
   useEffect(() => {
-    setSelected(new Date())
+    if (isOneWay) {
+      setSelected(new Date())
+    } else {
+      setSelected({ from: new Date() })
+    }
   }, [isOneWay])
 
   function handleClick() {
@@ -64,7 +70,7 @@ export default function DateModal({ isOneWay, toggleModal, dispatch, isOpen }) {
               onClick={handleClick}
               className='px-4 py-2 rounded bg-gray-100 text-[#4642FF] font-medium hover:bg-gray-200 duration-75 ease-in'
             >
-              Simpan
+              {t('searchFlight_btn-save')}
             </Button>
           </div>
         </div>
