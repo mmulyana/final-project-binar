@@ -4,10 +4,12 @@ import { changeToRupiah, formatTimestamp, getTimeByTimestamp } from '@/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function Success() {
   const router = useRouter()
   const [data, setData] = useState(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (router.isReady) {
@@ -36,7 +38,7 @@ function Success() {
               />
             </svg>
           </div>
-          <p className='text-slate-400 text-sm mt-2'>Pembayaran Berhasil</p>
+          <p className='text-slate-400 text-sm mt-2'>{t('success_title')}</p>
           <p className='text-slate-800 font-semibold text-2xl'>
             {changeToRupiah(data?.t)}
           </p>
@@ -50,19 +52,19 @@ function Success() {
           <hr className='absolute bottom-0 -translate-x-1/2 left-1/2 w-[84%] border-dashed border-[1.4px] border-[#F0F1F6]' />
         </div>
         <div className='mt-2 px-6 pt-4 flex flex-col gap-2'>
-          <p className='text-sm text-slate-600'>Detail transaksi</p>
+          <p className='text-sm text-slate-600'>{t('success_detail')}</p>
           <div className='flex justify-between items-center text-sm'>
-            <p className='text-slate-400'>tanggal</p>
+            <p className='text-slate-400'>{t('success_date')}</p>
             <p className='text-slate-800'>{formatTimestamp(data?.tm)}</p>
           </div>
 
           <div className='flex justify-between items-center text-sm'>
-            <p className='text-slate-400'>waktu</p>
+            <p className='text-slate-400'>{t('success_time')}</p>
             <p className='text-slate-800'>{getTimeByTimestamp(data?.tm)}</p>
           </div>
 
           <div className='flex justify-between items-center text-sm'>
-            <p className='text-slate-400'>Metode Pembayaran</p>
+            <p className='text-slate-400'>{t('success_method')}</p>
             <p className='text-slate-800'>{data?.mt}</p>
           </div>
         </div>
@@ -73,13 +75,13 @@ function Success() {
           href={`/ticket/${data?.id}`}
           className='py-3 rounded bg-gray-200 text-slate-800 text-center text-sm'
         >
-          Cetak Tiket
+          {t('success_btn_print')}
         </Link>
         <Link
           href='/'
           className='py-3 rounded bg-[#326BF1] text-white text-center text-sm'
         >
-          Kembali ke beranda
+          {t('success_btn_back')}
         </Link>
       </div>
     </div>

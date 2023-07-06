@@ -5,6 +5,7 @@ import IconClose from 'public/icon/close.svg'
 import Button from '../Button'
 import Image from 'next/image'
 import Counter from '../Form/Counter'
+import { useTranslation } from 'react-i18next'
 
 export default function SeatClassModal({
   toggleModal,
@@ -15,6 +16,7 @@ export default function SeatClassModal({
   const [adult, setAdult] = useState(1)
   const [kid, setKid] = useState(0)
   const [baby, setBaby] = useState(0)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -85,12 +87,12 @@ export default function SeatClassModal({
           {/* passengers section */}
           <div className='grid grid-cols-2 gap-6 mb-2 px-4'>
             <div>
-              <p className='py-2 capitalize font-medium'>Penumpang</p>
+              <p className='py-2 capitalize font-medium'>{t('searchFlight_passengerTitle')}</p>
               <div className='flex flex-col gap-2'>
                 <div className='flex items-center justify-between'>
                   <div>
-                    <p className='text-slate-800 font-medium'>Dewasa</p>
-                    <p className='text-slate-400 text-xs'>(12 tahun+)</p>
+                    <p className='text-slate-800 font-medium'>{t('searchFlight_passengerAtitle')}</p>
+                    <p className='text-slate-400 text-xs'>({t('searchFlight_passengerAbody')})</p>
                   </div>
                   <Counter
                     counter={adult}
@@ -104,8 +106,8 @@ export default function SeatClassModal({
                 </div>
                 <div className='flex items-center justify-between'>
                   <div>
-                    <p className='text-slate-800 font-medium'>Anak</p>
-                    <p className='text-slate-400 text-xs'>(2-11 tahun)</p>
+                    <p className='text-slate-800 font-medium'>{t('searchFlight_passengerKtitle')}</p>
+                    <p className='text-slate-400 text-xs'>({t('searchFlight_passengerKbody')})</p>
                   </div>
                   <Counter
                     counter={kid}
@@ -119,8 +121,8 @@ export default function SeatClassModal({
                 </div>
                 <div className='flex items-center justify-between'>
                   <div>
-                    <p className='text-slate-800 font-medium'>Bayi</p>
-                    <p className='text-slate-400 text-xs'>(dibawah 2)</p>
+                    <p className='text-slate-800 font-medium'>{t('searchFlight_passengerBtitle')}</p>
+                    <p className='text-slate-400 text-xs'>({t('searchFlight_passengerBbody')})</p>
                   </div>
                   <Counter
                     counter={baby}
@@ -137,7 +139,7 @@ export default function SeatClassModal({
 
             {/* seat class section */}
             <div>
-              <p className='py-2 capitalize font-medium'>Kelas Penerbangan</p>
+              <p className='py-2 capitalize font-medium'>{t('searchFlight_classTitle')}</p>
               {seates.map((seat, index) => (
                 <RadioSeat
                   data={seat}
@@ -155,7 +157,7 @@ export default function SeatClassModal({
               onClick={handleSave}
               className='px-4 py-2 rounded bg-gray-100 text-[#4642FF] font-medium hover:bg-gray-200 duration-75 ease-in'
             >
-              Simpan
+              {t('searchFlight_btn-save')}
             </Button>
           </div>
         </div>

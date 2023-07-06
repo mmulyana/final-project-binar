@@ -10,8 +10,10 @@ import CardNotifications from '@/component/Card/CardNotifications'
 import Button from '@/component/Button'
 import api from '@/services/api'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 function Notifications() {
+  const {t} = useTranslation()
   const { user } = useSelector(selectAuth)
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
@@ -63,7 +65,7 @@ function Notifications() {
     <div className='max-w-[540px]'>
       <div className='flex items-center justify-between'>
         <div className='flex gap-3 items-center'>
-          <h1 className='text-lg'>Notifikasi</h1>
+          <h1 className='text-lg'>{t('Notification_title')}</h1>
           {data && data.length > 0 ? (
             <>
               <div className='w-6 h-6 rounded-lg bg-[#4642FF] flex items-center justify-center text-white text-sm'>

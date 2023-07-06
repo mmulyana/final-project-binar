@@ -13,9 +13,11 @@ import imgBanner from 'public/image/banner-high-2.jpg'
 import { removeRedundantCities } from '@/utils'
 import { setUser } from '@/redux/reducers/auth'
 import { initialValue, searchReducer } from '@/component/SearchFlight/reducer'
+import { useTranslation } from 'react-i18next'
 
 function Home() {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   
   const [state, dispatchReducer] = useReducer(searchReducer, initialValue)
   const [flightsData, setFlightsData] = useState([])
@@ -90,9 +92,9 @@ function Home() {
       {/* section 2 */}
       <section className='pt-14 mt-16 px-4'>
         <div className='max-w-[1200px] mx-auto'>
-          <p className='text-2xl text-slate-900'>Yuk jelajahi dunia kembali</p>
+          <p className='text-2xl text-slate-900'>{t('home_section_2_title')}</p>
           <p className='text-sm text-[#A5A4A9]'>
-            Nikmati petualangan yang menanti di berbagai destinasi.
+            {t('home_section_2_subtitle')}
           </p>
           <div className='mt-6'>
             <CardSuggest data={favoriteCities} />
@@ -104,7 +106,7 @@ function Home() {
       <section className='bg-white pt-14 pb-20 mt-20 px-4'>
         <div className='max-w-[1200px] mx-auto'>
           <h2 className='text-2xl text-[#0E0C25]'>
-            Destinasi Lokal yang banyak diminati
+           {t('home_section_3_title')}
           </h2>
           <div className='mt-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6'>
             {flightsData?.map((flight, index) => (
@@ -117,11 +119,9 @@ function Home() {
       {/* section 4 */}
 
       <div className='bg-gray-100 pt-16 px-4'>
-        <h1 className='text-center font-semibold text-xl'>Partner Maskapai</h1>
+        <h1 className='text-center font-semibold text-xl'>{t('home_section_4_title')}</h1>
         <p className='text-center mt-4 text-[#131316]/80 max-w-[600px] mx-auto text-sm'>
-          Kerjasama kami dengan maskapai penerbangan di seluruh dunia
-          memungkinkan kami mengantar Anda ke tujuan impian Anda, tak peduli di
-          mana itu berada!
+          {t('home_section_4_subtitle')}
         </p>
 
         <div className='mt-8 md:mt-12 grid grid-cols-4 justify-self-center md:flex md:justify-center items-center gap-8 md:gap-[150px]'>

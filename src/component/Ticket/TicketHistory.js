@@ -4,9 +4,11 @@ import Button from '../Button'
 import { changeToRupiah, convertToHoursMinutes, formatTimestamp } from '@/utils'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 
 export default function TicketHistory({ data, withPrint, id }) {
   const router = useRouter()
+  const { t } = useTranslation()
 
   function handlePayment() {
     router.push(
@@ -18,11 +20,15 @@ export default function TicketHistory({ data, withPrint, id }) {
     <div className='bg-white rounded-lg overflow-hidden w-full'>
       <div className='py-2 w-full px-4 flex items-end justify-between relative bg-gray-50 border-b border-gray-200'>
         <p className='text-slate-400 text-xs'>
-          No. Pesanan{' '}
+          {t('history_card_number')}{' '}
           <span className='text-slate-900'>{data.transaction_id}</span>
         </p>
         <Label
-          text={data.payment_status ? 'lunas' : changeToRupiah(data.total_bill)}
+          text={
+            data.payment_status
+              ? t('history_card_state')
+              : changeToRupiah(data.total_bill)
+          }
           state={data.payment_status ? 'success' : 'failed'}
         />
       </div>
@@ -33,13 +39,20 @@ export default function TicketHistory({ data, withPrint, id }) {
       >
         <div className='flex flex-col gap-4 pt-4 pl-4'>
           <div className='text-xs text-left'>
-            <p className='text-slate-400 font-light'>Maskapai</p>
+            <p className='text-slate-400 font-light'>
+              {t('history_card_airline')}
+            </p>
             <p className='text-slate-800 text-sm'>{data.airline}</p>
           </div>
           <div>
-            <p className='text-slate-400 font-light text-xs'>Pembelian</p>
+            <p className='text-slate-400 font-light text-xs'>
+              {t('history_card_order')}
+            </p>
             <p className='text-slate-800 text-sm'>
-              {formatTimestamp(data.transaction_date)}
+              {formatTimestamp(
+                router.locale === 'id' ? 'ID-id' : 'EN-en',
+                data.transaction_date
+              )}
             </p>
           </div>
         </div>
@@ -85,14 +98,14 @@ export default function TicketHistory({ data, withPrint, id }) {
               className='block px-5 py-1 rounded bg-gray-100/70 hover:bg-blue-600 text-sm text-blue-600 hover:text-white'
               href={`/ticket/${data.transaction_id}`}
             >
-              Cetak
+              {t('history_card_btn_print')}
             </Link>
           ) : (
             <Button
               className='block px-5 py-1 rounded bg-gray-100/70 hover:bg-gray-200 text-sm text-red-600'
               onClick={handlePayment}
             >
-              Bayar
+              {t('history_card_btn_pay')}
             </Button>
           )}
         </div>

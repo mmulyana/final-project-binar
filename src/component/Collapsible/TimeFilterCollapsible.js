@@ -1,6 +1,7 @@
 import React from 'react'
 import withCollapsible from './withCollapsible'
 import { SelectWithCheckbox } from '../Select'
+import { useTranslation } from 'react-i18next'
 
 function TimeFilter({
   dataD,
@@ -9,7 +10,9 @@ function TimeFilter({
   setDataA,
   isActiveFilter,
   setIsActiveFilter,
+  locale = 'id'
 }) {
+  const { t } = useTranslation()
   function handleClick(id, type) {
     if (type === 'd') {
       const newData = dataD
@@ -44,7 +47,7 @@ function TimeFilter({
   return (
     <div className='mb-4'>
       <div>
-        <p className='text-gray-500 text-sm'>Berangkat</p>
+        <p className='text-gray-500 text-sm'>{t('result_filter_time_de')}</p>
         <div className='grid grid-cols-2 gap-2 mt-3 px-1'>
           {dataD.map((data, index) => (
             <div
@@ -63,7 +66,7 @@ function TimeFilter({
                   data.isActive ? 'text-white/80' : 'text-slate-500',
                 ].join(' ')}
               >
-                {data.title}
+                {data.title[locale]}
               </p>
               <p
                 className={[
@@ -79,7 +82,7 @@ function TimeFilter({
       </div>
 
       <div className='mt-4'>
-        <p className='text-gray-500 text-sm'>Tiba</p>
+        <p className='text-gray-500 text-sm'>{t('result_filter_time_ar')}</p>
         <div className='grid grid-cols-2 gap-2 mt-3 px-1'>
           {dataA.map((data, index) => (
             <div
@@ -98,7 +101,7 @@ function TimeFilter({
                   data.isActive ? 'text-white/80' : 'text-slate-500',
                 ].join(' ')}
               >
-                {data.title}
+                {data.title[locale]}
               </p>
               <p
                 className={[

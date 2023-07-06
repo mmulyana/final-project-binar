@@ -52,7 +52,7 @@ const Footer = () => {
 
           {/* Card 4 */}
           <div className='flex flex-col px-4 md:px-0'>
-            <h4 className='text-lg font-bold mb-4'>{t('footerContact')}</h4>
+            <h4 className='text-lg font-medium mb-4'>{t('footerContact')}</h4>
 
             <div className='flex gap-4'>
               <Link href='/'>

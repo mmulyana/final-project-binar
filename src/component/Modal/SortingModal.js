@@ -1,9 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from '../Button'
+import { useTranslation } from 'react-i18next'
 
-export default function SortingModal({ setData }) {
+export default function SortingModal({ setData, locale }) {
   const [isOpen, setIsOpen] = useState(false)
   const [sortingType, setSortingType] = useState(dataSortingType)
+  const { t } = useTranslation()
+  const ref = useRef()
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [ref, setIsOpen])
 
   function handleClick(id) {
     const newData = sortingType
@@ -22,7 +39,7 @@ export default function SortingModal({ setData }) {
     setIsOpen(false)
   }
   return (
-    <div className='relative'>
+    <div ref={ref} className='relative'>
       <Button
         className='flex items-center gap-2 text-gray-700'
         onClick={() => setIsOpen(true)}
@@ -42,7 +59,7 @@ export default function SortingModal({ setData }) {
             strokeLinejoin='round'
           />
         </svg>
-        <p className='text-gray-500 text-sm'>Urutkan</p>
+        <p className='text-gray-500 text-sm'>{t('result_ticket_sort')}</p>
       </Button>
 
       {!!isOpen && (
@@ -53,12 +70,12 @@ export default function SortingModal({ setData }) {
               className={[
                 'w-full py-2 rounded px-4 cursor-pointer',
                 d.isActive
-                  ? 'bg-blue-400 hover:bg-blue-500 text-white'
+                  ? 'bg-blue-500 hover:bg-blue-600 text-white'
                   : 'hover:bg-gray-100',
               ].join(' ')}
               onClick={() => handleClick(d.id)}
             >
-              <p>{d.name}</p>
+              <p>{d.name[locale]}</p>
             </div>
           ))}
         </div>
@@ -70,43 +87,64 @@ export default function SortingModal({ setData }) {
 const dataSortingType = [
   {
     id: 1,
-    name: 'harga terendah',
+    name: {
+      id: 'harga terendah',
+      en: 'Lower price',
+    },
     value: 'ASC',
     isActive: true,
   },
   {
     id: 2,
-    name: 'harga tertinggi',
+    name: {
+      id: 'harga tertinggi',
+      en: 'highest price',
+    },
     value: 'DSC',
     isActive: false,
   },
   {
     id: 3,
-    name: 'Berangkat paling awal',
+    name: {
+      id: 'Berangkat paling awal',
+      en: 'Earliest departure',
+    },
     value: 'EARLIEST-D',
     isActive: false,
   },
   {
     id: 4,
-    name: 'Berangkat paling akhir',
+    name: {
+      id: 'Berangkat paling akhir',
+      en: 'Last departure',
+    },
     value: 'LATEST-D',
     isActive: false,
   },
   {
     id: 5,
-    name: 'Tiba paling awal',
+    name: {
+      id: 'Tiba paling awal',
+      en: 'Earliest arrival',
+    },
     value: 'EARLIEST-A',
     isActive: false,
   },
   {
     id: 6,
-    name: 'Tiba paling akhir',
+    name: {
+      id: 'Tiba paling akhir',
+      en: 'Arrived last',
+    },
     value: 'LATEST-A',
     isActive: false,
   },
   {
     id: 7,
-    name: 'durasi paling sedikit',
+    name: {
+      id: 'durasi paling sedikit',
+      en: 'Least duration',
+    },
     value: 'SHORTEST_DURATION',
     isActive: false,
   },

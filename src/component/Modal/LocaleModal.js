@@ -21,7 +21,7 @@ const LocaleModal = forwardRef((props, ref) => {
       className='absolute top-9 right-0 rounded-lg bg-white p-2 shadow w-fit flex flex-col gap-2'
     >
       <div
-        className='flex gap-2 items-center hover:bg-gray-100 py-1 px-2 rounded cursor-pointer w-16'
+        className='flex gap-2 items-center hover:bg-gray-100 p-1 rounded cursor-pointer w-16'
         onClick={() => handleClick('id')}
       >
         <Image
@@ -32,7 +32,7 @@ const LocaleModal = forwardRef((props, ref) => {
         <p className='text-xs text-slate-800'>ID</p>
       </div>
       <div
-        className='flex gap-2 items-center hover:bg-gray-100 py-1 px-2 rounded cursor-pointer w-16'
+        className='flex gap-2 items-center hover:bg-gray-100 p-1 rounded cursor-pointer w-16'
         onClick={() => handleClick('en')}
       >
         <Image src={img_EN} alt='change to english' width={24} />

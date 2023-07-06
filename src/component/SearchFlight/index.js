@@ -257,7 +257,7 @@ export default function SearchFlight({ state, dispatch }) {
                             month: 'long',
                             year: 'numeric',
                           })
-                        : 'Pilih Tanggal'}
+                        : t('searchFlight_selectDate')}
                     </Button>
                   ) : null}
 

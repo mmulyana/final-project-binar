@@ -5,8 +5,13 @@ import Link from 'next/link'
 import { logout } from '@/utils/authUtils'
 import { useDispatch } from 'react-redux'
 import { removeUser } from '@/redux/reducers/auth'
+import { useTranslation } from 'react-i18next'
+import Image from 'next/image'
+import Ic_Setting from 'public/icon/settings.svg'
+import Ic_Logout from 'public/icon/logout-1.svg'
 
 const MenuModal = forwardRef((props, ref) => {
+  const { t } = useTranslation()
   const { data } = props
   const dispatch = useDispatch()
 
@@ -37,16 +42,34 @@ const MenuModal = forwardRef((props, ref) => {
 
       <div className='flex flex-col gap-1 mt-3'>
         <Link
-          className='py-2 px-4 hover:bg-gray-100 rounded text-sm text-slate-600'
+          className='p-2 hover:bg-gray-100 rounded text-sm text-slate-600 flex gap-2 items-center'
           href='/profile'
         >
-          Pengaturan
+          <Image src={Ic_Setting} width={20} height={20} alt='open setting' />
+          {t('menu_setting')}
         </Link>
         <Button
           onClick={handleLogout}
-          className='py-2 px-4 hover:bg-gray-100 rounded text-sm text-slate-600 text-left'
+          className='p-2 hover:bg-gray-100 rounded text-sm text-slate-600 flex gap-2 items-center'
         >
-          Keluar
+          <div>
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M16 17L21 12M21 12L16 7M21 12H9M9 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H9'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
+          {t('menu_close')}
         </Button>
       </div>
     </div>
