@@ -68,6 +68,7 @@ function Result() {
       console.log(err)
     }
   }
+  
   async function getFlightReverse(query) {
     if(query.dr === query.dd) return
     try {
@@ -78,7 +79,7 @@ function Result() {
         passenger_cnt: parseInt(query.c),
       }
       const { data } = await api.post('/flights', body)
-      setFlights(prev => [...prev, ...data.data])
+      setFlights([...flights, ...data.data])
     } catch (err) {
       console.log(err)
     }
