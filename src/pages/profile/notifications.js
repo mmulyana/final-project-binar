@@ -7,16 +7,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectNotif, setNotifications } from '@/redux/reducers/notifications'
 
 import CardNotifications from '@/component/Card/CardNotifications'
-import Button from '@/component/Button'
 import api from '@/services/api'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 function Notifications() {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { user } = useSelector(selectAuth)
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   async function handleNotif(id) {
     try {
@@ -24,34 +25,35 @@ function Notifications() {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: `https://final-project-be-develop.up.railway.app/notifications/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/notifications/${id}`,
         headers: {
           Authorization: jwt,
         },
       }
       const { data } = await axios.request(config)
+      console.log(data)
       getNotification()
     } catch (err) {}
   }
 
+  async function getNotification() {
+    try {
+      const jwt = Cookies.get('jwt')
+      const { data } = await api(`/notifications?user_id=${user.id}`, {
+        headers: {
+          Authorization: jwt,
+        },
+      })
+      if (data.status) {
+        dispatch(setNotifications(data.data))
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
   useEffect(() => {
     if (!user) return
-    async function getNotification() {
-      try {
-        const jwt = Cookies.get('jwt')
-        const { data } = await api(`/notifications?user_id=${user.id}`, {
-          headers: {
-            Authorization: jwt,
-          },
-        })
-        if (data.status) {
-          dispatch(setNotifications(data.data))
-        }
-      } catch (err) {
-        console.log(err.message)
-      }
-    }
-
     getNotification()
   }, [user, dispatch])
 
@@ -85,6 +87,7 @@ function Notifications() {
                 index={index}
                 handleNotif={handleNotif}
                 lenght={dataNotif.length}
+                locale={router.locale}
               />
             ))
           : null}

@@ -68,7 +68,7 @@ function Result() {
       console.log(err)
     }
   }
-  
+
   async function getFlightReverse(query) {
     if(query.dr === query.dd) return
     try {
@@ -220,7 +220,7 @@ function Result() {
                       alt='empty ticket image'
                     />
                     <p className='text-lg text-slate-800 font-medium -mt-3'>
-                      Tiket yang kamu inginkan tidak ada😭
+                      {t('result_filter_none')}😭
                     </p>
                   </div>
                 )
@@ -232,7 +232,7 @@ function Result() {
                     alt='loading image'
                   />
                   <p className='text-lg text-slate-800 font-medium mt-2'>
-                    Tunggu sebentar ya🫣
+                    {t('result_loading')}🫣
                   </p>
                 </div>
               )}

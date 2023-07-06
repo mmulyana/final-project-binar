@@ -1,11 +1,17 @@
-import React, { forwardRef, useMemo } from 'react'
+import React, { forwardRef, useMemo, useState } from 'react'
 import Button from '../Button'
 import CardNotifications from '../Card/CardNotifications'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import { setNotifications } from '@/redux/reducers/notifications'
+import api from '@/services/api'
+import { useSelector } from 'react-redux'
+import { selectAuth } from '@/redux/reducers/auth'
 
 const NotificationModal = forwardRef((props, ref) => {
   const { data } = props
+  const [notif, setNotif] = useState(data)
+  const {user} = useSelector(selectAuth)
 
   async function handleNotif(id) {
     try {
@@ -13,21 +19,38 @@ const NotificationModal = forwardRef((props, ref) => {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: `https://final-project-be-develop.up.railway.app/notifications/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/notifications/${id}`,
         headers: {
           Authorization: jwt,
         },
       }
       const { data } = await axios.request(config)
-      console.log(data)
+      getNotification()
     } catch (err) {}
+  }
+
+  async function getNotification() {
+    try {
+      const jwt = Cookies.get('jwt')
+      const { data } = await api(`/notifications?user_id=${user.id}`, {
+        headers: {
+          Authorization: jwt,
+        },
+      })
+      if (data.status) {
+        dispatch(setNotifications(data.data))
+        setNotif(data.data)
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
   }
 
   const sortNotifications = useMemo(() => {
     if (!data) return
     const tmp = [...data]
     return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-  }, [data])
+  }, [notif])
 
   return (
     <div
@@ -37,12 +60,9 @@ const NotificationModal = forwardRef((props, ref) => {
       <div className='flex justify-between items-center pb-2 border-b border-gray-200'>
         <div className='flex gap-3 items-center'>
           <p className='text-slate-600 text-sm'>Notifikasi</p>
-          {sortNotifications && sortNotifications.length > 0 ? (
+          {sortNotifications && sortNotifications.filter(d => data.is_read === false) > 0 ? (
             <div className='w-5 h-5 rounded-lg bg-[#326BF1] flex items-center justify-center text-white text-sm'>
-              {
-                sortNotifications.filter((data) => data.is_read === false)
-                  .length
-              }
+              {sortNotifications.filter((data) => data.is_read === false).length}
             </div>
           ) : null}
         </div>

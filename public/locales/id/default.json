@@ -144,6 +144,9 @@
   "register_to_login": "Sudah memiliki akun? ",
   "register_btn": "Daftar",
   "register_btn_email": "Selanjutnya",
-  "register_to_login_message": "Buat akun"
+  "register_to_login_message": "Buat akun",
+
+  "result_loading": "Tungguin yaa",
+  "result_filter_none": "waduh tiketnya gak ada, tapi tenang kamu bisa ulangi lagi"
 
 }

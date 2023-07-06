@@ -144,6 +144,9 @@
   "register_to_login": "Have an account? ",
   "register_btn": "Register",
   "register_btn_email": "Continue",
-  "register_to_login_message": "Login"
+  "register_to_login_message": "Login",
+
+  "result_loading": "Wait minute",
+  "result_filter_none": "The ticket you want doesn't exist"
 
 }
