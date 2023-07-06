@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import LoginGoogle from './LoginGoogle'
 import { emailSchema, registerSchema } from '@/utils/schema'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 const initialValues = {
   name: '',
@@ -24,6 +25,7 @@ export default function Register({ toggleModal }) {
   const [errors, setErrors] = useState({})
   const [hasFillEmail, setHasFillEmail] = useState(false)
   const [isEmail, setIsEmail] = useState(false)
+  const {t} = useTranslation()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -98,7 +100,7 @@ export default function Register({ toggleModal }) {
               onClick={handleEmail}
               className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 flex items-center justify-center cursor-pointer'
             >
-              Selanjutnya
+              {t('register_btn_email')}
             </Button>
           </>
         ) : (
@@ -115,7 +117,7 @@ export default function Register({ toggleModal }) {
               <Textfield
                 name='name'
                 id='name'
-                label='nama lengkap'
+                label={t('i_fullname')}
                 value={form.name}
                 onChange={handleChange}
                 withLabel
@@ -141,7 +143,7 @@ export default function Register({ toggleModal }) {
               <TextfieldPassword
                 name='confirmPassword'
                 id='confirmPassword'
-                label='confirm Password'
+                label={t('i_confirm_password')}
                 value={form.confirmPassword}
                 onChange={handleChange}
                 error={errors.confirmPassword ? errors.confirmPassword : null}
@@ -152,7 +154,7 @@ export default function Register({ toggleModal }) {
               type='submit'
               className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50 cursor-pointer'
             >
-              Daftar
+              {t('register_btn')}
             </Button>
           </form>
         )}
@@ -165,7 +167,7 @@ export default function Register({ toggleModal }) {
           className='py-3 rounded bg-gray-200 hover:bg-gray-300 text-slate-800 font-medium w-full text-sm'
           onClick={() => setIsEmail(true)}
         >
-          Daftar dengan Email
+          {t('register_sign_email')}
         </Button>
         <LoginGoogle />
       </div>
