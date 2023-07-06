@@ -13,6 +13,7 @@
 - Update profile
 - Notifications
 - Transactions history
+- i18n (internationalization)
 
 
 ## Stack (Frontend) 🛠
@@ -22,5 +23,7 @@
 - [🍞 React Toastify](https://fkhadra.github.io/react-toastify)
 - [🌐 Axios](https://axios-http.com)
 - [🔄 Redux toolkit](https://redux-toolkit.js.org)
+- [🧪 Yup](https://github.com/jquense/yup)
+- [🌍 i18next](https://react.i18next.com/)
 
 
