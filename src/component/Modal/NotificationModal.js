@@ -1,17 +1,15 @@
-import React, { forwardRef, useMemo, useState } from 'react'
-import Button from '../Button'
+import React, { forwardRef, useMemo } from 'react'
 import CardNotifications from '../Card/CardNotifications'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import { setNotifications } from '@/redux/reducers/notifications'
-import api from '@/services/api'
-import { useSelector } from 'react-redux'
-import { selectAuth } from '@/redux/reducers/auth'
+import { useDispatch } from 'react-redux'
+import { updateNotifications } from '@/redux/reducers/notifications'
+import { useTranslation } from 'react-i18next'
 
 const NotificationModal = forwardRef((props, ref) => {
-  const { data } = props
-  const [notif, setNotif] = useState(data)
-  const { user } = useSelector(selectAuth)
+  const { data: dataNotif } = props
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   async function handleNotif(id) {
     try {
@@ -25,32 +23,22 @@ const NotificationModal = forwardRef((props, ref) => {
         },
       }
       const { data } = await axios.request(config)
-      getNotification()
-    } catch (err) {}
-  }
-
-  async function getNotification() {
-    try {
-      const jwt = Cookies.get('jwt')
-      const { data } = await api(`/notifications?user_id=${user.id}`, {
-        headers: {
-          Authorization: jwt,
-        },
-      })
+      console.log(data)
       if (data.status) {
-        dispatch(setNotifications(data.data))
-        setNotif(data.data)
+        dispatch(updateNotifications({ id }))
       }
     } catch (err) {
-      console.log(err.message)
+      console.log(err)
     }
   }
 
   const sortNotifications = useMemo(() => {
-    if (!data) return
-    const tmp = [...data]
-    return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-  }, [notif])
+    if (!dataNotif) return
+    const tmp = [...dataNotif]
+    return tmp.sort((a, b) => b.id - a.id)
+  }, [dataNotif])
+
+  console.log(sortNotifications)
 
   return (
     <div
@@ -62,21 +50,21 @@ const NotificationModal = forwardRef((props, ref) => {
           <p className='text-slate-600 text-sm'>Notifikasi</p>
         </div>
       </div>
-      <div className='h-full overflow-y-auto pr-4'>
+      <div className='h-[calc(100%-1.6rem)] overflow-y-auto pr-4 pt-2'>
         <div className='flex flex-col rounded'>
-          {sortNotifications && sortNotifications.length > 0 ? (
+          {dataNotif && dataNotif.length > 0 ? (
             sortNotifications.map((data, index) => (
               <CardNotifications
                 key={index}
                 data={data}
                 index={index}
                 handleNotif={handleNotif}
-                lenght={dataNotif.length}
+                length={dataNotif.length}
               />
             ))
           ) : (
             <p className='text-sm text-slate-500 text-center mt-4'>
-              belum ada notifikasi
+              {t('notif_empty')}
             </p>
           )}
         </div>

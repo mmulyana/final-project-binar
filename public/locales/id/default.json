@@ -128,7 +128,7 @@
   "history_card_order":"Pembelian",
   "history_card_btn_print": "Cetak",
   "history_card_btn_pay": "Bayar",
-  "history_card_state": "Lunas",
+  "history_card_state": "Berhasil dibayar",
 
   "login_title": "Masuk Ke Tripp",
   "login_sign_email": "Masuk dengan Email",
@@ -147,6 +147,21 @@
   "register_to_login_message": "Buat akun",
 
   "result_loading": "Tungguin yaa",
-  "result_filter_none": "waduh tiketnya gak ada, tapi tenang kamu bisa ulangi lagi"
+  "result_filter_none": "waduh tiketnya gak ada, tapi tenang kamu bisa ulangi lagi",
 
+  "otp_title": "Masukkan Kode Verifikasi",
+  "otp_subtitle": "Kode verifikasi sudah kami kirim melalui email ",
+  "otp_btn_verify": "Verifikasi",
+  "otp_btn_resend": "Kirim kode lagi",
+
+  "forgot_title": "Lupa password Anda?",
+  "forgot_subtitle": "Tidak perlu khawatir. Silakan berikan alamat email, dan kami akan mengirimkan panduan untuk melakukan penggantian kata sandi.",
+  "btn_send": "Kirim",
+  "forgot_email_title": "Cek email anda?",
+  "forgot_email_subtitle": "kami telah mengirim link reset password ke ",
+  "forgot_email_not_yet": "belum menerima email? ",
+  "forgot_emaii_send_again": "Kirim lagi",
+
+  "reset_title": "Atur password baru",
+  "notif_empty": "belum ada notifikasi"
 }

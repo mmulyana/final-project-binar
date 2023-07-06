@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
 import api from '@/services/api'
 
 import { SecondaryLayout } from '@/component/Layout'

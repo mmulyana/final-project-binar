@@ -26,3 +26,13 @@ export const loginSchema = yup.object().shape({
     .required('Password is required')
     .min(6, 'Password must be at least 6 characters long'),
 })
+
+export const resetPasswordSchema = yup.object().shape({
+  newPassword: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters long'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword'), null], 'Confirm passwords must match'),
+})

@@ -12,7 +12,11 @@ const notifySlicer = createSlice({
       state.data = action.payload
     },
     updateNotifications: (state, action) => {
-    //   const newData = state.data.filter(())
+      const { id } = action.payload
+      const tmp = state.data.find((t) => t.id === id)
+      if (tmp) {
+        tmp.is_read = true
+      }
     },
   },
 })
