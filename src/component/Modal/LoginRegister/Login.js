@@ -64,7 +64,7 @@ export default function Login({ toggleModal }) {
       if (axios.isAxiosError(error)) {
         if (error.response.status === 401) {
           router.push(`/otp/${form.email}`)
-          toast.error(err.response.data.message)
+          toast.error(error.response.data.message)
         }
         toast.error(error.response.data.message)
         return
