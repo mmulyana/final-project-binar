@@ -15,6 +15,7 @@ import { parseJwt } from '@/utils'
 import api from '@/services/api'
 
 import { loginSchema } from '@/utils/schema'
+import { useTranslation } from 'react-i18next'
 
 const initialValues = {
   email: '',
@@ -27,6 +28,7 @@ export default function Login({ toggleModal }) {
   const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
   const router = useRouter()
+  const {t} = useTranslation()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -101,13 +103,12 @@ export default function Login({ toggleModal }) {
             value={form.password}
             onChange={handleChange}
             error={errors.password ? errors.password : null}
-
           />
           <Link
             href='/forgotpassword'
             className='block ml-auto -mt-4 text-sm text-[#326BF1]'
           >
-            Lupa password?
+            {t('btn_forgot_password')}
           </Link>
         </div>
 
@@ -116,7 +117,7 @@ export default function Login({ toggleModal }) {
           type='submit'
           className='py-4 rounded bg-[#4642FF] text-white font-medium w-full mt-8 hover:shadow hover:shadow-[#4642FF]/50'
         >
-          Masuk
+          {t('login_btn')}
         </Button>
       </form>
     )
@@ -127,7 +128,7 @@ export default function Login({ toggleModal }) {
           className='py-3 rounded bg-gray-200 hover:bg-gray-300 text-slate-800 font-medium w-full text-sm'
           onClick={() => setIsEmail(true)}
         >
-          Masuk dengan Email
+          {t('login_sign_email')}
         </Button>
         <LoginGoogle isLogin toggleModal={toggleModal} />
       </div>
