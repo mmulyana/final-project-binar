@@ -5,6 +5,7 @@ import { ProfileLayout } from '@/component/Layout'
 import DeleteAccountModal from '@/component/Modal/DeleteAccountModal'
 import { selectAuth, updateUser } from '@/redux/reducers/auth'
 import api from '@/services/api'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,11 +13,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 function Profile() {
-  const { user } = useSelector(selectAuth)
-  const {t} = useTranslation()
-  const [isDisable, setDisable] = useState(true)
   const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isDisable, setDisable] = useState(true)
+  const { user } = useSelector(selectAuth)
+  const { t } = useTranslation()
   const [data, setData] = useState({
     email: '',
     name: '',
@@ -33,10 +33,6 @@ function Profile() {
     if (!user) return
     setData(user)
   }, [user])
-
-  function handleToggle() {
-    setIsOpen(!isOpen)
-  }
 
   async function handleUpdateProfile() {
     try {
@@ -63,9 +59,16 @@ function Profile() {
         Cookies.set('profile', JSON.stringify(data))
         setDisable(true)
       }
-    } catch (err) {
-      console.log(err)
-      // toast.error(err.response.data.message)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(error.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -109,7 +112,7 @@ function Profile() {
                 onClick={() => setDisable(false)}
                 className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
               >
-                Edit profile
+                {t('profile_btn_update')}
               </Button>
             ) : (
               <>
@@ -117,13 +120,13 @@ function Profile() {
                   onClick={handleCancel}
                   className='text-slate-600 py-2 px-4 rounded text-sm'
                 >
-                  batal
+                  {t('profile_btn_cancel')}
                 </Button>
                 <Button
                   onClick={handleUpdateProfile}
                   className='bg-[#4642FF] text-white py-2 px-4 rounded text-sm'
                 >
-                  Update
+                  {t('profile_btn_send')}
                 </Button>
               </>
             )}
@@ -142,6 +145,5 @@ Profile.getLayout = (page) => {
 }
 
 Profile.auth = { hasLoggedIn: true }
-
 
 export default Profile

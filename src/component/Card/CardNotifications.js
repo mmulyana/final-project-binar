@@ -1,13 +1,21 @@
 import { formatTimestamp } from '@/utils'
 import React from 'react'
 
-export default function CardNotifications({ data, index, length, handleNotif }) {
+export default function CardNotifications({
+  data,
+  index,
+  length,
+  handleNotif,
+  locale,
+}) {
   return (
     <div
       onClick={() => handleNotif(data.id)}
       className={[
-        'grid grid-cols-[1fr_8fr] gap-2 items-start py-3 px-4 relative overflow-hidden',
-        data.is_read ? 'bg-white' : 'bg-blue-100 hover:bg-blue-200',
+        'grid grid-cols-[1fr_8fr] gap-2 items-start py-3 px-4 relative overflow-hidden cursor-pointer ',
+        data.is_read
+          ? 'bg-white hover:bg-gray-200'
+          : 'bg-blue-100 hover:bg-blue-200',
         index === 0 ? 'rounded-t' : '',
         index === length - 1 ? 'rounded-b' : '',
       ].join(' ')}
@@ -37,12 +45,16 @@ export default function CardNotifications({ data, index, length, handleNotif }) 
         </svg>
       </div>
       <div>
-        <p className='capitalize text-sm text-slate-700'>{data.type}</p>
         <p className='mt-1 text-sm font-medium text-slate-700'>{data.title}</p>
         {data.message !== '' ? (
           <p className='text-slate-500 text-sm font-normal'>{data.body}</p>
         ) : null}
-        <p className='mt-2 text-xs text-slate-500'>{formatTimestamp(data.created_at)}</p>
+        <p className='mt-2 text-xs text-slate-500'>
+          {formatTimestamp(
+            locale === 'id' ? 'ID-id' : 'EN-en',
+            data.created_at
+          )}
+        </p>
       </div>
       {!data.is_read && (
         <div className='absolute right-3 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-blue-500' />

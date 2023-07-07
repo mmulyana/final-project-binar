@@ -268,11 +268,12 @@ export default function Navbar({ isDark = false }) {
                         />
                       </svg>
                     </Button>
-                    {!!data && (
+                    {!!data &&
+                    data.filter((d) => d.is_read === false).length > 0 ? (
                       <div className='absolute -top-[5px] -right-[5px] h-4 w-4 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs'>
                         <p>{data.filter((d) => d.is_read === false).length}</p>
                       </div>
-                    )}
+                    ) : null}
                     {!!openNotify && (
                       <NotificationModal data={data} ref={notificationRef} />
                     )}

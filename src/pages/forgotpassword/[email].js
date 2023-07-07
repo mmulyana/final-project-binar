@@ -1,17 +1,22 @@
 import Button from '@/component/Button'
 import TextfieldPassword from '@/component/Form/TextfieldPassword'
 import api from '@/services/api'
+import { resetPasswordSchema } from '@/utils/schema'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 export default function ForgotPasswordEmail() {
   const router = useRouter()
+  const { t } = useTranslation()
   const [token, setToken] = useState(null)
   const [form, setForm] = useState({
     newPassword: '',
     confirmPassword: '',
   })
+  const [errors, setErrors] = useState({})
   const [email, setEmail] = useState('')
 
   useEffect(() => {
@@ -32,13 +37,31 @@ export default function ForgotPasswordEmail() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const { data } = await api.patch(`/auth/reset-password?token=${token}`, form)
-      if(data.status) {
+      await resetPasswordSchema.validate(form, { abortEarly: false })
+      const { data } = await api.patch(
+        `/auth/reset-password?token=${token}`,
+        form
+      )
+      if (data.status) {
         toast.success(data.message)
-        router.push('/')
+        router.replace('/')
       }
-    } catch(err) {
-      console.log(err)
+    } catch (error) {
+      const errorMessages = {}
+      error?.inner?.forEach((error) => {
+        errorMessages[error.path] = error.message
+      })
+      setErrors(errorMessages)
+
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(error.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -62,7 +85,7 @@ export default function ForgotPasswordEmail() {
         </svg>
       </div>
       <div className='mt-3 flex flex-col gap-2 items-center'>
-        <p className='text-lg text-slate-800 font-medium'>Atur password baru</p>
+        <p className='text-lg text-slate-800 font-medium'>{t('reset_title')}</p>
 
         <form className='mt-3 w-full flex flex-col gap-7'>
           <TextfieldPassword
@@ -71,14 +94,16 @@ export default function ForgotPasswordEmail() {
             value={form.newPassword}
             onChange={handleChange}
             className='bg-white'
+            error={errors.password ? errors.password : null}
           />
 
           <TextfieldPassword
             name='confirmPassword'
-            label='confirm password'
+            label={t('i_confirm_password')}
             value={form.confirmPassword}
             onChange={handleChange}
             className='bg-white'
+            error={errors.confirmPassword ? errors.confirmPassword : null}
           />
 
           <Button
@@ -86,7 +111,7 @@ export default function ForgotPasswordEmail() {
             onClick={handleSubmit}
             className='bg-[#326BF1] text-white rounded py-3 w-full mt-2'
           >
-            Kirim
+            {t('btn_send')}
           </Button>
         </form>
       </div>

@@ -128,7 +128,7 @@
   "history_card_order":"Purchase Date",
   "history_card_btn_print": "Print",
   "history_card_btn_pay": "Pay",
-  "history_card_state": "Paid off",
+  "history_card_state": "Purchase Successful",
 
   "login_title": "Login",
   "login_sign_email": "login with Email",
@@ -144,6 +144,29 @@
   "register_to_login": "Have an account? ",
   "register_btn": "Register",
   "register_btn_email": "Continue",
-  "register_to_login_message": "Login"
+  "register_to_login_message": "Login",
+
+  "result_loading": "Wait minute",
+  "result_filter_none": "The ticket you want doesn't exist",
+
+  "otp_title": "Enter the Verification Code",
+  "otp_subtitle": "We have sent a verification code via email ",
+  "otp_btn_verify": "Verify",
+  "otp_btn_resend": "resend OTP",
+
+  "forgot_title": "Forgot your password?",
+  "forgot_subtitle": "No need to worry. Please provide an email address, and we'll send you a guide for changing your password.",
+  "btn_send": "Send",
+  "forgot_email_title": "Check your email?",
+  "forgot_email_subtitle": "we have sent a password reset link to ",
+  "forgot_email_not_yet": "Havent received the email yet? ",
+  "forgot_emaii_send_again": "Send again",
+
+  "reset_title": "Set a new password",
+  "notif_empty": "theres no notifications",
+
+  "profile_btn_update": "Update Profile",
+  "profile_btn_send": "Update",
+  "profile_btn_cancel": "Cancel"
 
 }

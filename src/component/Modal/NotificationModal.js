@@ -1,11 +1,15 @@
 import React, { forwardRef, useMemo } from 'react'
-import Button from '../Button'
 import CardNotifications from '../Card/CardNotifications'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { updateNotifications } from '@/redux/reducers/notifications'
+import { useTranslation } from 'react-i18next'
 
 const NotificationModal = forwardRef((props, ref) => {
-  const { data } = props
+  const { data: dataNotif } = props
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   async function handleNotif(id) {
     try {
@@ -13,55 +17,57 @@ const NotificationModal = forwardRef((props, ref) => {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: `https://final-project-be-develop.up.railway.app/notifications/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/notifications/${id}`,
         headers: {
           Authorization: jwt,
         },
       }
       const { data } = await axios.request(config)
       console.log(data)
-    } catch (err) {}
+      if (data.status) {
+        dispatch(updateNotifications({ id }))
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const sortNotifications = useMemo(() => {
-    if (!data) return
-    const tmp = [...data]
-    return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-  }, [data])
+    if (!dataNotif) return
+    const tmp = [...dataNotif]
+    return tmp.sort((a, b) => b.id - a.id)
+  }, [dataNotif])
+
+  console.log(sortNotifications)
 
   return (
     <div
       ref={ref}
-      className='absolute top-9 right-0 w-[500px] h-auto rounded-lg bg-white p-4 shadow'
+      className='absolute top-9 right-0 w-[500px] h-[400px] rounded-lg bg-white py-4 pl-4 shadow'
     >
-      <div className='flex justify-between items-center pb-2 border-b border-gray-200'>
+      <div className='flex justify-between items-center pb-2 pr-4 border-b border-gray-200'>
         <div className='flex gap-3 items-center'>
           <p className='text-slate-600 text-sm'>Notifikasi</p>
-          {sortNotifications && sortNotifications.length > 0 ? (
-            <div className='w-5 h-5 rounded-lg bg-[#326BF1] flex items-center justify-center text-white text-sm'>
-              {
-                sortNotifications.filter((data) => data.is_read === false)
-                  .length
-              }
-            </div>
-          ) : null}
         </div>
-        {/* <Button className='text-[#326BF1] text-xs'>Sudah dibaca</Button> */}
       </div>
-      <div className='flex flex-col rounded'>
-        {sortNotifications && sortNotifications.length > 0 ? (
-          sortNotifications.map((data, index) => (
-            <CardNotifications
-              key={index}
-              data={data}
-              index={index}
-              handleNotif={handleNotif}
-              lenght={dataNotif.length}
-            />
-          ))
-        ) : (
-          <p className='text-sm text-slate-500 text-center mt-4'>belum ada notifikasi</p>
-        )}
+      <div className='h-[calc(100%-1.6rem)] overflow-y-auto pr-4 pt-2'>
+        <div className='flex flex-col rounded'>
+          {dataNotif && dataNotif.length > 0 ? (
+            sortNotifications.map((data, index) => (
+              <CardNotifications
+                key={index}
+                data={data}
+                index={index}
+                handleNotif={handleNotif}
+                length={dataNotif.length}
+              />
+            ))
+          ) : (
+            <p className='text-sm text-slate-500 text-center mt-4'>
+              {t('notif_empty')}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )

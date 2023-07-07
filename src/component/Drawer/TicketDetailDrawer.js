@@ -16,7 +16,6 @@ function TicketDetail({ onClose, locale, ...props }) {
       try {
         const { data } = await api(`/flights/${id}`)
         setData(data.data)
-        console.log(data)
       } catch (error) {
         console.log(error)
       }

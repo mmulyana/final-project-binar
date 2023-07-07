@@ -1,26 +1,46 @@
 import Button from '@/component/Button'
 import Textfield from '@/component/Form/Textfield'
 import api from '@/services/api'
+import { emailSchema } from '@/utils/schema'
+import axios from 'axios'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [hasSend, setHasSend] = useState(false)
+  const [errors, setErrors] = useState({})
+  const { t } = useTranslation()
 
   async function handleSubmit(e) {
     e.preventDefault()
     try {
+      await emailSchema.validate({email}, { abortEarly: false })
+      setErrors({})
       const body = { email }
       const { data } = await api.post('/auth/forgot-password', body)
-      console.log(data)
-      if(data.success) {
+      if (data.success) {
         toast.success(data.message)
         setHasSend(true)
       }
-    } catch(err) {
-      console.log(err)
+    } catch (error) {
+      const errorMessages = {}
+      error?.inner?.forEach((error) => {
+        errorMessages[error.path] = error.message
+      })
+      setErrors(errorMessages)
+
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(error.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -47,11 +67,10 @@ export default function ForgotPassword() {
           </div>
           <div className='mt-3 flex flex-col gap-2 items-center'>
             <p className='text-lg text-slate-800 font-medium'>
-              Lupa password Anda?
+              {t('forgot_title')}
             </p>
             <p className='text-slate-400 text-sm text-center'>
-              Tidak perlu khawatir. Silakan berikan alamat email, dan kami akan
-              mengirimkan panduan untuk melakukan penggantian kata sandi.
+              {t('forgot_subtitle')}
             </p>
 
             <form onSubmit={handleSubmit} className='mt-3 w-full'>
@@ -62,6 +81,7 @@ export default function ForgotPassword() {
                 onChange={(e) => setEmail(e.target.value)}
                 className='bg-white'
                 withLabel
+                error={errors.email ? errors.email : null}
               />
 
               <Button
@@ -69,14 +89,14 @@ export default function ForgotPassword() {
                 onClick={handleSubmit}
                 className='bg-[#326BF1] text-white rounded py-3 w-full mt-6'
               >
-                Kirim
+                {t('btn_send')}
               </Button>
             </form>
             <Link
               href='/'
               className='mt-3 text-slate-400 text-sm text-center block'
             >
-              Kembali ke beranda
+              {t('success_btn_back')}
             </Link>
           </div>
         </>
@@ -101,16 +121,17 @@ export default function ForgotPassword() {
           </div>
           <div className='mt-3 flex flex-col gap-2 items-center'>
             <p className='text-lg text-slate-800 font-medium'>
-              Cek email anda?
+              {t('forgot_email_title')}
             </p>
             <p className='text-slate-400 text-sm text-center'>
-              kami telah mengirim link reset password ke {email}
+              {t('forgot_email_subtitle')}
+              {email}
             </p>
 
             <p className='text-center text-sm mt-2 text-slate-600'>
-              belum menerima email?{' '}
+              {t('forgot_email_not_yet')}
               <Button onClick={handleSubmit} className='text-[#326BF1]'>
-                kirim lagi
+                {t('forgot_emaii_send_again')}
               </Button>
             </p>
           </div>

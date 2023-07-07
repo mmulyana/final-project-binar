@@ -17,13 +17,19 @@ export default function CheckPage() {
   async function handleCheck() {
     try {
       const { data } = await api(`/transactions?transaction_id=${id}`)
-      // console.log(data)
       if (data.status) {
         setTransaction(data.data)
       }
     } catch (error) {
-      console.log(error)
-      // if(axios.isAxiosError()) {}
+      if (axios.isAxiosError(error)) {
+        if (error.response.status === 401) {
+          router.push(`/otp/${form.email}`)
+          toast.error(error.response.data.message)
+        }
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 

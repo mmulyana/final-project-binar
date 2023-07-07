@@ -48,7 +48,7 @@ function Result() {
   useEffect(() => {
     if (query === null) return
     getFlight(query)
-    if(query.iow === 'false') {
+    if (query.iow === 'false') {
       getFlightReverse(query)
     }
     return () => setFlights([])
@@ -68,7 +68,9 @@ function Result() {
       console.log(err)
     }
   }
+
   async function getFlightReverse(query) {
+    if (query.dr === query.dd) return
     try {
       const body = {
         origin_airport: query.ds,
@@ -77,7 +79,7 @@ function Result() {
         passenger_cnt: parseInt(query.c),
       }
       const { data } = await api.post('/flights', body)
-      setFlights(prev => [...prev, ...data.data])
+      setFlights([...flights, ...data.data])
     } catch (err) {
       console.log(err)
     }
@@ -173,7 +175,6 @@ function Result() {
           </div>
         </div>
         <div className='h-fit'>
-          <div className='grid grid-cols-3 gap-2 md:gap-6'>{/* time */}</div>
           <div>
             <div className='flex justify-between'>
               <p className='text-sm text-slate-600'>
@@ -218,7 +219,7 @@ function Result() {
                       alt='empty ticket image'
                     />
                     <p className='text-lg text-slate-800 font-medium -mt-3'>
-                      Tiket yang kamu inginkan tidak ada😭
+                      {t('result_filter_none')}😭
                     </p>
                   </div>
                 )
@@ -230,7 +231,7 @@ function Result() {
                     alt='loading image'
                   />
                   <p className='text-lg text-slate-800 font-medium mt-2'>
-                    Tunggu sebentar ya🫣
+                    {t('result_loading')}🫣
                   </p>
                 </div>
               )}
@@ -267,44 +268,79 @@ function SortingTicket({ type, data, query, handleDetail }) {
       return data
         .sort((a, b) => b.price - a.price)
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'EARLIEST-D':
       return data
         .sort((a, b) => compareTime(a, b, 'd', true))
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'LATEST-D':
       return data
         .sort((a, b) => compareTime(a, b, 'd', false))
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'EARLIEST-A':
       return data
         .sort((a, b) => compareTime(a, b, 'a', true))
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'LATEST-A':
       return data
         .sort((a, b) => compareTime(a, b, 'a', false))
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'SHORTEST_DURATION':
       return data
         .sort((a, b) => a.flight_duration - b.flight_duration)
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
     case 'ASC':
     default:
       return data
         .sort((a, b) => a.price - b.price)
         .map((flight, index) => (
-          <Ticket query={query} data={flight} key={index} handleDetail={handleDetail}/>
+          <Ticket
+            query={query}
+            data={flight}
+            key={index}
+            handleDetail={handleDetail}
+          />
         ))
   }
 }

@@ -4,19 +4,24 @@ import { useCallback, useEffect, useMemo } from 'react'
 
 import { selectAuth } from '@/redux/reducers/auth'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectNotif, setNotifications } from '@/redux/reducers/notifications'
+import {
+  selectNotif,
+  setNotifications,
+  updateNotifications,
+} from '@/redux/reducers/notifications'
 
 import CardNotifications from '@/component/Card/CardNotifications'
-import Button from '@/component/Button'
 import api from '@/services/api'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 function Notifications() {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { user } = useSelector(selectAuth)
   const { data } = useSelector(selectNotif)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   async function handleNotif(id) {
     try {
@@ -24,18 +29,20 @@ function Notifications() {
       let config = {
         method: 'put',
         maxBodyLength: Infinity,
-        url: `https://final-project-be-develop.up.railway.app/notifications/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/notifications/${id}`,
         headers: {
           Authorization: jwt,
         },
       }
       const { data } = await axios.request(config)
-      getNotification()
+      if (data.status) {
+        dispatch(updateNotifications({ id }))
+      }
     } catch (err) {}
   }
 
   useEffect(() => {
-    if (!user) return
+    if (!user && data) return
     async function getNotification() {
       try {
         const jwt = Cookies.get('jwt')
@@ -51,14 +58,13 @@ function Notifications() {
         console.log(err.message)
       }
     }
-
     getNotification()
   }, [user, dispatch])
 
   const sortNotifications = useMemo(() => {
     if (!data) return
     const tmp = [...data]
-    return tmp.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    return tmp.sort((a, b) => b.id - a.id)
   }, [data])
 
   return (
@@ -74,7 +80,6 @@ function Notifications() {
             </>
           ) : null}
         </div>
-        {/* <Button className='text-sm text-[#4642FF]'>Sudah dibaca</Button> */}
       </div>
       <div className='mt-4 flex flex-col border border-gray-200 rounded'>
         {data && data.length > 0
@@ -84,7 +89,8 @@ function Notifications() {
                 data={data}
                 index={index}
                 handleNotif={handleNotif}
-                lenght={dataNotif.length}
+                length={dataNotif.length}
+                locale={router.locale}
               />
             ))
           : null}

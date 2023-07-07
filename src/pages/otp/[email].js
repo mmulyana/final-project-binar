@@ -7,11 +7,13 @@ import { useRef, useState } from 'react'
 import Button from '@/component/Button'
 import api from '@/services/api'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 export default function OtpPage() {
   const router = useRouter()
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const otpInputs = useRef([])
+  const { t } = useTranslation()
 
   function handleChange(e, index) {
     const value = e.target.value
@@ -80,10 +82,10 @@ export default function OtpPage() {
         className='h-fit mx-auto'
       />
       <h1 className='text-lg text-slate-800 font-medium text-center mt-2'>
-        Masukkan Kode Verifikasi
+        {t('otp_title')}
       </h1>
       <p className='max-w-[400px] mx-auto text-center mt-2 text-sm text-slate-400'>
-        Kode verifikasi sudah kami kirim melalui email{' '}
+        {t('otp_subtitle')}
         {router.query.email !== undefined
           ? hideEmail(router.query.email)
           : null}
@@ -112,10 +114,10 @@ export default function OtpPage() {
           onClick={submit}
           className='px-10 py-3 text-sm bg-[#4642FF] rounded text-white'
         >
-          Verifikasi
+          {t('otp_btn_verify')}
         </Button>
         <Button onClick={resentOtp} className='mt-2 text-sm text-gray-500'>
-          Kirim kode lagi
+          {t('otp_btn_resend')}
         </Button>
       </div>
     </div>
