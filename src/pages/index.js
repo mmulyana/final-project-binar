@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import api from '@/services/api'
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
 
 import CardFlight from '@/component/Card/CardFlight'
 import DefaultLayout from '@/component/Layout/DefaultLayout'
